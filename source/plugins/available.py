@@ -1,3 +1,4 @@
+"""Still garbage, will revisit."""
 COMMAND = "available"
 
 async def command_available(client, message):
