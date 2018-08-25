@@ -1,11 +1,16 @@
 #import sqlite
 import re
 import discord
-from constants import TOKEN, COMMAND_PATTERN
+import random
+from constants import TOKEN, FULL_PATTERN, FLAG, COMMAND
+
 # GOALS
 # count messages (and subtract from count as they are deleted)
 # allow autoroles with commands
 # create queue of requests that can be parsed by the mods
+
+print(FULL_PATTERN)
+PATTERN = re.compile(FULL_PATTERN)
 
 client = discord.Client()
 
@@ -14,11 +19,20 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    message_match = re.match(COMMAND_PATTERN, message.content)
-    if message_match:
-        print("match")
-        flag = message_match.group('flag')
-        print(flag)
+    result = PATTERN.match(message.content)
+    print(result)
+    if result is not None:
+        print(True)
+        command = result.group(COMMAND)
+        if command == "roll":
+            result2 = re.match("^[0-9]+$", result.group(FLAG))
+            if result2:
+                max_roll = int(result.group(FLAG))
+                roll = random.choice(range(max_roll))
+                response = "You rolled a {0}".format(roll)
+                await client.send_message(message.channel, response)
+            else:
+                await client.send_message(message.channel, "cant bub")
 
 
 @client.event
