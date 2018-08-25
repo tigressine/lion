@@ -1,5 +1,9 @@
-from plugins.users import command_users
+from plugins.usercount import command_usercount
+from plugins.available import command_available
+from plugins.poll import command_poll
 
 commands = {
-    "users" : command_users,
+    "usercount" : command_usercount,
+    "available" : command_available,
+    "poll" : command_poll,
 }
