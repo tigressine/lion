@@ -1,9 +1,15 @@
-from plugins.usercount import command_usercount
-from plugins.available import command_available
-from plugins.poll import command_poll
+"""initializer for included Lion plugins.
+
+This script imports all installed Lion plugins and associates their command
+strings with their command functions.
+Written by Tiger Sachse.
+"""
+from plugins import (usercount,
+                     available,
+                     poll)
 
 commands = {
-    "usercount" : command_usercount,
-    "available" : command_available,
-    "poll" : command_poll,
+    usercount.COMMAND : usercount.command_usercount,
+    available.COMMAND : available.command_available,
+    poll.COMMAND : poll.command_poll,
 }

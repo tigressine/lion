@@ -1,3 +1,5 @@
+COMMAND = "available"
+
 async def command_available(client, message):
     response = "```"
     response += "Available commands for LionBot\n"
