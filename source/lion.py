@@ -16,11 +16,11 @@ async def on_message(message):
     match_result = re.match(pattern, message.content)
     if match_result is not None:
         command = match_result.group("command")
-        print(command)
+        #print(command)
         if command in commands.keys():
             await commands[command](client, message)
         else:
-            await commands["help"](client, message)
+            await commands["available"](client, message)
 
 @client.event
 async def on_ready():
@@ -28,7 +28,6 @@ async def on_ready():
     server = next(iter(client.servers)).name
     
     print(message.format(server, client.user.name))
-
 
 client.run(TOKEN)
 
