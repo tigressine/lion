@@ -1,3 +1,4 @@
+"""Still garbage, will revisit."""
 COMMAND = "users"
 
 async def command_usercount(client, message):
