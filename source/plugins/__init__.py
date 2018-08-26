@@ -6,10 +6,12 @@ Written by Tiger Sachse.
 """
 from plugins import (usercount,
                      available,
-                     poll)
+                     poll,
+                     garage)
 
 commands = {
     usercount.COMMAND : usercount.command_usercount,
     available.COMMAND : available.command_available,
     poll.COMMAND : poll.command_poll,
+    garage.COMMAND : garage.command_garages,
 }
