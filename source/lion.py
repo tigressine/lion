@@ -11,7 +11,7 @@ import discord
 from plugins import COMMANDS, INLINES
 
 COMMAND_PATTERN = r"^!(?P<command>[a-zA-Z]+)"
-TOKEN_FILE = "token.json"
+TOKEN_FILE = "data/token.json"
 
 # Create a Discord client to interface with Discord servers.
 client = discord.Client()
