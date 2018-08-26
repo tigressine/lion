@@ -5,12 +5,12 @@ My primary goal is to provide functions to improve the functionality of the [UCF
 Existing Functions:
 - Polls
 - User count
+- UCF parking status
 
 Planned Functions:
 - Auto roles
 - Message counter
 - Requests queue
 - Help menu
-- Parking availability information (stretch)
 - Cave status (stretch)
 - Eustis status (half stretch)
