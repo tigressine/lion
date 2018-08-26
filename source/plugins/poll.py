@@ -13,8 +13,9 @@ COMMAND = "poll"
 DELIMITER = ";"
 MAX_SECONDS = 172800
 CHOICE_FORMAT = "{0}) {1}"
-RESULTS_HEADER = "__Results:__"
-WINNER_FORMAT = "**{0}) {1} [winner]**"
+POLL_HEADER = "**New poll:**"
+RESULTS_HEADER = "**Poll results:**"
+WINNER_FORMAT = "{0}) {1} [winner]"
 PROMPT_PATTERN = r"`(?P<prompt>.+)`"
 CHOICES_PATTERN = r"`(?P<choices>.+)`"
 WAIT_PATTERN = r"(?P<amount>[1-9][0-9]*)(?P<multiplier>[smhd])"
@@ -92,7 +93,11 @@ def get_wait(amount, multiplier):
 
 def get_response(prompt, choices, winners=[]):
     """Get a formatted poll string, with all choices enumerated."""
-    response = prompt + "\n\n"
+    if len(winners) == 0:
+        response = POLL_HEADER + "\n"
+    else:
+        response = ""
+    response += prompt + "\n\n```"
     
     for number, choice in enumerate(choices, 1):
         if number in winners:
@@ -100,8 +105,8 @@ def get_response(prompt, choices, winners=[]):
         else:
             response += CHOICE_FORMAT.format(number, choice)
 
-        if number < len(choices):
-            response += "\n"
+        response += "\n"
+    response += "```"
 
     return response
 
