@@ -13,11 +13,12 @@ COMMAND = "poll"
 DELIMITER = ";"
 MAX_SECONDS = 172800
 CHOICE_FORMAT = "{0}) {1}"
+RESULTS_HEADER = "__Results:__"
 WINNER_FORMAT = "**{0}) {1} [winner]**"
 PROMPT_PATTERN = r"`(?P<prompt>.+)`"
 CHOICES_PATTERN = r"`(?P<choices>.+)`"
 WAIT_PATTERN = r"(?P<amount>[1-9][0-9]*)(?P<multiplier>[smhd])"
-INTEGER_EMOJIS = ["0⃣", "1⃣", "2⃣", "3⃣", "4⃣", "5⃣", "6⃣", "7⃣", "8⃣", "9⃣"]
+INTEGER_EMOJIS = ("0⃣", "1⃣", "2⃣", "3⃣", "4⃣", "5⃣", "6⃣", "7⃣", "8⃣", "9⃣")
 
 COMMAND_PATTERN = r"^!{0} {1} {2} {3}$".format(COMMAND,
                                                WAIT_PATTERN,
@@ -28,7 +29,7 @@ async def command_poll(client, message):
     """Create a poll based on specified inputs, then examine the results."""
     command_match = re.match(COMMAND_PATTERN, message.content)
 
-    # Call the help command if the given message does not match
+    # Call the help function if the given message does not match
     # the command pattern.
     if command_match is None:
         await command_poll_help(client, message)
@@ -118,7 +119,7 @@ def get_results(message, prompt, choices):
             elif reaction.count == highest:
                 winners.append(integer)
 
-    return "__Results:__\n" + get_response(prompt, choices, winners)
+    return RESULTS_HEADER + "\n" + get_response(prompt, choices, winners)
 
 
 def find_poll_message(client, text):
