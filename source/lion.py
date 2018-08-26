@@ -45,7 +45,7 @@ async def on_ready():
 
 
 def load_token():
-    """"""
+    """Load Lion's token from a json file."""
     with open(TOKEN_FILE, "r") as token_file:
         token = json.load(token_file)
 
