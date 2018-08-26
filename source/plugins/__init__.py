@@ -1,17 +1,18 @@
-"""initializer for included Lion plugins.
+"""Initializer for included Lion plugins.
 
 This script imports all installed Lion plugins and associates their command
 strings with their command functions.
+
 Written by Tiger Sachse.
 """
-from plugins import (usercount,
-                     available,
+from plugins import (user_count,
+                     help_menu,
                      poll,
-                     garage)
+                     garage_status)
 
-commands = {
-    usercount.COMMAND : usercount.command_usercount,
-    available.COMMAND : available.command_available,
+COMMANDS = {
+    user_count.COMMAND : user_count.command_user_count,
+    help_menu.COMMAND : help_menu.command_help_menu,
     poll.COMMAND : poll.command_poll,
-    garage.COMMAND : garage.command_garages,
+    garage_status.COMMAND : garage_status.command_garage_status,
 }

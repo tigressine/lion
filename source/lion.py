@@ -1,13 +1,17 @@
-"""Main script for Lion.
+"""Main driver script for Lion.
 
-This script creates the Discord client interface and provides a hook into the
-plugins installed alongside Lion.
+This script creates the Discord client interface and provides a hook into
+Lion's plugins.
+
 Written by Tiger Sachse.
 """
 import re
+import json
 import discord
-from plugins import commands
-from constants import TOKEN, COMMAND_PATTERN
+from plugins import COMMANDS
+
+COMMAND_PATTERN = r"^!(?P<command>[a-zA-Z]+)"
+TOKEN_FILE = "token.json"
 
 # Create a Discord client to interface with Discord servers.
 client = discord.Client()
@@ -24,12 +28,12 @@ async def on_message(message):
     if command_match is not None:
         command = command_match.group("command")
 
-        # if the command is supported, execute its function. Else call
-        # the "available" commands function.
-        if command in commands.keys():
-            await commands[command](client, message)
+        # If the command is supported, execute its function. Else call
+        # the "help" function.
+        if command in COMMANDS.keys():
+            await COMMANDS[command](client, message)
         else:
-            await commands["available"](client, message)
+            await COMMANDS["help"](client, message)
 
 
 @client.event
@@ -40,5 +44,13 @@ async def on_ready():
     print(message.format(server, client.user.name))
 
 
+def load_token():
+    """"""
+    with open(TOKEN_FILE, "r") as token_file:
+        token = json.load(token_file)
+
+    return token
+
+
 # Fire up the bot.
-client.run(TOKEN)
+client.run(load_token())
