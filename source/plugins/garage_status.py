@@ -3,12 +3,12 @@ import re
 import requests
 from bs4 import BeautifulSoup
 
+COMMAND = "gar"
 PARSER = "html.parser"
-URL = "http://secure.parking.ucf.edu/GarageCount/iframe.aspx"
-COMMAND = "garage"
-GARAGE_LIST_FORMAT = "{0:>5}: {1:>4} / {2:>4} ({3:>2}% full)"
-GARAGE_SINGLE_FORMAT = "{0}: {1} / {2} ({3}% full)"
 CHOICE_PATTERN = r"(?P<choice>[ABCDHI]|(Libra))"
+GARAGE_SINGLE_FORMAT = "{1} / {2} ({3}% full)"
+GARAGE_LIST_FORMAT = "{0:>5}: {1:>4} / {2:>4} ({3:>2}% full)"
+URL = "http://secure.parking.ucf.edu/GarageCount/iframe.aspx"
 COMMAND_PATTERN = r"^!{0}( {1})?$".format(COMMAND, CHOICE_PATTERN)
 
 class Garage:
@@ -39,7 +39,7 @@ class Garage:
                                         self.percent_full)
 
 
-async def command_garages(client, message):
+async def command_garage_status(client, message):
     """"""
     command_match = re.match(COMMAND_PATTERN, message.content)
 
@@ -65,9 +65,12 @@ async def command_garages(client, message):
 
 
 async def command_garages_help(client, message):
+    """"""
     pass
 
+
 def respond_all_garages(garages):
+    """"""
     response = "**Current garage availability on UCF campus:**```\n"
     response += garages[-1].string(string_format=GARAGE_LIST_FORMAT)
     response += "\n"
@@ -80,6 +83,7 @@ def respond_all_garages(garages):
 
 
 def respond_single_garage(garage):
+    """"""
     response = "**Current availability of Garage {0}:**```\n".format(garage.name)
     response += garage.string(string_format=GARAGE_SINGLE_FORMAT)
     response += "\n```"
