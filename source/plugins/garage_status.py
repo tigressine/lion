@@ -7,9 +7,11 @@ Written by Tiger Sachse.
 Inspired by code written by Matthew Villegas.
 """
 import re
+import random
 import requests
 from bs4 import BeautifulSoup
 
+ODDS = .05
 COMMAND = "gar"
 PARSER = "html.parser"
 CHOICE_PATTERN = r"(?P<choice>[ABCDHI]|(Libra))"
@@ -19,6 +21,8 @@ GARAGE_SINGLE_HEADER = "**Current availability of Garage {0}:**"
 GARAGE_LIST_HEADER = "**Current garage availability on UCF campus:**"
 URL = "http://secure.parking.ucf.edu/GarageCount/iframe.aspx"
 COMMAND_PATTERN = r"^!{0}( {1})?$".format(COMMAND, CHOICE_PATTERN)
+
+VEHICLE_EMOJIS = ("🚗", "🚙", "🏎")
 
 class Garage:
     """Hold various information about a UCF campus garage."""
@@ -72,7 +76,12 @@ async def command_garage_status(client, message):
                 response = respond_with_single_garage(garage)
                 break
 
-    await client.send_message(message.channel, response)
+    garage_message = await client.send_message(message.channel, response)
+
+    # A little Easter egg. ;)
+    if random.random() < ODDS:
+        for emoji in VEHICLE_EMOJIS:
+            await client.add_reaction(garage_message, emoji)
 
 
 async def command_garages_help(client, message):

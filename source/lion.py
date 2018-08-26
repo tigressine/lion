@@ -8,7 +8,7 @@ Written by Tiger Sachse.
 import re
 import json
 import discord
-from plugins import COMMANDS
+from plugins import COMMANDS, INLINES
 
 COMMAND_PATTERN = r"^!(?P<command>[a-zA-Z]+)"
 TOKEN_FILE = "token.json"
@@ -23,6 +23,12 @@ async def on_message(message):
     # Skip messages emitted by Lion.
     if message.author == client.user:
         return
+
+    # Check message for inline commands.
+    for inline in INLINES.keys():
+        if re.match(inline, message.content):
+            await INLINES[inline](client, message)
+            return
 
     command_match = re.match(COMMAND_PATTERN, message.content)
     if command_match is not None:
