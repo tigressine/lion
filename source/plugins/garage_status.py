@@ -55,7 +55,7 @@ class Garage:
 
 async def command_garage_status(client, message):
     """Discover the status of garages on UCF campus."""
-    command_match = re.match(COMMAND_PATTERN, message.content)
+    command_match = re.match(COMMAND_PATTERN, message.content, re.IGNORECASE)
 
     # If the given command doesn't match the necessary pattern, call the
     # help function.
@@ -72,7 +72,7 @@ async def command_garage_status(client, message):
     # Else respond with a specific garage's information.
     else:
         for garage in garages:
-            if garage.name == command_match.group("choice"):
+            if re.match(garage.name, command_match.group("choice"), re.IGNORECASE):
                 response = respond_with_single_garage(garage)
                 break
 
