@@ -102,9 +102,14 @@ def wrap_text(text, canvas, width, font):
     character_count = LINE_LENGTH_START
     usable_width = width - HORIZONTAL_OFFSET * 2
 
+    # If the text doesn't need to be wrapped, return the text.
+    if canvas.textsize(text, font=font)[0] < usable_width:
+        return text
+
     # Use a loop to find the best break point for the text for the given width.
     # This is certainly not the most efficient way to do this.
     copied_text = textwrap.fill(text, width=character_count)
+
     while canvas.textsize(copied_text, font=font)[0] < usable_width:
         character_count += 1
         copied_text = textwrap.fill(text, width=character_count)
