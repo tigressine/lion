@@ -1,20 +1,20 @@
 """"""
 import re
+import random
 from PIL import Image, ImageDraw, ImageFont
 
+ODDS = .5
+ODDS_OFFSET = .25
 COMMAND = "spong"
-TEMPLATE_FILE = "data/mocking_spongebob.jpg"
+TEMPLATE_FILE = "data/mocking_spongebob_twitter.jpg"
 TEMPORARY_FILE = "/tmp/generated_image.jpg"
 COMMAND_FORMAT = r"^!{0} (?P<rest>.*)$".format(COMMAND)
-FONT_FILE = "/usr/share/fonts/truetype/msttcorefonts/Impact.ttf"
+FONT_FILE = "/usr/share/fonts/truetype/msttcorefonts/Arial.ttf"
 
-FONT_SIZE = 128
-LINE_WIDTH = 20
-TEXT_SPACING = 40
-VERTICAL_OFFSET = 30
-BORDER_THICKNESS = 7
-BORDER_COLOR = (0, 0, 0)
-TEXT_COLOR = (255, 255, 255)
+FONT_SIZE = 30
+VERTICAL_OFFSET = 15
+HORIZONTAL_OFFSET = VERTICAL_OFFSET
+TEXT_COLOR = (0, 0, 0)
 
 async def command_sponge(client, message):
     """SpOnGeBoBiFiY a message."""
@@ -27,10 +27,12 @@ async def command_sponge(client, message):
         return
    
     # Get the top and bottom text from the raw text of the message.
-    top_text, bottom_text = parse_text(command_match.group("rest"))
+    #normal_text, sponge_text = parse_text(command_match.group("rest"))
+    normal_text, sponge_text = generate_texts(message.author.name,
+                                              command_match.group("rest"))
 
     # Create the meme and capture the file path.
-    meme = generate_image(top_text, bottom_text)
+    meme = generate_image(normal_text, sponge_text)
 
     # Send the meme to the client.
     await client.send_file(message.channel, meme)
@@ -41,96 +43,43 @@ async def command_sponge_help(client, message):
     print("help")
 
 
-def parse_text(raw_text):
-    """Parse two SpOnGeBoBeD lines out of raw text."""
-
-    # Filter out non-alphanumeric/whitespace characters.
-    char_filter = lambda char: char.isalnum() or char.isspace()
-    characters = list(filter(char_filter, raw_text.lower()))
-
-    # Turn all whitespace into simple spaces.
-    normalize_space = lambda char: " " if char.isspace() else char
-    characters = list(map(normalize_space, characters))
+def generate_texts(user, text):
+    characters = [" " if char.isspace() else char for char in text]
+    normal_text = "{0}: {1}".format(user, text)
 
     # SpOnGeBoB the alphabetic characters.
-    to_upper = False
+    last_upper = True
     for index in range(len(characters)):
         if characters[index].isalpha():
-            if to_upper:
+            odds = ODDS + (ODDS_OFFSET if last_upper else -ODDS_OFFSET)
+            if random.random() > odds:
                 characters[index] = characters[index].upper()
-                to_upper = False
+                last_upper = True
             else:
-                to_upper = True
+                last_upper = False
 
-    # Return two cut strings.
-    return cut_text(characters)
+    sponge_text = "{0}e: {1}".format("m" if characters[0].islower() else "M",
+                                     "".join(characters))
 
-
-def cut_text(characters):
-    
-
-    index = 0
-    while index < LINE_WIDTH * 2:
-        while index < LINE_WIDTH:
-            if characters[index].isalpha():
-                index += 1
+    return normal_text, sponge_text
 
 
-    if len(characters) > LINE_WIDTH * 2:
-        top_text = "".join(characters[:LINE_WIDTH])
-        bottom_text = "".join(characters[LINE_WIDTH: LINE_WIDTH * 2])
-    elif len(characters) > LINE_WIDTH:
-        top_text = "".join(characters[:LINE_WIDTH])
-        bottom_text = "".join(characters[LINE_WIDTH:])
-    else:
-        top_text = "".join(characters)
-        bottom_text = ""
-
-    return top_text, bottom_text
-
-
-
-def generate_image(top_text, bottom_text):
+def generate_image(normal_text, sponge_text):
     """"""
     image = Image.open(TEMPLATE_FILE)
     canvas = ImageDraw.Draw(image)
     meme_font = ImageFont.truetype(FONT_FILE, FONT_SIZE)
 
     image_width, image_height = image.size
-    top_width, top_height = canvas.textsize(top_text, font=meme_font)
-    bottom_width, bottom_height = canvas.textsize(bottom_text, font=meme_font)
+    normal_width, normal_height = canvas.textsize(normal_text, font=meme_font)
+    sponge_width, sponge_height = canvas.textsize(sponge_text, font=meme_font)
 
-    top_coordinates = ((image_width / 2) - (top_width / 2), VERTICAL_OFFSET)
-    bottom_coordinates = ((image_width / 2) - (bottom_width / 2),
-                          image_height - (VERTICAL_OFFSET * 1.5) - bottom_height)
+    top_coordinates = (HORIZONTAL_OFFSET, VERTICAL_OFFSET)
+    bottom_coordinates = (HORIZONTAL_OFFSET,
+                          VERTICAL_OFFSET + normal_height * 2 + VERTICAL_OFFSET)
 
-    shifts = ((BORDER_THICKNESS, 0),
-              (-BORDER_THICKNESS, 0),
-              (0, BORDER_THICKNESS),
-              (0, -BORDER_THICKNESS),
-              (BORDER_THICKNESS, BORDER_THICKNESS),
-              (-BORDER_THICKNESS, BORDER_THICKNESS),
-              (BORDER_THICKNESS, -BORDER_THICKNESS),
-              (-BORDER_THICKNESS, -BORDER_THICKNESS))
-
-    for shift in shifts:
-        shift_top_coordinates = (top_coordinates[0] + shift[0],
-                                 top_coordinates[1] + shift[1])
-        shift_bottom_coordinates = (bottom_coordinates[0] + shift[0],
-                                    bottom_coordinates[1] + shift[1])
-        canvas.text(shift_top_coordinates,
-                    top_text,
-                    font=meme_font,
-                    fill=BORDER_COLOR,
-                    spacing=TEXT_SPACING)
-        canvas.text(shift_bottom_coordinates,
-                    bottom_text,
-                    font=meme_font,
-                    fill=BORDER_COLOR,
-                    spacing=TEXT_SPACING)
-
-    canvas.text(top_coordinates, top_text, font=meme_font, fill=TEXT_COLOR, spacing=TEXT_SPACING)
-    canvas.text(bottom_coordinates, bottom_text, font=meme_font, fill=TEXT_COLOR)
+    canvas.text(top_coordinates, normal_text, font=meme_font, fill=TEXT_COLOR)
+    canvas.text(bottom_coordinates, sponge_text, font=meme_font, fill=TEXT_COLOR)
 
     image.save(TEMPORARY_FILE)
 
