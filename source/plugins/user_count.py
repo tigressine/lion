@@ -1,5 +1,5 @@
 """Still garbage, will revisit."""
-COMMAND = "tuc"
+COMMAND = "users"
 
 async def command_user_count(client, message):
     server = next(iter(client.servers))

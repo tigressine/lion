@@ -7,7 +7,7 @@ import random
 import textwrap
 from PIL import Image, ImageDraw, ImageFont
 
-COMMAND = "spong"
+COMMAND = "sponge"
 TEMPORARY_FILE = "/tmp/generated_spongebob_meme.jpg"
 TEMPLATE_FILE = "data/mocking_spongebob_template.jpg"
 COMMAND_FORMAT = r"^!{0} (?P<rest>.*)$".format(COMMAND)

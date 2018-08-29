@@ -8,21 +8,22 @@ Inspired by code written by Matthew Villegas.
 """
 import re
 import random
+import discord
 import requests
 from bs4 import BeautifulSoup
 
 ODDS = .05
-COMMAND = "gar"
+VEHICLE_EMOJIS = ("🚗", "🚙", "🏎")
+
+COMMAND = "garage"
 PARSER = "html.parser"
 CHOICE_PATTERN = r"(?P<choice>[ABCDHI]|(Libra))"
 GARAGE_SINGLE_FORMAT = "{1} / {2} ({3}% full)"
 GARAGE_LIST_FORMAT = "{0:>5}: {1:>4} / {2:>4} ({3:>2}% full)"
-GARAGE_SINGLE_HEADER = "**Current availability of Garage {0}:**"
-GARAGE_LIST_HEADER = "**Current garage availability on UCF campus:**"
 URL = "http://secure.parking.ucf.edu/GarageCount/iframe.aspx"
+GARAGE_SINGLE_HEADER = "**Current availability of Garage {0}:**"
 COMMAND_PATTERN = r"^!{0}( {1})?$".format(COMMAND, CHOICE_PATTERN)
-
-VEHICLE_EMOJIS = ("🚗", "🚙", "🏎")
+GARAGE_LIST_HEADER = "**Current garage availability on UCF campus:**"
 
 class Garage:
     """Hold various information about a UCF campus garage."""
@@ -86,7 +87,27 @@ async def command_garage_status(client, message):
 
 async def command_garages_help(client, message):
     """"""
-    pass
+    
+    embed = discord.Embed(color=0xeee657)
+    embed.add_field(name="Garage Status",
+    value="This command allows you to check parking availability on UCF campus.")
+
+    embed.add_field(name="Command",
+                    value="!gar [garage]")
+
+    embed.add_field(
+        name="Examples",
+        value="""```
+        !garage A
+            Show the availability of Garage A.
+        !garage Libra
+            Show the availability of Garage Libra.
+        !garage
+            Show the availability of all garages on campus.
+        !garage help
+            Show this help menu.
+        ```""")
+    await client.send_message(message.channel, embed=embed)
 
 
 def respond_with_all_garages(garages):
