@@ -5,12 +5,14 @@ strings with their command functions.
 
 Written by Tiger Sachse.
 """
-from plugins import (user_count,
-                     help_menu,
-                     poll,
-                     aerospace,
-                     garage_status,
-                     sponge)
+from plugins import (
+    user_count,
+    help_menu,
+    poll,
+    aerospace,
+    garage_status,
+    sponge
+)
 
 COMMANDS = {
     user_count.COMMAND : user_count.command_user_count,
