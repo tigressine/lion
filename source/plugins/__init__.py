@@ -10,7 +10,8 @@ from plugins import (user_count,
                      poll,
                      aerospace,
                      garage_status,
-                     sponge)
+                     sponge,
+                     roles)
 
 COMMANDS = {
     user_count.COMMAND : user_count.command_user_count,
@@ -18,6 +19,7 @@ COMMANDS = {
     poll.COMMAND : poll.command_poll,
     garage_status.COMMAND : garage_status.command_garage_status,
     sponge.COMMAND : sponge.command_sponge,
+    roles.COMMAND : roles.command_roles,
 }
 
 INLINES = {
