@@ -35,7 +35,8 @@ async def command_poll(client, message):
     # Call the help function if the given message does not match
     # the command pattern.
     if command_match is None:
-        await command_poll_help(client, message)
+        response = "You've got the syntax wrong. Try `!help`."
+        await client.send_message(message.channel, response)
         return
 
     # Get the wait time specified in the message.
@@ -48,7 +49,8 @@ async def command_poll(client, message):
     # too many choices are provided.
     choices = command_match.group("choices").split(DELIMITER)
     if len(choices) > 9:
-        await command_poll_help(client, message)
+        response = "You've got the syntax wrong. Try `!help`."
+        await client.send_message(message.channel, response)
         return
 
     prompt = command_match.group("prompt")
@@ -135,10 +137,3 @@ def find_poll_message(client, text):
     poll's time frame.
     """
     return discord.utils.get(reversed(client.messages), content=text)
-
-
-# UNFINISHED
-async def command_poll_help(client, message):
-    """Show a help menu for the poll command."""
-    await client.send_message(message.channel, "bad")
-###########

@@ -1,21 +1,35 @@
 """Still garbage, will revisit."""
 COMMAND = "help"
-HELP_HEADER = "Available commands for Lion:"
-HELP_FOOTER = "Get detailed help for any command with `!help command`."
-HELP_LIST = (
-    ("!users", "display the total user count for this server."),
-    ("!poll", "create a new poll."),
-    ("!garages", "see the status of UCF parking garages."),
-    ("!help", "view this menu."),
-)
 
+import discord
 
 async def command_help_menu(client, message):
     """"""
-    response = HELP_HEADER + "\n"
-    for command, description in HELP_LIST:
-        response += "**{0}**\n".format(command)
-        response += "   {0}\n".format(description)
-    response += "\n" + HELP_FOOTER
+    response = "Hey there! Here's a list of commands that I understand:"
 
-    await client.send_message(message.channel, response)
+    embedded_message = discord.Embed(color=0x81f97c)
+    embedded_message.add_field(
+        name="!users",
+        value="Display the latest server membership count.",
+        inline=False
+    )
+
+    embedded_message.add_field(
+        name="!poll time{s|m|h|d} \`prompt\` \`choice1;choice2;etc\`",        
+        value="Create a new poll.",
+        inline=False
+    )
+
+    embedded_message.add_field(
+        name="!garage [garage]",
+        value="See the status of UCF parking garages.",
+        inline=False
+    )
+
+    embedded_message.add_field(
+        name="!sponge message",
+        value="Say hi to Spongebob.",
+        inline=False
+    )
+
+    await client.send_message(message.channel, response, embed=embedded_message)
