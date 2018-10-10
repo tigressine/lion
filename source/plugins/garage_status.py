@@ -33,12 +33,6 @@ class Garage:
         self.capacity = int(capacity)
 
 
-    def set_available_space(self, available_space):
-        """Set the available space."""
-        self.available_space = int(available_space)
-        self.percent_full = self.__get_percent_full()
-
-
     def __get_percent_full(self):
         """Return the percentage of the garage that is full."""
         percent_full = 100 - (self.available_space / self.capacity * 100)
@@ -46,12 +40,20 @@ class Garage:
         return int(percent_full) if percent_full >= 0 else 0
 
     
+    def set_available_space(self, available_space):
+        """Set the available space."""
+        self.available_space = int(available_space)
+        self.percent_full = self.__get_percent_full()
+
+
     def string(self, string_format=GARAGE_SINGLE_FORMAT):
         """Return a formatted string containing this garage's information."""
-        return string_format.format(self.name,
-                                    self.available_space,
-                                    self.capacity,
-                                    self.percent_full)
+        return string_format.format(
+            self.name,
+            self.available_space,
+            self.capacity,
+            self.percent_full
+        )
 
 
 async def command_garage_status(client, message):
@@ -83,31 +85,6 @@ async def command_garage_status(client, message):
     if random.random() < ODDS:
         for emoji in VEHICLE_EMOJIS:
             await client.add_reaction(garage_message, emoji)
-
-
-async def command_garages_help(client, message):
-    """"""
-    
-    embed = discord.Embed(color=0xeee657)
-    embed.add_field(name="Garage Status",
-    value="This command allows you to check parking availability on UCF campus.")
-
-    embed.add_field(name="Command",
-                    value="!gar [garage]")
-
-    embed.add_field(
-        name="Examples",
-        value="""```
-        !garage A
-            Show the availability of Garage A.
-        !garage Libra
-            Show the availability of Garage Libra.
-        !garage
-            Show the availability of all garages on campus.
-        !garage help
-            Show this help menu.
-        ```""")
-    await client.send_message(message.channel, embed=embed)
 
 
 def respond_with_all_garages(garages):
@@ -170,3 +147,30 @@ def get_garages():
         garage.set_available_space(available_space)
     
     return garages
+
+
+### WORKING AREA
+async def command_garages_help(client, message):
+    """"""
+    embed = discord.Embed(color=0xeee657)
+    embed.add_field(name="Garage Status",
+    value="This command allows you to check parking availability on UCF campus.")
+
+    embed.add_field(
+        name="Command",
+        value="!garage [garage]"
+    )
+
+    embed.add_field(
+        name="Examples",
+        value="```\n" +
+        "!garage A\n" +
+        "    Show the availability of Garage A.\n" +
+        "!garage Libra\n" +
+        "    Show the availability of Garage Libra.\n" +
+        "!garage\n" +
+        "    Show the availability of all garages on campus.\n" +
+        "!garage help\n" +
+        "    Show this help menu.\n```"
+    )
+    await client.send_message(message.channel, embed=embed)

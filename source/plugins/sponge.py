@@ -33,19 +33,16 @@ async def command_sponge(client, message):
         return
 
     # Get the normal and SpOnGe text from the raw text of the message.
-    normal_text, sponge_text = generate_texts(message.author.display_name,
-                                              command_match.group("rest"))
+    normal_text, sponge_text = generate_texts(
+        message.author.display_name,
+        command_match.group("rest")
+    )
 
     # Create the meme and capture the file path.
     meme = generate_image(normal_text, sponge_text)
 
     # Send the meme to the client.
     await client.send_file(message.channel, meme)
-
-
-async def command_sponge_help(client, message):
-    """"""
-    print("help")
 
 
 def is_ascii(text):
@@ -138,9 +135,11 @@ def generate_image(normal_text, sponge_text):
     sponge_height = test_canvas.textsize(sponge_text, font=font)[1]
 
     # Calculate the height of the white text region above the template.
-    text_region_height = (VERTICAL_OFFSET + normal_height +
-                          clearance + sponge_height +
-                          VERTICAL_OFFSET)
+    text_region_height = (
+        VERTICAL_OFFSET + normal_height +
+        clearance + sponge_height +
+        VERTICAL_OFFSET
+    )
 
     # Create a new image with a white region above the template for text,
     # and prepare the canvas to draw the text.
@@ -152,8 +151,10 @@ def generate_image(normal_text, sponge_text):
 
     # Calculate the topleft coordinates for both strings of text.
     normal_coordinates = (HORIZONTAL_OFFSET, VERTICAL_OFFSET)
-    sponge_coordinates = (HORIZONTAL_OFFSET,
-                          VERTICAL_OFFSET + normal_height + clearance)
+    sponge_coordinates = (
+        HORIZONTAL_OFFSET,
+        VERTICAL_OFFSET + normal_height + clearance
+    )
 
     # Draw the text onto the meme.
     canvas.text(normal_coordinates, normal_text, font=font, fill=TEXT_COLOR)
@@ -162,3 +163,8 @@ def generate_image(normal_text, sponge_text):
     meme.save(TEMPORARY_FILE)
 
     return TEMPORARY_FILE
+
+
+async def command_sponge_help(client, message):
+    """"""
+    print("help")

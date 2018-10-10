@@ -21,10 +21,12 @@ CHOICES_PATTERN = r"`(?P<choices>.+)`"
 WAIT_PATTERN = r"(?P<amount>[1-9][0-9]*)(?P<multiplier>[smhd])"
 INTEGER_EMOJIS = ("0⃣", "1⃣", "2⃣", "3⃣", "4⃣", "5⃣", "6⃣", "7⃣", "8⃣", "9⃣")
 
-COMMAND_PATTERN = r"^!{0} {1} {2} {3}$".format(COMMAND,
-                                               WAIT_PATTERN,
-                                               PROMPT_PATTERN,
-                                               CHOICES_PATTERN)
+COMMAND_PATTERN = r"^!{0} {1} {2} {3}$".format(
+    COMMAND,
+    WAIT_PATTERN,
+    PROMPT_PATTERN,
+    CHOICES_PATTERN
+)
 
 async def command_poll(client, message):
     """Create a poll based on specified inputs, then examine the results."""
@@ -37,8 +39,10 @@ async def command_poll(client, message):
         return
 
     # Get the wait time specified in the message.
-    wait = get_wait(command_match.group("amount"),
-                    command_match.group("multiplier"))
+    wait = get_wait(
+        command_match.group("amount"),
+        command_match.group("multiplier")
+    )
 
     # Split choices by the delimiter and show the help message if
     # too many choices are provided.
@@ -66,13 +70,6 @@ async def command_poll(client, message):
 
     results = get_results(poll_message, prompt, choices)
     await client.send_message(message.channel, results)
-
-
-# UNFINISHED
-async def command_poll_help(client, message):
-    """Show a help menu for the poll command."""
-    await client.send_message(message.channel, "bad")
-###########
 
 
 def get_wait(amount, multiplier):
@@ -138,3 +135,10 @@ def find_poll_message(client, text):
     poll's time frame.
     """
     return discord.utils.get(reversed(client.messages), content=text)
+
+
+# UNFINISHED
+async def command_poll_help(client, message):
+    """Show a help menu for the poll command."""
+    await client.send_message(message.channel, "bad")
+###########
