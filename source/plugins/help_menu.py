@@ -6,6 +6,7 @@ HELP_LIST = (
     ("!tuc", "display the total user count for this server."),
     ("!poll", "create a new poll."),
     ("!gar", "see the status of UCF parking garages."),
+    ("!roles", "manage your roles run `!roles help` for more info"),
     ("!help", "view this menu."),
 )
 
