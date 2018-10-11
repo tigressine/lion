@@ -63,7 +63,8 @@ async def command_garage_status(client, message):
     # If the given command doesn't match the necessary pattern, call the
     # help function.
     if command_match is None:
-        await command_garages_help(client, message)
+        response = "You've got the syntax wrong. Try `!help`."
+        await client.send_message(message.channel, response)
         return
     
     garages = get_garages()
@@ -147,30 +148,3 @@ def get_garages():
         garage.set_available_space(available_space)
     
     return garages
-
-
-### WORKING AREA
-async def command_garages_help(client, message):
-    """"""
-    embed = discord.Embed(color=0xeee657)
-    embed.add_field(name="Garage Status",
-    value="This command allows you to check parking availability on UCF campus.")
-
-    embed.add_field(
-        name="Command",
-        value="!garage [garage]"
-    )
-
-    embed.add_field(
-        name="Examples",
-        value="```\n" +
-        "!garage A\n" +
-        "    Show the availability of Garage A.\n" +
-        "!garage Libra\n" +
-        "    Show the availability of Garage Libra.\n" +
-        "!garage\n" +
-        "    Show the availability of all garages on campus.\n" +
-        "!garage help\n" +
-        "    Show this help menu.\n```"
-    )
-    await client.send_message(message.channel, embed=embed)

@@ -29,7 +29,8 @@ async def command_sponge(client, message):
     # all ASCII characters, then show the help message.
     command_match = re.match(COMMAND_FORMAT, message.content, re.DOTALL)
     if command_match is None or not is_ascii(command_match.group("rest")):
-        await command_sponge_help(client, message)
+        response = "You've got the syntax wrong. Try `!help`."
+        await client.send_message(message.channel, response)
         return
 
     # Get the normal and SpOnGe text from the raw text of the message.
@@ -163,8 +164,3 @@ def generate_image(normal_text, sponge_text):
     meme.save(TEMPORARY_FILE)
 
     return TEMPORARY_FILE
-
-
-async def command_sponge_help(client, message):
-    """"""
-    print("help")
