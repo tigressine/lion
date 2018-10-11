@@ -4,7 +4,7 @@ from discord.utils import get
 
 COMMAND = "roles"
 EXCLUDED_ROLES = ['Admin', 'Moderator',
-                  'Teaching Assistant', 'TA', '@everyone', 'Suspended']
+                  'Teaching Assistant', 'TA', '@everyone', 'Suspended', 'suspended']
 
 
 async def command_roles(client, message):
