@@ -11,8 +11,8 @@ from plugins import (
     poll,
     aerospace,
     garage_status,
-    sponge
-	corgi
+    sponge,
+    corgi
 )
 
 COMMANDS = {
