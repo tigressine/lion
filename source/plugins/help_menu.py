@@ -31,5 +31,11 @@ async def command_help_menu(client, message):
         value="Say hi to Spongebob.",
         inline=False
     )
+    
+    embedded_message.add_field(
+        name="!corgi",
+        value="Posts a corgi picture FOR FREE :)",
+        inline=False
+    )
 
     await client.send_message(message.channel, response, embed=embedded_message)
