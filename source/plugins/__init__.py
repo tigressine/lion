@@ -5,6 +5,7 @@ strings with their command functions.
 
 Written by Tiger Sachse.
 """
+
 from plugins import (
     user_count,
     help_menu,
@@ -12,6 +13,7 @@ from plugins import (
     aerospace,
     garage_status,
     sponge,
+    roles,
     corgi
 )
 
@@ -20,9 +22,9 @@ COMMANDS = {
     help_menu.COMMAND : help_menu.command_help_menu,
     poll.COMMAND : poll.command_poll,
     garage_status.COMMAND : garage_status.command_garage_status,
-	sponge.COMMAND : sponge.command_sponge,
-	corgi.COMMAND : corgi.command_corgi,
-	
+    sponge.COMMAND : sponge.command_sponge,
+    roles.COMMAND : roles.command_roles,
+	  corgi.COMMAND : corgi.command_corgi,
 }
 
 INLINES = {

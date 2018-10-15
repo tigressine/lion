@@ -33,9 +33,15 @@ async def command_help_menu(client, message):
     )
     
     embedded_message.add_field(
-        name="!corgi",
-        value="Posts a corgi picture FOR FREE :)",
+        name="!roles [sub-command]",
+        value="Manage your roles. Run `!roles help` for more info",
         inline=False
+    )
+    
+    embedded_message.add_field(
+      name="!corgi",
+      value="Posts a corgi picture FOR FREE :)",
+      inline=False
     )
 
     await client.send_message(message.channel, response, embed=embedded_message)
