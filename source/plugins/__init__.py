@@ -24,7 +24,7 @@ COMMANDS = {
     garage_status.COMMAND : garage_status.command_garage_status,
     sponge.COMMAND : sponge.command_sponge,
     roles.COMMAND : roles.command_roles,
-	  corgi.COMMAND : corgi.command_corgi,
+    corgi.COMMAND : corgi.command_corgi,
 }
 
 INLINES = {
