@@ -11,7 +11,8 @@ from plugins import (
     poll,
     aerospace,
     garage_status,
-    sponge
+    sponge,
+    corgi
 )
 
 COMMANDS = {
@@ -19,7 +20,9 @@ COMMANDS = {
     help_menu.COMMAND : help_menu.command_help_menu,
     poll.COMMAND : poll.command_poll,
     garage_status.COMMAND : garage_status.command_garage_status,
-    sponge.COMMAND : sponge.command_sponge,
+	sponge.COMMAND : sponge.command_sponge,
+	corgi.COMMAND : corgi.command_corgi,
+	
 }
 
 INLINES = {
