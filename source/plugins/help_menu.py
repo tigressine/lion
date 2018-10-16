@@ -43,5 +43,10 @@ async def command_help_menu(client, message):
       value="Posts a corgi picture FOR FREE :)",
       inline=False
     )
+    embedded_message.add_field(
+      name="!gulag [userToGulag] [reason for gulag]",
+      value="Posts a corgi picture FOR FREE :)",
+      inline=False
+    )
 
     await client.send_message(message.channel, response, embed=embedded_message)
