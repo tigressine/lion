@@ -37,15 +37,22 @@ async def command_help_menu(client, message):
         value="Manage your roles. Run `!roles help` for more info",
         inline=False
     )
+
+    embedded_message.add_field(
+        name="!request request_message",
+        value="Send a request to the admins with the given message",
+        inline=False
+    )
     
     embedded_message.add_field(
       name="!corgi",
       value="Posts a corgi picture FOR FREE :)",
       inline=False
     )
+
     embedded_message.add_field(
       name="!gulag [userToGulag] [reason for gulag]",
-      value="Posts a corgi picture FOR FREE :)",
+      value="Sends a user to the gulag for a given reason",
       inline=False
     )
 
