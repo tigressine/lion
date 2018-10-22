@@ -29,7 +29,7 @@ COMMANDS = {
     corgi.COMMAND : corgi.command_corgi,
     gulag.COMMAND : gulag.command_gulag,
     request.REQUEST_COMMAND : request.command_request,
-    request.SHOW_COMMAND : request.command_show_requests,
+    request.REQUESTS_COMMAND : request.command_requests,
     request.RESPOND_COMMAND : request.command_respond,
 }
 
