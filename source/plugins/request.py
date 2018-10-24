@@ -19,29 +19,16 @@ ELEVATED_PERMISSIONS_ROLES = ['Admin', 'Moderator']
 
 async def command_request(client, message):
     try:
-        request = create_request_item(message)
-        add_request(request)
-        await alert_admins(client, message, request)
-        await client.send_message(message.channel, DEFAULT_RESPONSE)
+        await handle_request_command(client, message)
     except Exception as error:
         await client.send_message(message.channel, str(error))
         raise error
 
 
-async def command_requests(client, message):
+async def command_requests_management(client, message):
     try:
-        if not user_has_elevated_permissions(message.author):
-            await client.send_message(message.channel, NO_PERMISSIONS_RESPONSE)
-            return
-        
-        command = parse_sub_command(message.content)
-
-        if  command['subcommand'] == 'show':
-            await client.send_message(message.channel, get_requests_list_message())
-        elif command['subcommand'] == 'clear':
-            clear_requests()
-            await client.send_message(message.channel, 'The requests queue has been cleared')
-
+        await check_user_has_elevated_permissions(client, message,
+                                                  lambda: handle_requests_management_command(client, message))
     except Exception as error:
         await client.send_message(message.channel, str(error))
         raise error
@@ -49,24 +36,49 @@ async def command_requests(client, message):
 
 async def command_respond(client, message):
     try:
-        if not user_has_elevated_permissions(message.author):
-            await client.send_message(message.channel, NO_PERMISSIONS_RESPONSE)
-            return
-
-        cmd = parse_respond_command(message.content)
-        remove_request(cmd['request_index'])
-        await send_respond_response(client, cmd)
-        await client.send_message(message.channel, 'The response has been sent')
+        await check_user_has_elevated_permissions(client, message,
+                                                  lambda: handle_respond_command(client, message))
     except Exception as error:
         await client.send_message(message.channel, str(error))
         raise error
 
 
+async def check_user_has_elevated_permissions(client, message, action):
+    if user_has_elevated_permissions(message.author):
+        await action()
+    else:
+        await client.send_message(message.channel, NO_PERMISSIONS_RESPONSE)
+
+
+async def handle_request_command(client, message):
+    request = create_request_item(message)
+    add_request(request)
+    await alert_admins(client, message, request)
+    await client.send_message(message.channel, DEFAULT_RESPONSE)
+
+
+async def handle_requests_management_command(client, message):
+    command = parse_sub_command(message.content)
+
+    if command['subcommand'] == 'show':
+        await client.send_message(message.channel, get_requests_list_message())
+    elif command['subcommand'] == 'clear':
+        clear_requests()
+        await client.send_message(message.channel, 'The requests queue has been cleared')
+
+
+async def handle_respond_command(client, message):
+    cmd = parse_respond_command(message.content)
+    remove_request(cmd['request_index'])
+    await send_respond_response(client, cmd)
+    await client.send_message(message.channel, 'The response has been sent')
+
+
 async def alert_admins(client, message, request):
     admin_channel = get(message.server.channels, name=ADMIN_CHANNEL_NAME)
-    resp = 'New request "{}" by **{}**'.format(request['message'], request['author_name'])
+    resp = 'New request "{}" by **{}**'.format(
+        request['message'], request['author_name'])
     await client.send_message(admin_channel, resp)
-
 
 
 async def send_respond_response(client, cmd):
@@ -98,17 +110,18 @@ def parse_sub_command(content):
     if len(parts) <= 1:
         raise Exception(
             'Requests sub-command not given. Run `!requests help` for usage details')
-    
+
     return {
         'subcommand': parts[1],
     }
 
 
 def user_has_elevated_permissions(user):
-    user_elevated_permissions = [role.name for role in user.roles if role.name in ELEVATED_PERMISSIONS_ROLES]
+    user_elevated_permissions = [
+        role.name for role in user.roles if role.name in ELEVATED_PERMISSIONS_ROLES]
 
     return user_elevated_permissions != []
-    
+
 
 def add_request(request):
     map_over_requests(lambda reqs: [request] + reqs)
@@ -119,7 +132,7 @@ def remove_request(index):
 
 
 def clear_requests():
-    map_over_requests(lambda _ : [])
+    map_over_requests(lambda _: [])
 
 
 def remove_element(l, idx):
