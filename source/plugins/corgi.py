@@ -1,9 +1,10 @@
+"""
+Written by Hayden Inghem and Joey The corgi 
+"""
 import discord
 import aiohttp
 import random
 import json
-
-#Written by Hayden Inghem and Joey The corgi 
 
 COMMAND = "corgi"
 

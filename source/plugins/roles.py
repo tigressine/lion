@@ -1,9 +1,12 @@
-"""Command to show the available roles of a user"""
+"""Command to show the available roles of a user.
+
+Written by Evan Rupert.
+"""
 
 from discord.utils import get
 
 COMMAND = "roles"
-EXCLUDED_ROLES = ['Admin', 'Moderator',
+EXCLUDED_ROLES = ['Admin', 'Administrator', 'Moderator',
                   'Teaching Assistant', 'TA', '@everyone', 'Suspended', 'suspended']
 
 

@@ -1,3 +1,6 @@
+"""
+Written by Hayden Inghem.
+"""
 import discord
 
 COMMAND = "gulag"

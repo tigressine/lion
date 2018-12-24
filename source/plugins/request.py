@@ -1,4 +1,7 @@
-"""Command to queue server requests and send them to the admins"""
+"""Command to queue server requests and send them to the admins.
+
+Written by Evan Rupert.
+"""
 
 import json
 import re

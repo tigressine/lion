@@ -8,10 +8,10 @@ import textwrap
 from PIL import Image, ImageDraw, ImageFont
 
 COMMAND = "sponge"
+FONT_FILE = "data/arial.ttf"
 TEMPORARY_FILE = "/tmp/generated_spongebob_meme.jpg"
 TEMPLATE_FILE = "data/mocking_spongebob_template.jpg"
 COMMAND_FORMAT = r"^!{0} (?P<rest>.*)$".format(COMMAND)
-FONT_FILE = "data/arial.ttf"
 
 ODDS = .5
 FONT_SIZE = 30
