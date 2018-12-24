@@ -5,13 +5,14 @@ Revised by Tiger Sachse.
 """
 import json
 import random
-#import aiohttp
+import aiohttp
 import discord
-import requests
 
 COMMAND = "corgi"
-TUMBLR_KEY = "m9ZzEYfFoBEjEQpjqYunya8Ji2802GMj1ng1MWbKVY7Ra8kGEP"
+DEFAULT_IMAGE = "data/default_corgi.jpg"
 TEMPORARY_FILE_FORMAT = "/tmp/random_corgi.{0}"
+TUMBLR_KEY = "m9ZzEYfFoBEjEQpjqYunya8Ji2802GMj1ng1MWbKVY7Ra8kGEP"
+BLOG_URL_FORMAT = "https://api.tumblr.com/v2/blog/{0}/posts/photo?api_key={1}"
 CORGI_BLOGS = (
     "corgito",
     "acorgiaday",
@@ -24,37 +25,46 @@ CORGI_BLOGS = (
 
 async def command_corgi(client, message):
     """Fetch a corgi picture from Tumblr and post it."""
-    blog_url = (
-        "https://api.tumblr.com/v2/blog/"
-        + random.choice(CORGI_BLOGS)
-        + "/posts/photo?api_key="
-        + TUMBLR_KEY
-    )
+    blog_url = BLOG_URL_FORMAT.format(random.choice(CORGI_BLOGS), TUMBLR_KEY)
 
-    # First, attempt to retrieve a random corgi image URL from one of the blogs.
+    # First, attempt to retrieve a random corgi image URL from a blog.
     try:
-        image_url_request = requests.get(blog_url)
-        if image_url_request.status_code == 200:
-            image_url = get_random_image_url(image_url_request.json())
-        else:
-            raise requests.RequestException("URL request status was not 200.")
+        session = aiohttp.ClientSession() 
+
+        async with session.get(blog_url) as url_response:
+            if url_response.status == 200:
+                image_url = get_random_image_url(await url_response.json())
+            else:
+                raise aiohttp.ClientResponseError(
+                    "URL response status is not 200."
+                )
 
         # Next, attempt to download that random image.
-        image_request = requests.get(image_url)
-        if image_request.status_code == 200:
-            with open(TEMPORARY_FILE, "wb") as writable_file:
-                writable_file.write(image_request.content)
-        else:
-            raise requests.RequestException("Image request status was not 200.")
+        async with session.get(image_url) as image_response:
+            if image_response.status == 200:
 
-        # 
+                # Format the temporary file name with the file type
+                # from the image URL.
+                temporary_image = TEMPORARY_FILE_FORMAT.format(
+                    image_url.rpartition(".")[2]
+                )
 
+                with open(temporary_image, "wb") as writable_file:
+                    writable_file.write(await image_response.read())
+            else:
+                raise aiohttp.ClientResponseError(
+                    "Image response status is not 200."
+                )
+        
         # Finally, send the image to the client.
-        await client.send_file(message.channel, TEMPORARY_FILE)
+        await client.send_file(message.channel, temporary_image)
 
     except Exception as exception:
         print(exception)
-        await client.send_message(message.channel, "Something wen't wrong!")
+        await client.send_file(message.channel, DEFAULT_IMAGE)
+
+    finally:
+        session.close()
 
 
 def get_random_image_url(data):
