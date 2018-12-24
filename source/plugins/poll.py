@@ -85,7 +85,6 @@ def get_response(prompt, choices, winners=[]):
             response += WINNER_FORMAT.format(number, choice)
         else:
             response += CHOICE_FORMAT.format(number, choice)
-
         response += "\n"
     response += "```"
 

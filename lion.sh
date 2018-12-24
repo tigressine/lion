@@ -29,6 +29,12 @@ kill_lion() {
     fi
 }
 
+# Restart the bot.
+restart_lion() {
+    kill_lion
+    start_lion
+}
+
 # Main entry point of the script.
 case $1 in
     "--start")
@@ -36,5 +42,8 @@ case $1 in
         ;;
     "--kill")
         kill_lion
+        ;;
+    "--restart")
+        restart_lion
         ;;
 esac

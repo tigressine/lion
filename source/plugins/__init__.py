@@ -30,6 +30,7 @@ COMMANDS = {
     #request.REQUESTS_COMMAND : request.command_requests_management,
     #request.RESPOND_COMMAND : request.command_respond,
     roles.ADD_COMMAND : roles.command_addrole,
+    roles.LIST_COMMAND : roles.command_listroles,
     roles.REMOVE_COMMAND : roles.command_removerole,
 }
 
