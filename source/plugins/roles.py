@@ -7,6 +7,9 @@ import re
 ADD_COMMAND = "addrole"
 LIST_COMMAND = "listroles"
 REMOVE_COMMAND = "removerole"
+LIST_HEADER = "**All server roles:**"
+HAS_ROLE_FORMAT = "--> {0}"
+LACKS_ROLE_FORMAT = "    {0}"
 EXCLUDED_ROLES_FILE = "data/excluded_roles.txt"
 LIST_COMMAND_PATTERN = r"^!{0}$".format(LIST_COMMAND)
 ADD_COMMAND_PATTERN = r"^!{0}( [a-zA-Z]+)+$".format(ADD_COMMAND)
@@ -36,6 +39,13 @@ async def command_removerole(client, message):
     await client.send_message(message.channel, response)
 
 
+async def command_listroles(client, message):
+    """"""
+    response = get_response(get_server(client), message.author)
+
+    await client.send_message(message.channel, response)
+
+
 async def get_roles(client, message, command, command_pattern):
     """Get all available roles on the server, excluding protected roles."""
 
@@ -48,7 +58,7 @@ async def get_roles(client, message, command, command_pattern):
         return None
 
     # Get all possible roles, and all desired role names from the message content.
-    possible_roles = get_possible_roles(client)
+    possible_roles = get_possible_roles(get_server(client))
     role_names = set(message.content.split()[1:])
 
     # Ensure every desired role name is also a possible role. Also save the
@@ -73,7 +83,7 @@ def get_server(client):
     return next(iter(client.servers))
 
 
-def get_possible_roles(client):
+def get_possible_roles(server):
     """Return a list of roles for the server.
     
     This excludes roles saved in an exclusion file.
@@ -81,6 +91,20 @@ def get_possible_roles(client):
     with open(EXCLUDED_ROLES_FILE, "r") as role_file:
         excluded_roles = role_file.readlines()
 
-    server = get_server(client)
-
     return [role for role in server.roles if role.name not in excluded_roles]
+
+
+def get_response(server, author):
+    """Get a formatted roles list string, with all current roles marked."""
+    response = LIST_HEADER + "\n```"
+    
+    for role in server.roles:
+        if role in author.roles:
+            response += HAS_ROLE_FORMAT.format(role.name)
+        else:
+            response += LACKS_ROLE_FORMAT.format(role.name)
+        response += "\n"
+    response += "```"
+    response += "\nYour roles are highlighted with an arrow!"
+
+    return response
