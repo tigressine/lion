@@ -46,7 +46,7 @@ async def command_poll(client, message):
     # too many choices are provided.
     choices = command_match.group("choices").split(DELIMITER)
     if len(choices) > 9:
-        response = "You've got the syntax wrong. Try `!help`."
+        response = "You've got too many choices. Keep it below 10."
         await client.send_message(message.channel, response)
 
         return
@@ -78,7 +78,7 @@ def get_response(prompt, choices, winners=[]):
         response = POLL_HEADER + "\n"
     else:
         response = ""
-    response += prompt + "\n\n```"
+    response += prompt + "\n```"
     
     for number, choice in enumerate(choices, 1):
         if number in winners:
