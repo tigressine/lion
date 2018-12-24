@@ -39,6 +39,7 @@ async def command_poll(client, message):
             + "too much time. Try `!help`."
         )
         await client.send_message(message.channel, response)
+
         return
 
     # Split choices by the delimiter and show the help message if
@@ -47,6 +48,7 @@ async def command_poll(client, message):
     if len(choices) > 9:
         response = "You've got the syntax wrong. Try `!help`."
         await client.send_message(message.channel, response)
+
         return
 
     prompt = command_match.group("prompt")

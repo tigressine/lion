@@ -1,4 +1,4 @@
-"""Produce a modest help menu to list high level commands.
+"""Produce a modest help menu that lists high level commands.
 
 Written by Tiger Sachse.
 """
@@ -7,7 +7,7 @@ import discord
 COMMAND = "help"
 
 async def command_help_menu(client, message):
-    """"""
+    """Display an embedded help menu."""
     response = "Hey there! Here's a list of commands that I understand:"
 
     embedded_message = discord.Embed(color=0x81f97c)
