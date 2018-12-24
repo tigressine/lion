@@ -12,11 +12,10 @@ from plugins import (
     poll,
     aerospace,
     garage_status,
-    roles,
+    #roles,
     corgi,
-    gulag,
     sponge,
-    request,
+    #request,
 )
 
 COMMANDS = {
@@ -25,12 +24,11 @@ COMMANDS = {
     poll.COMMAND : poll.command_poll,
     garage_status.COMMAND : garage_status.command_garage_status,
     sponge.COMMAND : sponge.command_sponge,
-    roles.COMMAND : roles.command_roles,
+    #roles.COMMAND : roles.command_roles,
     corgi.COMMAND : corgi.command_corgi,
-    gulag.COMMAND : gulag.command_gulag,
-    request.REQUEST_COMMAND : request.command_request,
-    request.REQUESTS_COMMAND : request.command_requests_management,
-    request.RESPOND_COMMAND : request.command_respond,
+    #request.REQUEST_COMMAND : request.command_request,
+    #request.REQUESTS_COMMAND : request.command_requests_management,
+    #request.RESPOND_COMMAND : request.command_respond,
 }
 
 INLINES = {

@@ -1,7 +1,10 @@
-"""Still garbage, will revisit."""
-COMMAND = "help"
+"""Produce a modest help menu to list high level commands.
 
+Written by Tiger Sachse.
+"""
 import discord
+
+COMMAND = "help"
 
 async def command_help_menu(client, message):
     """"""
@@ -15,44 +18,40 @@ async def command_help_menu(client, message):
     )
 
     embedded_message.add_field(
-        name="!poll time{s|m|h|d} \`prompt\` \`choice1;choice2;etc\`",        
-        value="Create a new poll.",
+        name="!poll time \"prompt\" \"choice1|choice2|choice3|etc\"",        
+        value="Create a new poll. Time is in minutes.",
         inline=False
     )
 
     embedded_message.add_field(
         name="!garage [garage]",
-        value="See the status of UCF parking garages.",
+        value="See the status of the UCF parking garages.",
         inline=False
     )
 
     embedded_message.add_field(
         name="!sponge message",
-        value="Say hi to Spongebob.",
+        value="Create a spicy, sarcastic meme.",
         inline=False
     )
     
     embedded_message.add_field(
-        name="!roles [sub-command]",
-        value="Manage your roles. Run `!roles help` for more info",
+        name="!roles [subcommand]",
+        value="Manage your roles. Run `!roles help` for more details.",
         inline=False
     )
 
+    """
     embedded_message.add_field(
-        name="!request request_message",
-        value="Send a request to the admins with the given message",
+        name="!request message",
+        value="Send a request to the administrators.",
         inline=False
     )
+    """
     
     embedded_message.add_field(
       name="!corgi",
-      value="Posts a corgi picture FOR FREE :)",
-      inline=False
-    )
-
-    embedded_message.add_field(
-      name="!gulag [userToGulag] [reason for gulag]",
-      value="Sends a user to the gulag for a given reason",
+      value="Call a good boy over for pets.",
       inline=False
     )
 

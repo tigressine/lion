@@ -10,17 +10,16 @@ import asyncio
 import discord
 
 COMMAND = "poll"
-DELIMITER = ";"
-MAX_SECONDS = 172800
+DELIMITER = "|"
+MAX_MINUTES = 60
 CHOICE_FORMAT = "{0}) {1}"
 POLL_HEADER = "**New poll:**"
 RESULTS_HEADER = "**Poll results:**"
 WINNER_FORMAT = "{0}) {1} [winner]"
-PROMPT_PATTERN = r"`(?P<prompt>.+)`"
-CHOICES_PATTERN = r"`(?P<choices>.+)`"
-WAIT_PATTERN = r"(?P<amount>[1-9][0-9]*)(?P<multiplier>[smhd])"
+PROMPT_PATTERN = r"\"(?P<prompt>.+)\""
+CHOICES_PATTERN = r"\"(?P<choices>.+)\""
+WAIT_PATTERN = r"(?P<amount>[1-9][0-9]*)"
 INTEGER_EMOJIS = ("0⃣", "1⃣", "2⃣", "3⃣", "4⃣", "5⃣", "6⃣", "7⃣", "8⃣", "9⃣")
-
 COMMAND_PATTERN = r"^!{0} {1} {2} {3}$".format(
     COMMAND,
     WAIT_PATTERN,
@@ -34,16 +33,13 @@ async def command_poll(client, message):
 
     # Call the help function if the given message does not match
     # the command pattern.
-    if command_match is None:
-        response = "You've got the syntax wrong. Try `!help`."
+    if command_match is None or int(command_match.group("amount")) > MAX_MINUTES:
+        response = (
+            "You've got the poll syntax wrong or you're asking for "
+            + "too much time. Try `!help`."
+        )
         await client.send_message(message.channel, response)
         return
-
-    # Get the wait time specified in the message.
-    wait = get_wait(
-        command_match.group("amount"),
-        command_match.group("multiplier")
-    )
 
     # Split choices by the delimiter and show the help message if
     # too many choices are provided.
@@ -62,7 +58,7 @@ async def command_poll(client, message):
         await client.add_reaction(poll_message, INTEGER_EMOJIS[integer])
 
     # Wait for the poll to complete.
-    await asyncio.sleep(wait)
+    await asyncio.sleep(int(command_match.group("amount")) * 60)
 
     # Attempt to find the poll. If it has been popped from the message deque
     # then just return. This is not ideal... see the find_poll_message docstring.
@@ -72,22 +68,6 @@ async def command_poll(client, message):
 
     results = get_results(poll_message, prompt, choices)
     await client.send_message(message.channel, results)
-
-
-def get_wait(amount, multiplier):
-    """Get the wait time for a poll based on the amount and the multiplier."""
-    wait = int(amount)
-
-    if multiplier == "s":
-        wait *= 1
-    elif multiplier == "m":
-        wait *= 60
-    elif multiplier == "h":
-        wait *= 3600
-    elif multiplier == "d":
-        wait *= 86400
-
-    return wait if wait < MAX_SECONDS else MAX_SECONDS
 
 
 def get_response(prompt, choices, winners=[]):
