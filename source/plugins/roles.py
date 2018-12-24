@@ -1,20 +1,19 @@
 """Plugin to manage one's own non-critical roles.
 
-Written by Evan Rupert.
-Revised by Tiger Sachse.
+Written by Evan Rupert and Tiger Sachse.
 """
-
 import re
 
 ADD_COMMAND = "addrole"
-REMOVE_COMMAND = "removerole"
 LIST_COMMAND = "listroles"
+REMOVE_COMMAND = "removerole"
 EXCLUDED_ROLES_FILE = "data/excluded_roles.txt"
 LIST_COMMAND_PATTERN = r"^!{0}$".format(LIST_COMMAND)
 ADD_COMMAND_PATTERN = r"^!{0}( [a-zA-Z]+)+$".format(ADD_COMMAND)
 REMOVE_COMMAND_PATTERN = r"^!{0}( [a-zA-Z]+)+$".format(REMOVE_COMMAND)
 
 async def command_addrole(client, message):
+    """Give the member new roles."""
     roles = await get_roles(client, message, ADD_COMMAND, ADD_COMMAND_PATTERN)
     if roles is None:
         return
@@ -26,6 +25,7 @@ async def command_addrole(client, message):
 
 
 async def command_removerole(client, message):
+    """Remove roles from the member."""
     roles = await get_roles(client, message, REMOVE_COMMAND, REMOVE_COMMAND_PATTERN)
     if roles is None:
         return
@@ -37,6 +37,9 @@ async def command_removerole(client, message):
 
 
 async def get_roles(client, message, command, command_pattern):
+    """Get all available roles on the server, excluding protected roles."""
+
+    # First, confirm that the message matches the syntax.
     command_match = re.match(command_pattern, message.content)
     if command_match is None:
         response = "You've got the {0} syntax wrong. Try `!help`.".format(command)
@@ -44,9 +47,12 @@ async def get_roles(client, message, command, command_pattern):
 
         return None
 
+    # Get all possible roles, and all desired role names from the message content.
     possible_roles = get_possible_roles(client)
     role_names = set(message.content.split()[1:])
 
+    # Ensure every desired role name is also a possible role. Also save the
+    # roles that correspond to the given role names in a list.
     roles = []
     for name in role_names:
         for possible_role in possible_roles:
@@ -63,23 +69,18 @@ async def get_roles(client, message, command, command_pattern):
 
 
 def get_server(client):
+    """Get the next (and only) server for the client."""
     return next(iter(client.servers))
 
 
 def get_possible_roles(client):
+    """Return a list of roles for the server.
+    
+    This excludes roles saved in an exclusion file.
+    """
     with open(EXCLUDED_ROLES_FILE, "r") as role_file:
         excluded_roles = role_file.readlines()
 
     server = get_server(client)
 
     return [role for role in server.roles if role.name not in excluded_roles]
-
-"""
-async def show_all_server_roles(client, message):
-    role_names = get_all_server_role_names(client)
-    resp = '\n'.join(role_names)
-    await client.send_message(message.channel, resp)
-
-def get_roles_from_role_names(client, role_names):
-    return [get_server_role_by_name(client, rn) for rn in role_names]
-"""
