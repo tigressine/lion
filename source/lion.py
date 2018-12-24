@@ -44,14 +44,6 @@ async def on_message(message):
             await COMMANDS["help"](client, message)
 
 
-@client.event
-async def on_ready():
-    """Print a message when Lion is ready to go."""
-    message = "Lion: Logging in to server \"{0}\" as {1}..."
-    server = next(iter(client.servers)).name
-    print(message.format(server, client.user.name))
-
-
 def load_token():
     """Load Lion's token from a json file."""
     with open(TOKEN_FILE, "r") as token_file:
@@ -62,7 +54,6 @@ def load_token():
 
 def handle_signals(signal_number, stack_frame):
     """Gracefully shut down the client."""
-    print("Lion: Shutting down...")
     client.close()
     sys.exit(0)
 

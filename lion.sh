@@ -9,9 +9,9 @@ LION_PID="lion_pid_temp.txt"
 start_lion() {
     cd source
 
-    python3 lion.py &
-    echo $! > $LION_PID
-    rm -rf plugins/__pycache__
+    echo "Starting Lion..."
+    (python3 lion.py &> /dev/null) &
+    echo $! > ../$LION_PID
 
     cd ..
 }
@@ -19,11 +19,13 @@ start_lion() {
 # Kill the bot.
 kill_lion() {
     if [ ! -f $LION_PID ]; then
-        echo "Lion: Not running."
+        echo "Lion is not running."
     else
-        printf "Lion: PID is "
-        cat $LION_PID
+        printf "Killing Lion (%d)...\n" $(cat $LION_PID)
         kill $(cat $LION_PID)
+
+        rm -rf source/plugins/__pycache__
+        rm -f $LION_PID
     fi
 }
 
