@@ -1,8 +1,1 @@
 source/data/token.json
-
-# Possible editors
-/.vscode/
-/.idea/
-
-# Ignore __pycache__ folders
-**/__pycache__/

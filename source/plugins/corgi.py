@@ -1,7 +1,7 @@
 """Post a random corgi picture.
 
 Written by Hayden Inghem and Joey the Corgi.
-Heavily revised by Tiger Sachse.
+Revised by Tiger Sachse.
 """
 import json
 import random

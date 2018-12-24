@@ -1,0 +1,5 @@
+Admin
+Moderator
+Teaching Assistant
+Bot
+Suspended
