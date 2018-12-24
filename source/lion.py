@@ -6,7 +6,9 @@ Lion's plugins.
 Written by Tiger Sachse.
 """
 import re
+import sys
 import json
+import signal
 import discord
 from plugins import COMMANDS, INLINES
 
@@ -58,5 +60,14 @@ def load_token():
     return token
 
 
+def handle_signals(signal_number, stack_frame):
+    """Gracefully shut down the client."""
+    print("Lion: Shutting down...")
+    client.close()
+    sys.exit(0)
+
+
 # Fire up the bot.
+signal.signal(signal.SIGINT, handle_signals)
+signal.signal(signal.SIGTERM, handle_signals)
 client.run(load_token())
