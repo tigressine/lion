@@ -3,11 +3,14 @@
 
 # Written by Tiger Sachse.
 
+LION_PID="lion_pid_temp.txt"
+
 # Start the bot.
 start_lion() {
     cd source
 
     python3 lion.py &
+    echo $! > $LION_PID
     rm -rf plugins/__pycache__
 
     cd ..
@@ -15,9 +18,16 @@ start_lion() {
 
 # Kill the bot.
 kill_lion() {
+    if [ ! -f $LION_PID ]; then
+        echo "Lion: Not running."
+    else
+        printf "Lion: PID is "
+        cat $LION_PID
+        kill $(cat $LION_PID)
+    fi
 }
 
-# Main entrypoint of the script.
+# Main entry point of the script.
 case $1 in
     "--start")
         start_lion
