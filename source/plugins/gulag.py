@@ -1,4 +1,4 @@
-"""
+"""NOTE: Not currently included in Lion.
 Written by Hayden Inghem.
 """
 import discord
