@@ -1,7 +1,7 @@
 """Post a random corgi picture.
 
 Written by Hayden Inghem and Joey the Corgi.
-Revised by Tiger Sachse.
+Heavily revised by Tiger Sachse.
 """
 import json
 import random
@@ -9,6 +9,7 @@ import aiohttp
 import discord
 
 COMMAND = "corgi"
+MAX_ATTEMPTS = 20
 DEFAULT_IMAGE = "data/default_corgi.jpg"
 TEMPORARY_FILE_FORMAT = "/tmp/random_corgi.{0}"
 TUMBLR_KEY = "m9ZzEYfFoBEjEQpjqYunya8Ji2802GMj1ng1MWbKVY7Ra8kGEP"
@@ -16,7 +17,6 @@ BLOG_URL_FORMAT = "https://api.tumblr.com/v2/blog/{0}/posts/photo?api_key={1}"
 CORGI_BLOGS = (
     "corgito",
     "acorgiaday",
-    "worldofcorgi",
     "corgioverload",
     "vegasthecorgi",
     "discothecorgi",
@@ -59,8 +59,8 @@ async def command_corgi(client, message):
         # Finally, send the image to the client.
         await client.send_file(message.channel, temporary_image)
 
+    # If something goes wrong, send a default corgi to the client.
     except Exception as exception:
-        print(exception)
         await client.send_file(message.channel, DEFAULT_IMAGE)
 
     finally:
@@ -68,7 +68,23 @@ async def command_corgi(client, message):
 
 
 def get_random_image_url(data):
-    """Get a random image URL from the data dictionaries."""
+    """Get a random image URL out of the provided data."""
+   
+    # Get a new post from the data. Occasionally the chosen post won't include
+    # any pictures. If this happens, the code will try new posts a certain
+    # number of times until a picture is found.
+    attempts = 1
     random_post = random.choice(data["response"]["posts"])
+    while("photos" not in random_post and attempts < MAX_ATTEMPTS):
+        random_post = random.choice(data["response"]["posts"])
+        attempts += 1
+        print(attempts)
 
-    return random_post["photos"][0]["original_size"]["url"]
+    # If no picture is found after all those attempts, throw an error.
+    # Otherwise, return the URL of the picture in the post.
+    if "photos" not in random_post:
+        raise aiohttp.ClientResponseError(
+            "No pictures found after {0} attempts.".format(attempts)
+        )
+    else:
+        return random_post["photos"][0]["original_size"]["url"]
