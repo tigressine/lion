@@ -12,6 +12,12 @@ async def command_help_menu(client, message):
 
     embedded_message = discord.Embed(color=0xffee05)
     embedded_message.add_field(
+        name="!info",
+        value="Show some more information about Lion.",
+        inline=False
+    )
+
+    embedded_message.add_field(
         name="!users",
         value="Display the latest server membership count.",
         inline=False

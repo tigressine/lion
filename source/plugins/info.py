@@ -1,4 +1,4 @@
-"""
+"""Display some information about this bot to the screen.
 
 Written by Tiger Sachse.
 """
@@ -34,8 +34,8 @@ async def command_info(client, message):
     )
 
     embedded_message.add_field(
-        name="Source Code",
-        value="https://github.com/tgsachse/lion",
+        name="Source",
+        value="This project is hosted at https://github.com/tgsachse/lion.",
         inline=False
     )
 
