@@ -19,7 +19,7 @@ async def command_info(client, message):
 
     embedded_message.add_field(
         name="Contributors",        
-        value="Evan Rupert, Hayden Inghem, Joey the Corgi",
+        value="Evan Rupert, Hayden Inghem",
         inline=False
     )
 
