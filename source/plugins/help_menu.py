@@ -42,14 +42,14 @@ async def command_help_menu(client, message):
     )
 
     embedded_message.add_field(
-        name="!addrole [roles...]",
-        value="Give yourself a language role.",
+        name="!addroles [roles...]",
+        value="Give yourself some new language roles.",
         inline=False
     )
 
     embedded_message.add_field(
-        name="!removerole [roles...]",
-        value="Remove a language role.",
+        name="!removeroles [roles...]",
+        value="Remove language roles.",
         inline=False
     )
 

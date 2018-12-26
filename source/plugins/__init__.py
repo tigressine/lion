@@ -23,10 +23,10 @@ COMMANDS = {
     poll.COMMAND : poll.command_poll,
     corgi.COMMAND : corgi.command_corgi,
     sponge.COMMAND : sponge.command_sponge,
-    roles.ADD_COMMAND : roles.command_addrole,
+    roles.ADD_COMMAND : roles.command_addroles,
     roles.LIST_COMMAND : roles.command_listroles,
-    roles.REMOVE_COMMAND : roles.command_removerole,
     help_menu.COMMAND : help_menu.command_help_menu,
+    roles.REMOVE_COMMAND : roles.command_removeroles,
     user_count.COMMAND : user_count.command_user_count,
     garage_status.COMMAND : garage_status.command_garage_status,
 }
