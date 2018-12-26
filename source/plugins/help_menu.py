@@ -8,9 +8,9 @@ COMMAND = "help"
 
 async def command_help_menu(client, message):
     """Display an embedded help menu."""
-    response = "Hey there! Here's a list of commands that I understand:"
+    response = "Here's a list of commands that I understand..."
 
-    embedded_message = discord.Embed(color=0x81f97c)
+    embedded_message = discord.Embed(color=0xffee05)
     embedded_message.add_field(
         name="!users",
         value="Display the latest server membership count.",
@@ -43,7 +43,7 @@ async def command_help_menu(client, message):
 
     embedded_message.add_field(
         name="!removerole [roles...]",
-        value="Remove your language roles.",
+        value="Remove a language role.",
         inline=False
     )
 
