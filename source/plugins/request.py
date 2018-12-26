@@ -1,5 +1,6 @@
 """Command to queue server requests and send them to the admins.
 
+NOTE: Not currently included in Lion.
 Written by Evan Rupert.
 """
 
