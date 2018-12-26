@@ -30,29 +30,33 @@ async def command_help_menu(client, message):
     )
 
     embedded_message.add_field(
-        name="!sponge message",
-        value="Create a spicy, sarcastic meme.",
-        inline=False
-    )
-    
-    embedded_message.add_field(
-        name="!roles [subcommand]",
-        value="Manage your roles. Run `!roles help` for more details.",
+        name="!listroles",
+        value="List all server roles.",
         inline=False
     )
 
-    """
     embedded_message.add_field(
-        name="!request message",
-        value="Send a request to the administrators.",
+        name="!addrole [roles...]",
+        value="Give yourself a language role.",
         inline=False
     )
-    """
-    
+
+    embedded_message.add_field(
+        name="!removerole [roles...]",
+        value="Remove your language roles.",
+        inline=False
+    )
+
     embedded_message.add_field(
       name="!corgi",
       value="Call a good boy over for pets.",
       inline=False
+    )
+    
+    embedded_message.add_field(
+        name="!sponge message",
+        value="Create a spicy, sarcastic meme.",
+        inline=False
     )
 
     await client.send_message(message.channel, response, embed=embedded_message)
