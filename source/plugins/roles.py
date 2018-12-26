@@ -5,9 +5,9 @@ Written by Evan Rupert and Tiger Sachse.
 import re
 import discord
 
-ADD_COMMAND = "addrole"
+ADD_COMMAND = "addroles"
 LIST_COMMAND = "listroles"
-REMOVE_COMMAND = "removerole"
+REMOVE_COMMAND = "removeroles"
 HAS_ROLE_FORMAT = "--> {0}"
 LACKS_ROLE_FORMAT = "    {0}"
 LIST_HEADER = "**All server roles:**"
@@ -16,7 +16,7 @@ ADD_COMMAND_PATTERN = r"^!{0}( \S+)+$".format(ADD_COMMAND)
 REMOVE_COMMAND_PATTERN = r"^!{0}( \S+)+$".format(REMOVE_COMMAND)
 PERMISSIONS_ERROR = "Insufficent permissions to handle one of your specified roles."
 
-async def command_addrole(client, message):
+async def command_addroles(client, message):
     """Give the member new roles."""
     roles = await get_roles(client, message, ADD_COMMAND, ADD_COMMAND_PATTERN)
     if roles is None:
@@ -30,7 +30,7 @@ async def command_addrole(client, message):
         await client.send_message(message.channel, PERMISSIONS_ERROR)
 
 
-async def command_removerole(client, message):
+async def command_removeroles(client, message):
     """Remove roles from the member."""
     roles = await get_roles(client, message, REMOVE_COMMAND, REMOVE_COMMAND_PATTERN)
     if roles is None:
@@ -45,7 +45,7 @@ async def command_removerole(client, message):
 
 
 async def command_listroles(client, message):
-    """"""
+    """List all roles available on the server."""
     response = get_response(get_server(client), message.author)
 
     await client.send_message(message.channel, response)
