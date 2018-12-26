@@ -12,8 +12,8 @@ HAS_ROLE_FORMAT = "--> {0}"
 LACKS_ROLE_FORMAT = "    {0}"
 LIST_HEADER = "**All server roles:**"
 LIST_COMMAND_PATTERN = r"^!{0}$".format(LIST_COMMAND)
-ADD_COMMAND_PATTERN = r"^!{0}( [a-zA-Z]+)+$".format(ADD_COMMAND)
-REMOVE_COMMAND_PATTERN = r"^!{0}( [a-zA-Z]+)+$".format(REMOVE_COMMAND)
+ADD_COMMAND_PATTERN = r"^!{0}( \S+)+$".format(ADD_COMMAND)
+REMOVE_COMMAND_PATTERN = r"^!{0}( \S+)+$".format(REMOVE_COMMAND)
 PERMISSIONS_ERROR = "Insufficent permissions to handle one of your specified roles."
 
 async def command_addrole(client, message):
@@ -71,7 +71,7 @@ async def get_roles(client, message, command, command_pattern):
     roles = []
     for name in role_names:
         for possible_role in possible_roles:
-            if name.lower() == possible_role.name.lower():
+            if re.match(name, possible_role.name, re.IGNORECASE):
                 roles.append(possible_role)
                 break
         else:
