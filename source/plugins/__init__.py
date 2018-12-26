@@ -7,6 +7,7 @@ Written by Tiger Sachse.
 """
 
 from plugins import (
+    info,
     poll,
     roles,
     corgi,
@@ -18,6 +19,7 @@ from plugins import (
 )
 
 COMMANDS = {
+    info.COMMAND : info.command_info,
     poll.COMMAND : poll.command_poll,
     corgi.COMMAND : corgi.command_corgi,
     sponge.COMMAND : sponge.command_sponge,

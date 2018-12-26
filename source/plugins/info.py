@@ -1,0 +1,42 @@
+"""
+
+Written by Tiger Sachse.
+"""
+import discord
+
+COMMAND = "info"
+
+async def command_info(client, message):
+    """Display information about the server."""
+    response = "Hey there, I'm Lion! Here's a little bit more about me."
+
+    embedded_message = discord.Embed(color=0xffee05)
+    embedded_message.add_field(
+        name="Creator",
+        value="Tiger Sachse",
+        inline=False
+    )
+
+    embedded_message.add_field(
+        name="Contributors",        
+        value="Evan Rupert, Hayden Inghem, Joey the Corgi",
+        inline=False
+    )
+
+    embedded_message.add_field(
+        name="Technologies",
+        value=(
+            "Written in Python. Relies heavily on the *discord* package "
+            + "written by Rapptz. Source code and documentation for this "
+            + "package can be found at https://github.com/Rapptz/discord.py."
+        ),
+        inline=False
+    )
+
+    embedded_message.add_field(
+        name="Source Code",
+        value="https://github.com/tgsachse/lion",
+        inline=False
+    )
+
+    await client.send_message(message.channel, response, embed=embedded_message)
