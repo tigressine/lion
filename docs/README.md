@@ -1,16 +1,11 @@
 # lion
-This bot is meant to be simple and lightweight. I'm writing it with plugins in mind, however it is not intended for mass distribution.
-My primary goal is to provide functions to improve the functionality of the UCF CS Discord server.  
+This simple and lightweight bot is meant to improve the functionality of the UCF CS Discord server. It is written using a plugin architecture, however it is not intended for mass distribution.
 
 Existing Functions:
 - Polls
 - User count
 - UCF parking status
-
-Planned Functions:
 - Auto roles
-- Message counter
-- Requests queue
 - Help menu
-- Cave status (stretch)
-- Eustis status (half stretch)
+- Spongebob meme generator
+- Corgi picture picker
