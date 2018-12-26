@@ -31,12 +31,18 @@ async def command_poll(client, message):
     """Create a poll based on specified inputs, then examine the results."""
     command_match = re.match(COMMAND_PATTERN, message.content)
 
-    # Call the help function if the given message does not match
-    # the command pattern.
-    if command_match is None or int(command_match.group("amount")) > MAX_MINUTES:
+    # Throw an error message if the command syntax is wrong.
+    if command_match is None:
+        response = "You've got the poll syntax wrong. Try `!help`."
+        await client.send_message(message.channel, response)
+
+        return
+
+    # Throw an error message if the time requested is too long.
+    if int(command_match.group("amount")) > MAX_MINUTES:
         response = (
-            "You've got the poll syntax wrong or you're asking for "
-            + "too much time. Try `!help`."
+            "You are asking for too much time. "
+            + "I can't remember things for that long!"
         )
         await client.send_message(message.channel, response)
 
