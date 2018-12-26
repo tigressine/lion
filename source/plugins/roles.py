@@ -14,6 +14,7 @@ LIST_HEADER = "**All server roles:**"
 LIST_COMMAND_PATTERN = r"^!{0}$".format(LIST_COMMAND)
 ADD_COMMAND_PATTERN = r"^!{0}( [a-zA-Z]+)+$".format(ADD_COMMAND)
 REMOVE_COMMAND_PATTERN = r"^!{0}( [a-zA-Z]+)+$".format(REMOVE_COMMAND)
+PERMISSIONS_ERROR = "Insufficent permissions to handle one of your specified roles."
 
 async def command_addrole(client, message):
     """Give the member new roles."""
@@ -23,11 +24,10 @@ async def command_addrole(client, message):
 
     try:
         await client.add_roles(message.author, *roles)
-        response = "Added roles! Check them out with !{0}".format(LIST_COMMAND)
+        response = "Added roles! Check them out with `!{0}`".format(LIST_COMMAND)
         await client.send_message(message.channel, response)
     except discord.errors.Forbidden:
-        response = "No permission to give one of your requested roles."
-        await client.send_message(message.channel, response)
+        await client.send_message(message.channel, PERMISSIONS_ERROR)
 
 
 async def command_removerole(client, message):
@@ -38,11 +38,10 @@ async def command_removerole(client, message):
 
     try:
         await client.remove_roles(message.author, *roles)
-        response = "Removed roles. Confirm with !{0}".format(LIST_COMMAND)
+        response = "Removed roles. Confirm with `!{0}`".format(LIST_COMMAND)
         await client.send_message(message.channel, response)
     except discord.errors.Forbidden:
-        response = "No permission to remove one of your requested roles."
-        await client.send_message(message.channel, response)
+        await client.send_message(message.channel, PERMISSIONS_ERROR)
 
 
 async def command_listroles(client, message):
@@ -53,7 +52,7 @@ async def command_listroles(client, message):
 
 
 async def get_roles(client, message, command, command_pattern):
-    """Get all available roles on the server, excluding protected roles."""
+    """Get all available roles on the server."""
 
     # First, confirm that the message matches the syntax.
     command_match = re.match(command_pattern, message.content)
