@@ -10,7 +10,7 @@ start_lion() {
     cd source
 
     echo "Starting Lion..."
-    python3.6 lion.py &
+    python3 lion.py &
     echo $! > ../$LION_PID
 
     cd ..
