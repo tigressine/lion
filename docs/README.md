@@ -9,3 +9,4 @@ Existing Functions:
 - Help menu
 - Spongebob meme generator
 - Corgi picture picker
+- Filter posts without links in certain channels
