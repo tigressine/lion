@@ -51,6 +51,15 @@ def is_ascii(text):
     return len(text) == len(text.encode())
 
 
+def is_first_lower(string):
+    """Determine if the first alphabetic character in the string is lowercase."""
+    for character in string:
+        if character.isalpha():
+            return character.islower()
+
+    return False 
+
+
 def generate_texts(user, text):
     """Create the normal and SpOnGe text strings for the meme."""
 
@@ -85,7 +94,7 @@ def generate_texts(user, text):
     # name was all ASCII (so it matches the normal text). If the user's name
     # begins with a capital letter, capitalize "Me", else use a lower case "me".
     sponge_text = "{0}e: " if is_ascii(user) else ""
-    sponge_text = sponge_text.format("m" if user[0].islower() else "M")
+    sponge_text = sponge_text.format("m" if is_first_lower(user) else "M")
 
     # Add the actual SpOnGe text.
     sponge_text += "".join(characters)
