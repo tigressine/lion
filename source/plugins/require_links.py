@@ -7,7 +7,6 @@ Written by Tiger Sachse.
 """
 
 import re
-import ssl
 import httplib2
 
 URL_FORMAT = "(?P<url>https?://\S+)"
@@ -50,7 +49,7 @@ def is_invalid(link):
     """Check if a link is invalid by requesting its header."""
     try:
         response = httplib2.Http().request(link, "HEAD")
-    except (httplib2.HttpLib2Error, ssl.SSLError):
+    except httplib2.HttpLib2Error:
         return True
     
     return False if int(response[0]["status"]) < 400 else True
