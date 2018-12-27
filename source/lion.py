@@ -54,10 +54,11 @@ async def on_message(message):
 
 def load_token():
     """Load Lion's token from a json file."""
-    with open(TOKEN_FILE, "r") as token_file:
-        token = json.load(token_file)
+    # with open(TOKEN_FILE, "r") as token_file:
+    #     token = json.load(token_file)
 
-    return token
+    #return token
+    return 'NTI3ODYxMDQwNjI5ODA5MTUz.DwaVFw.0nTG9hB94T1d_tIVYZrmkWHRYC0'
 
 
 def handle_signals(signal_number, stack_frame):
