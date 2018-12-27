@@ -71,7 +71,7 @@ async def get_roles(client, message, command, command_pattern):
     roles = []
     for name in role_names:
         for possible_role in possible_roles:
-            if re.match(name, possible_role.name, re.IGNORECASE):
+            if name.lower() == possible_role.name.lower():
                 roles.append(possible_role)
                 break
         else:
