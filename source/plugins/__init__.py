@@ -16,7 +16,12 @@ from plugins import (
     aerospace,
     user_count,
     garage_status,
+    require_links,
 )
+
+FILTERED_CHANNELS = {
+    require_links.FILTERED_CHANNELS : require_links.filter_require_links
+}
 
 COMMANDS = {
     info.COMMAND : info.command_info,

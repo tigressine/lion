@@ -10,7 +10,7 @@ import sys
 import json
 import signal
 import discord
-from plugins import COMMANDS, INLINES
+from plugins import COMMANDS, INLINES, FILTERED_CHANNELS
 
 TOKEN_FILE = "data/token.json"
 COMMAND_PATTERN = r"^!(?P<command>[a-zA-Z]+)"
@@ -26,10 +26,18 @@ async def on_message(message):
     if message.author == client.user:
         return
 
+    # Check if message is in a filtered channel.
+    for filtered_channels in FILTERED_CHANNELS.keys():
+        if message.channel.name in filtered_channels:
+            await FILTERED_CHANNELS[filtered_channels](client, message)
+
+            return
+
     # Check message for inline commands.
     for inline in INLINES.keys():
         if re.match(inline, message.content):
             await INLINES[inline](client, message)
+
             return
 
     command_match = re.match(COMMAND_PATTERN, message.content)
