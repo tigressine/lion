@@ -58,10 +58,11 @@ async def command_eggplant(client, message):
     message_author_display_name = message.author.display_name
     message_body                = command_match.group("rest")
 
-    # Begin generating our response to the sender; this will be a list of words
-    # rather than a string to simplify, beautify, and optimize message splits
-    # when the character limit is surpassed. Messages will be split by word
-    # and never mid-word unless if absolutely neccessary
+    """Begin generating our response to the sender; this will be a list of words
+    rather than a string to simplify, beautify, and optimize message splits
+    when the character limit is surpassed. Messages will be split by word
+    and never mid-word unless if absolutely neccessary
+    """
     full_response   = []
     response        = ""
     tokenized_message = nltk.word_tokenize(message_body)
@@ -92,8 +93,9 @@ async def command_eggplant(client, message):
 
         response += "   "
 
-    # If the sender signature fits in the resulting message without overflowing
-    # to a new message, then add it to the end. Otherwise just send it separately
+    """If the sender signature fits in the resulting message without overflowing
+    to a new message, then add it to the end. Otherwise just send it separately
+    """
     if len(response + " - " + message_author_display_name) < MAX_MESSAGE_LENGTH:
         response += " - " + message_author_display_name
         print(response)
@@ -102,7 +104,8 @@ async def command_eggplant(client, message):
         full_response.append(" - " + message_author_display_name)
 
 
-    # There may be more than one message to send, so loop through the full response
-    # and send each message sequentially
+    """There may be more than one message to send, so loop through the full response
+    and send each message sequentially
+    """
     for response in full_response:
         await client.send_message(message.channel, response)
