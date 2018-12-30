@@ -3,9 +3,7 @@ Generates dog pictures utilizing woofbot.io API
 
 Made by joey
 """
-
 import json
-import random
 import aiohttp
 import discord
 
