@@ -10,7 +10,6 @@ from plugins import (
     info,
     poll,
     roles,
-    corgi,
     dog,
     sponge,
     help_menu,
@@ -27,7 +26,6 @@ FILTERED_CHANNELS = {
 COMMANDS = {
     info.COMMAND : info.command_info,
     poll.COMMAND : poll.command_poll,
-    corgi.COMMAND : corgi.command_corgi,
     dog.COMMAND : dog.command_dog,
     sponge.COMMAND : sponge.command_sponge,
     roles.ADD_COMMAND : roles.command_addroles,
