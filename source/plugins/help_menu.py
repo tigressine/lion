@@ -58,10 +58,16 @@ async def command_help_menu(client, message):
       value="Call a good boy over for pets.",
       inline=False
     )
-    
+
     embedded_message.add_field(
         name="!sponge message",
         value="Create a spicy, sarcastic meme.",
+        inline=False
+    )
+
+    embedded_message.add_field(
+        name="!eggplant message",
+        value="Create an emoji string",
         inline=False
     )
 
