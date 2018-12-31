@@ -15,7 +15,7 @@ from bs4 import BeautifulSoup
 ODDS = .05
 VEHICLE_EMOJIS = ("🚗", "🚙", "🏎")
 
-COMMAND = "garage"
+#COMMAND = "garage"
 PARSER = "html.parser"
 CHOICE_PATTERN = r"(?P<choice>[ABCDHI]|(Libra))"
 GARAGE_SINGLE_FORMAT = "{1} / {2} ({3}% full)"

@@ -12,7 +12,7 @@ COMMAND = "corgi"
 MAX_ATTEMPTS = 20
 DEFAULT_IMAGE = "data/default_corgi.jpg"
 TEMPORARY_FILE_FORMAT = "/tmp/random_corgi.{0}"
-TUMBLR_KEY = "m9ZzEYfFoBEjEQpjqYunya8Ji2802GMj1ng1MWbKVY7Ra8kGEP"
+# REMOVED API KEY
 BLOG_URL_FORMAT = "https://api.tumblr.com/v2/blog/{0}/posts/photo?api_key={1}"
 CORGI_BLOGS = (
     "corgito",
