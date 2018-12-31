@@ -57,8 +57,8 @@ async def command_help_menu(client, message):
 
     """
     embedded_message.add_field(
-      name="!corgi",
-      value="Call a good boy over for pets.",
+      name="!dog [breed]",
+      value="Generates dog picture based on breed.",
       inline=False
     )
     """

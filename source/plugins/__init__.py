@@ -10,7 +10,11 @@ from plugins import (
     info,
     poll,
     roles,
+<<<<<<< HEAD
 #   corgi,                  removed until API key issue is solved
+=======
+    dog,
+>>>>>>> 3039d0ee5a93d6d900584c2608ae9c0ea93989e4
     sponge,
     eggplant,
     help_menu,
@@ -27,7 +31,11 @@ FILTERED_CHANNELS = {
 COMMANDS = {
     info.COMMAND : info.command_info,
     poll.COMMAND : poll.command_poll,
+<<<<<<< HEAD
 #   corgi.COMMAND : corgi.command_corgi,
+=======
+    dog.COMMAND : dog.command_dog,
+>>>>>>> 3039d0ee5a93d6d900584c2608ae9c0ea93989e4
     sponge.COMMAND : sponge.command_sponge,
     roles.ADD_COMMAND : roles.command_addroles,
     eggplant.COMMAND : eggplant.command_eggplant,
