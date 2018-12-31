@@ -13,7 +13,7 @@ async def command_help_menu(client, message):
     embedded_message = discord.Embed(color=0xffee05)
     embedded_message.add_field(
         name="!info",
-        value="Show some more information about Lion.",
+        value="Show some more information about Shell (Lion).",
         inline=False
     )
 
@@ -29,11 +29,13 @@ async def command_help_menu(client, message):
         inline=False
     )
 
+    """
     embedded_message.add_field(
         name="!garage [garage]",
         value="See the status of the UCF parking garages.",
         inline=False
     )
+    """
 
     embedded_message.add_field(
         name="!listroles",
@@ -53,11 +55,13 @@ async def command_help_menu(client, message):
         inline=False
     )
 
+    """
     embedded_message.add_field(
       name="!corgi",
       value="Call a good boy over for pets.",
       inline=False
     )
+    """
 
     embedded_message.add_field(
         name="!sponge message",

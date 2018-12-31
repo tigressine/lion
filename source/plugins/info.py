@@ -19,7 +19,7 @@ async def command_info(client, message):
 
     embedded_message.add_field(
         name="Contributors",        
-        value="Evan Rupert, Hayden Inghem",
+        value="Evan Rupert, Hayden Inghem, Caleb Shepard",
         inline=False
     )
 
@@ -35,7 +35,9 @@ async def command_info(client, message):
 
     embedded_message.add_field(
         name="Source",
-        value="This project is hosted at https://github.com/tgsachse/lion.",
+        value="This project is hosted at https://github.com/tgsachse/lion.\n" +
+        "The FPU fork of this project is located at "   +
+        "https://github.com/Caleb-Shepard/lion."        ,
         inline=False
     )
 
