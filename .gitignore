@@ -1,1 +1,3 @@
 source/data/token.json
+source/lion_pid_temp.txt
+__pycache__/*.pyc
