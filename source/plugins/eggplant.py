@@ -98,7 +98,6 @@ async def command_eggplant(client, message):
     """
     if len(response + " - " + message_author_display_name) < MAX_MESSAGE_LENGTH:
         response += " - " + message_author_display_name
-        print(response)
         full_response.append(response)
     else:
         full_response.append(" - " + message_author_display_name)
