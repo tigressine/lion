@@ -5,17 +5,6 @@
 
 LION_PID="lion_pid_temp.txt"
 
-# Start the bot.
-start_lion() {
-    cd source
-
-    echo "Starting Lion..."
-    python3 lion.py &
-    echo $! > ../$LION_PID
-
-    cd ..
-}
-
 # Kill the bot.
 kill_lion() {
     if [ ! -f $LION_PID ]; then
@@ -29,10 +18,17 @@ kill_lion() {
     fi
 }
 
-# Restart the bot.
-restart_lion() {
+# Start the bot.
+start_lion() {
     kill_lion
-    start_lion
+
+    cd source
+
+    echo "Starting Lion..."
+    python3 lion.py &
+    echo $! > ../$LION_PID
+
+    cd ..
 }
 
 # Main entry point of the script.
@@ -42,8 +38,5 @@ case $1 in
         ;;
     "--kill")
         kill_lion
-        ;;
-    "--restart")
-        restart_lion
         ;;
 esac
