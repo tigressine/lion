@@ -10,23 +10,18 @@ CHARACTER_LIMIT = 2000
 RESPONSE_FORMAT = "{0}:\n{1}"
 COMMAND_FORMAT = r"^!{0} (?P<rest>.*)$".format(COMMAND)
 EGG_DICT = {
-    '1': ':one: ', 
-    '2': ':two: ',
-    '3': ':three: ',
-    '4': ':four: ',
-    '5': ':five: ',
-    '6': ':six: ',
-    '7': ':seven: ',
-    '8': ':eight: ',
-    '9': ':nine: ',
-    '0': ':zero: ',
-    '!': ':exclamation: '
+    "1": ":one: ", 
+    "2": ":two: ",
+    "3": ":three: ",
+    "4": ":four: ",
+    "5": ":five: ",
+    "6": ":six: ",
+    "7": ":seven: ",
+    "8": ":eight: ",
+    "9": ":nine: ",
+    "0": ":zero: ",
+    "!": ":exclamation: "
 }
-
-def is_ascii(text):
-    """Confirm that the given text is all ASCII characters."""
-    return len(text) == len(text.encode())
-
 
 async def command_egg(client, message):
     """Egg a message."""
@@ -63,3 +58,8 @@ async def command_egg(client, message):
     else:
         sassy_response = "I can't handle that many characters. You gotta chill fam."
         await client.send_message(message.channel, sassy_response)
+
+
+def is_ascii(text):
+    """Confirm that the given text is all ASCII characters."""
+    return len(text) == len(text.encode())
