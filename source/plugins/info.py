@@ -35,9 +35,7 @@ async def command_info(client, message):
 
     embedded_message.add_field(
         name="Source",
-        value="This project is hosted at https://github.com/tgsachse/lion.\n" +
-        "The FPU fork of this project is located at "   +
-        "https://github.com/Caleb-Shepard/lion."        ,
+        value="This project is hosted at https://github.com/tgsachse/lion.",
         inline=False
     )
 
