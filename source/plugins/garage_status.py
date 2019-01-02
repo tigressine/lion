@@ -60,11 +60,11 @@ async def command_garage_status(client, message):
     """Discover the status of garages on UCF campus."""
     command_match = re.match(COMMAND_PATTERN, message.content, re.IGNORECASE)
 
-    # If the given command doesn't match the necessary pattern, call the
-    # help function.
+    # If the given command doesn't match the necessary pattern, we've got a problem.
     if command_match is None:
-        response = "You've got the syntax wrong. Try `!help`."
+        response = "You've got the garage syntax wrong. Try `!help`."
         await client.send_message(message.channel, response)
+
         return
     
     garages = get_garages()
