@@ -1,62 +1,38 @@
-"""
-Generates dog pictures utilizing woofbot.io API
+"""Generate dog pictures utilizing woofbot.io API.
 
-Made by joey
+Made by joey.
 """
+import re
 import json
 import aiohttp
 import discord
 
 COMMAND = "dog"
-
-API_URL = "https://api.woofbot.io/v1/"
-API_DOG_URL_FORMAT = "https://api.woofbot.io/v1/breeds/{0}/image"
 IMAGE_FILE = "/tmp/dog.jpg"
-
-async def fetch_image(url):
-    """ Fetches image from a URL. If successful, returns image data, else returns empty string """
-    # Initialize response to be empty
-    response = ''
-    try:
-        session = aiohttp.ClientSession()
-        async with session.get(url) as url_response:
-            if url_response.status == 200:
-                response = await url_response.read()
-    finally:
-        session.close()
-        
-    return response
-
-async def fetch_json(url):
-    """ Fetches json from a URL. If successful, returns json object, else returns empty string """
-    # Initialize response to be empty
-    response = ''
-    try:
-        session = aiohttp.ClientSession()
-        async with session.get(url) as url_response:
-            if url_response.status == 200:
-                response = await url_response.json()
-    finally:
-        session.close()
-
-    return response
+API_URL = "https://api.woofbot.io/v1/"
+BREED_PATTERN = r"(?P<breed>[a-zA-Z]+)"
+COMMAND_PATTERN = r"^!{0}( {1})?$".format(COMMAND, BREED_PATTERN)
+API_DOG_URL_FORMAT = "https://api.woofbot.io/v1/breeds/{0}/image"
 
 async def command_dog(client, message):
-    breed = message.content.replace("!dog ", "").lower()
-    response = ""
+    """Fetch a dog picture from the Internet!"""
+    command_match = re.match(COMMAND_PATTERN, message.content, re.IGNORECASE)
 
-    if breed == "!dog":
-        # The user didn't request a breed.
+    # If the given command doesn't match the necessary pattern, we've got a problem.
+    if command_match is None:
+        response = "You've got dog syntax wrong. Try `!help`."
+        await client.send_message(message.channel, response)
+
         return
+   
+    # If no breed was requested, return a list of breeds.
+    if command_match.group(1) is None:
+        await client.send_message(message.channel, await get_breeds()) 
 
-    if breed == "breeds":
-        # The user requested for list of breeds, let's give that.
-        breeds = await get_breeds()
-        return await client.send_message(message.channel, breeds) 
-
-    request_url = API_DOG_URL_FORMAT.format(breed)
+        return
     
-
+    request_url = API_DOG_URL_FORMAT.format()
+    ##################### pick up here
     try:
         web_response = await fetch_json(request_url)
 
@@ -82,6 +58,39 @@ async def command_dog(client, message):
         # everything successfully runs.
         if response != "":
             await client.send_message(message.channel, response)
+
+
+async def fetch_image(url):
+    """Fetch an image from a URL.
+    
+    If successful, return image data, else return an empty string
+    """
+    response = ''
+    try:
+        session = aiohttp.ClientSession()
+        async with session.get(url) as url_response:
+            if url_response.status == 200:
+                response = await url_response.read()
+    finally:
+        session.close()
+        
+    return response
+
+
+async def fetch_json(url):
+    """ Fetches json from a URL. If successful, returns json object, else returns empty string """
+    # Initialize response to be empty
+    response = ''
+    try:
+        session = aiohttp.ClientSession()
+        async with session.get(url) as url_response:
+            if url_response.status == 200:
+                response = await url_response.json()
+    finally:
+        session.close()
+
+    return response
+
 
 async def get_breeds():
     """ Grabs list of breeds that woofbot.io currently supports and formats into a friendly message """
