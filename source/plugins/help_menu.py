@@ -29,13 +29,11 @@ async def command_help_menu(client, message):
         inline=False
     )
 
-    """
     embedded_message.add_field(
         name="!garage [garage]",
         value="See the status of the UCF parking garages.",
         inline=False
     )
-    """
 
     embedded_message.add_field(
         name="!listroles",
@@ -70,8 +68,8 @@ async def command_help_menu(client, message):
     )
 
     embedded_message.add_field(
-        name="!eggplant message",
-        value="Create an emoji string",
+        name="!egg message",
+        value="Send your text through the egg machine.",
         inline=False
     )
 
