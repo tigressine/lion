@@ -10,14 +10,14 @@ import asyncio
 import discord
 
 COMMAND = "poll"
-DELIMITER = "|"
+DELIMITER = ", "
 MAX_MINUTES = 60
 CHOICE_FORMAT = "{0}) {1}"
 POLL_HEADER = "**New poll:**"
-RESULTS_HEADER = "**Poll results:**"
+PROMPT_PATTERN = r"(?P<prompt>.+)"
 WINNER_FORMAT = "{0}) {1} [winner]"
-PROMPT_PATTERN = r"\"(?P<prompt>.+)\""
-CHOICES_PATTERN = r"\"(?P<choices>.+)\""
+RESULTS_HEADER = "**Poll results:**"
+CHOICES_PATTERN = r"\((?P<choices>.+)\)"
 WAIT_PATTERN = r"(?P<amount>[1-9][0-9]*)"
 INTEGER_EMOJIS = ("0⃣", "1⃣", "2⃣", "3⃣", "4⃣", "5⃣", "6⃣", "7⃣", "8⃣", "9⃣")
 COMMAND_PATTERN = r"^!{0} {1} {2} {3}$".format(

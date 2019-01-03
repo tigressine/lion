@@ -24,7 +24,7 @@ async def command_help_menu(client, message):
     )
 
     embedded_message.add_field(
-        name="!poll time \"prompt\" \"choice1|choice2|choice3|etc\"",        
+        name="!poll time prompt (choice1, choice2, etc)",        
         value="Create a new poll. Time is in minutes.",
         inline=False
     )
