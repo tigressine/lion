@@ -44,6 +44,10 @@ async def command_sponge(client, message):
 
     # Send the meme to the client.
     await client.send_file(message.channel, meme)
+    
+    # Delete the original request if the user name was included in the meme.
+    if is_ascii(message.author.display_name):
+        await client.delete_message(message)
 
 
 def is_ascii(text):
@@ -72,7 +76,7 @@ def generate_texts(user, text):
 
     # Prepend the user's name to the front of the normal text if the user's
     # name is all ASCII.
-    normal_text = "{0}: ".format(user) if is_ascii(user) else ""
+    normal_text = "{0}: ".format(user) if is_ascii(user) else "You: "
     normal_text += text
 
     # SpOnGeIfY the alphabetic characters.
@@ -90,10 +94,9 @@ def generate_texts(user, text):
             else:
                 last_upper = False
 
-    # Add the string "Me: " to the front of the SpOnGe text if the user's
-    # name was all ASCII (so it matches the normal text). If the user's name
+    # Add the string "Me: " to the front of the SpOnGe text. If the user's name
     # begins with a capital letter, capitalize "Me", else use a lower case "me".
-    sponge_text = "{0}e: " if is_ascii(user) else ""
+    sponge_text = "{0}e: "
     sponge_text = sponge_text.format("m" if is_first_lower(user) else "M")
 
     # Add the actual SpOnGe text.

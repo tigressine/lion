@@ -42,7 +42,7 @@ async def command_egg(client, message):
             response_components.append("  ")
         elif char.isalpha():
             response_components.append(
-                ":regional_indicator_{0}: ".format(char.lower())
+                ":regional_indicator_{0}:".format(char.lower())
             )
         elif char in EGG_DICT:
             response_components.append(EGG_DICT[char])
@@ -55,6 +55,9 @@ async def command_egg(client, message):
     # Send the mention and response to the client.
     if len(response) < CHARACTER_LIMIT:
         await client.send_message(message.channel, response)
+
+        # Delete the original request.
+        await client.delete_message(message)
     else:
         sassy_response = "I can't handle that many characters. You gotta chill fam."
         await client.send_message(message.channel, sassy_response)
