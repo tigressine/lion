@@ -54,7 +54,6 @@ async def on_message(message):
 
 def load_token():
     """Load Lion's token from a json file."""
-    # The token should be formatted as "<token>"
     with open(TOKEN_FILE, "r") as token_file:
         token = json.load(token_file)
 
