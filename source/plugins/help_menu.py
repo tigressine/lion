@@ -53,13 +53,11 @@ async def command_help_menu(client, message):
         inline=False
     )
 
-    """
     embedded_message.add_field(
       name="!dog [breed]",
-      value="Generates dog picture based on breed.",
+      value="Get a picture of a good boy!",
       inline=False
     )
-    """
 
     embedded_message.add_field(
         name="!sponge message",
