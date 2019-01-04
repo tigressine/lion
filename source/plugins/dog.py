@@ -39,7 +39,6 @@ async def command_dog(client, message):
     requested_breed = requested_breed.lower()
     for breed in breeds:
         if requested_breed == breed.lower():
-            await client.send_message(message.channel, requested_breed)
             break
     else:
         response = "That breed isn't currently available!\n" + make_breeds_list(breeds)
@@ -58,6 +57,10 @@ async def command_dog(client, message):
                 writable_file.write(image)
             
             await client.send_file(message.channel, IMAGE_FILE)
+        else:
+            await client.send_message(message.channel, "Could not download image!")
+    else:
+        await client.send_message(message.channel, "Could not reach Woofbot API.")
 
 
 async def fetch_image(url):
@@ -97,4 +100,5 @@ async def get_breeds():
 
 
 def make_breeds_list(breeds):
-    return "\n".join(breeds)
+    """Return a string that holds a list of breeds."""
+    return "Here's a list of available breeds.\n```" + "\n".join(breeds) + "```"
