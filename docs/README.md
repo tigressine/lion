@@ -9,5 +9,5 @@ Existing Functions:
 - Help menu
 - Spongebob meme generator
 - Text egging machine
-- Corgi picture picker
+- Dog picture picker
 - Filter posts without links in certain channels
