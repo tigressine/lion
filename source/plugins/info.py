@@ -22,6 +22,12 @@ async def command_info(client, message):
         value="Evan Rupert, Hayden Inghem, Caleb Shepard",
         inline=False
     )
+    
+    embedded_message.add_field(
+        name="Version",
+        value="1.1.1",
+        inline=False
+    )
 
     embedded_message.add_field(
         name="Technologies",
@@ -38,5 +44,5 @@ async def command_info(client, message):
         value="This project is hosted at https://github.com/tgsachse/lion.",
         inline=False
     )
-
+    
     await client.send_message(message.channel, response, embed=embedded_message)

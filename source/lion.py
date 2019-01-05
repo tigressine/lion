@@ -35,7 +35,7 @@ async def on_message(message):
 
     # Check message for inline commands.
     for inline in INLINES.keys():
-        if re.match(inline, message.content):
+        if re.search(inline, message.content):
             await INLINES[inline](client, message)
 
             return
