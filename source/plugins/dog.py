@@ -101,4 +101,4 @@ async def get_breeds():
 
 def make_breeds_list(breeds):
     """Return a string that holds a list of breeds."""
-    return "Here's a list of available breeds.\n```" + "\n".join(breeds) + "```"
+    return "Here's a list of available breeds.\n```\n" + "\n".join(breeds) + "```"
