@@ -10,14 +10,14 @@ import discord
 import requests
 import time
 import math
+import json
 from datetime import datetime
 
 COMMAND = "weather"
 COMMAND_FORMAT = r"^!{0}( ((?P<location>[a-zA-Z ]+|\d{{5}})))?$".format(COMMAND)
 
 API_URL = "https://api.openweathermap.org/data/2.5/"
-API_KEY = "2039a2bd0fdb1de5d63ccbfb34d02323"
-API_OPTS = "&units=imperial&apikey={}".format(API_KEY)
+API_KEY_FILE = "data/weather_api.json"
 
 DEFAULT_LOCATION = "Orlando"
 EMBED_COLOR = 0xffee05
@@ -26,6 +26,10 @@ ICON_SIZE = 128 if LARGE_ICONS else 64
 FORECAST_NUM = 3
 
 DEBUG = False       # prints api urls to console
+
+with open(API_KEY_FILE, "r") as f:
+    API_KEY = json.load(f)['API_KEY']
+API_OPTS = "&units=imperial&apikey={}".format(API_KEY)
 
 
 async def command_weather(client, message):
