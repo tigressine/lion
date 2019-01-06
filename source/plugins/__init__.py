@@ -18,6 +18,7 @@ from plugins import (
     user_count,
     garage_status,
     require_links,
+    weather,
 )
 
 FILTERED_CHANNELS = {
@@ -36,6 +37,7 @@ COMMANDS = {
     roles.REMOVE_COMMAND : roles.command_removeroles,
     user_count.COMMAND : user_count.command_user_count,
     garage_status.COMMAND : garage_status.command_garage_status,
+    weather.COMMAND : weather.command_weather,
 }
 
 INLINES = {
