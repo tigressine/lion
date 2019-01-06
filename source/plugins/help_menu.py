@@ -70,5 +70,11 @@ async def command_help_menu(client, message):
         value="Send your text through the egg machine.",
         inline=False
     )
+    
+    embedded_message.add_field(
+        name="!weather [city|zip]",
+        value="Check the current weather with forecast",
+        inline=False
+    )
 
     await client.send_message(message.channel, response, embed=embedded_message)
