@@ -16,13 +16,13 @@ VEHICLE_EMOJIS = ("🚗", "🚙", "🏎")
 
 COMMAND = "garage"
 PARSER = "html.parser"
-CHOICE_PATTERN = r"(?P<choice>[ABCDHI]|(Libra))"
 GARAGE_SINGLE_FORMAT = "{1} / {2} ({3}% full)"
+CHOICE_PATTERN = r"(?P<choice>[ABCDHI]|(Libra))"
 GARAGE_LIST_FORMAT = "{0:>5}: {1:>4} / {2:>4} ({3:>2}% full)"
 URL = "http://secure.parking.ucf.edu/GarageCount/iframe.aspx"
-GARAGE_SINGLE_HEADER = "**Current availability of Garage {0}:**"
+GARAGE_SINGLE_HEADER = "**Current saturation of Garage {0}:**"
 COMMAND_PATTERN = r"^!{0}( {1})?$".format(COMMAND, CHOICE_PATTERN)
-GARAGE_LIST_HEADER = "**Current garage availability on UCF campus:**"
+GARAGE_LIST_HEADER = "**Current garage saturation on UCF campus:**"
 
 class Garage:
     """Hold various information about a UCF campus garage."""
@@ -34,14 +34,14 @@ class Garage:
 
     def __get_percent_full(self):
         """Return the percentage of the garage that is full."""
-        percent_full = 100 - (self.available_space / self.capacity * 100)
+        percent_full = self.saturated_space / self.capacity * 100
 
         return int(percent_full) if percent_full >= 0 else 0
 
 
-    def set_available_space(self, available_space):
-        """Set the available space."""
-        self.available_space = int(available_space)
+    def set_saturated_space(self, available_space):
+        """Set the saturated space."""
+        self.saturated_space = self.capacity - int(available_space)
         self.percent_full = self.__get_percent_full()
 
 
@@ -49,7 +49,7 @@ class Garage:
         """Return a formatted string containing this garage's information."""
         return string_format.format(
             self.name,
-            self.available_space,
+            self.saturated_space,
             self.capacity,
             self.percent_full
         )
@@ -144,6 +144,6 @@ def get_garages():
     # setting each garage with the appropriate amount of available space
     # along the way.
     for available_space, garage in zip(available_spaces, garages):
-        garage.set_available_space(available_space)
+        garage.set_saturated_space(available_space)
 
     return garages
