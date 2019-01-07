@@ -8,7 +8,6 @@ Inspired by code written by Matthew Villegas.
 """
 import re
 import random
-import discord
 import requests
 from bs4 import BeautifulSoup
 
@@ -39,7 +38,7 @@ class Garage:
 
         return int(percent_full) if percent_full >= 0 else 0
 
-    
+
     def set_available_space(self, available_space):
         """Set the available space."""
         self.available_space = int(available_space)
@@ -66,7 +65,7 @@ async def command_garage_status(client, message):
         await client.send_message(message.channel, response)
 
         return
-    
+
     garages = get_garages()
 
     # If no garage is selected, then respond with all garages.
@@ -131,7 +130,7 @@ def get_garages():
         Garage("I", 1231),
         Garage("Libra", 1007),
     )
-   
+
     # Brew up some beautiful HTML soup.
     soup = BeautifulSoup(requests.get(URL).content, PARSER)
 
@@ -140,11 +139,11 @@ def get_garages():
     # the counts of unused spaces for each garage. The tags are in the same
     # order as the garages in garages.
     available_spaces = (tag.get_text() for tag in soup.find_all("strong"))
- 
+
     # Iterate through the available spaces generator and the tuple of garages,
     # setting each garage with the appropriate amount of available space
     # along the way.
     for available_space, garage in zip(available_spaces, garages):
         garage.set_available_space(available_space)
-    
+
     return garages
