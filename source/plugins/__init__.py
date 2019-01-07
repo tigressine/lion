@@ -14,7 +14,6 @@ from plugins import (
     roles,
     sponge,
     help_menu,
-    aerospace,
     user_count,
     garage_status,
     require_links,
@@ -39,5 +38,4 @@ COMMANDS = {
 }
 
 INLINES = {
-    aerospace.INLINE : aerospace.inline_aerospace,
 }
