@@ -1,4 +1,4 @@
-source/data/token.json
+source/data/weather_token.txt
+source/data/discord_token.txt
 source/lion_pid_temp.txt
-source/data/weather_api.json
 __pycache__/*.pyc
