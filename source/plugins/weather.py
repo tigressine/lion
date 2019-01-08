@@ -333,7 +333,9 @@ def generate_forecast(fdata):
         
         # only use forecast times more than 30 mins from now
         if hours > 0:
-            strf = datetime.fromtimestamp(timestamp).strftime('%I %p').lstrip("0").lower()
+            dt = datetime.utcfromtimestamp(timestamp - 18000)
+        
+            strf = dt.strftime('%I %p').lstrip("0").lower()
             weather_id = tdata['weather'][0]['id']
             output += "**{} hours ({})**".format(hours, strf)
             

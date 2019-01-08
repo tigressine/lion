@@ -7,7 +7,7 @@ Existing Functions:
 - User count
 - Auto roles
 - Post filters
-- weather checker
+- Weather checker
 - UCF parking status
 - Dog picture picker
 - Text egging machine
