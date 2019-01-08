@@ -31,6 +31,23 @@ start_lion() {
     cd ..
 }
 
+# Install dependencies.
+install_dependencies() {
+    if [[ $EUID -ne 0 ]]; then
+        echo "This operation must be run as root." 
+        exit 1
+    fi
+
+    apt install python3-pip
+    pip3 install discord BeautifulSoup4 httplib2 pillow
+
+    printf "\n\n========================================================================\n"
+    echo "You need the Discord and weather API tokens before the bot will work."
+    echo "These are pinned in the #lion_development channel of the UCF CS Discord."
+    echo "Ask a moderator for access to this channel."
+    printf "========================================================================\n"
+}
+
 # Main entry point of the script.
 case $1 in
     "--start")
@@ -38,5 +55,8 @@ case $1 in
         ;;
     "--kill")
         kill_lion
+        ;;
+    "--install-dependencies")
+        install_dependencies
         ;;
 esac
