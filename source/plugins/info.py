@@ -21,7 +21,7 @@ async def command_info(client, message):
         name="Contributors",        
         value="\n".join((
             "Charles",
-            "Mr. Brexit",
+            "Sam Shannon",
             "Evan Rupert",
             "Hayden Inghem",
             "Caleb Shepard",
