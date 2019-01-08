@@ -73,7 +73,7 @@ async def command_help_menu(client, message):
     
     embedded_message.add_field(
         name="!weather [city|zip]",
-        value="Check the current weather with forecast",
+        value="Check the current weather forecast.",
         inline=False
     )
 

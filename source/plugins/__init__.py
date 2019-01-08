@@ -13,11 +13,11 @@ from plugins import (
     poll,
     roles,
     sponge,
+    weather,
     help_menu,
     user_count,
     garage_status,
     require_links,
-    weather,
 )
 
 FILTERED_CHANNELS = {
@@ -30,13 +30,13 @@ COMMANDS = {
     info.COMMAND : info.command_info,
     poll.COMMAND : poll.command_poll,
     sponge.COMMAND : sponge.command_sponge,
+    weather.COMMAND : weather.command_weather,
     roles.ADD_COMMAND : roles.command_addroles,
     roles.LIST_COMMAND : roles.command_listroles,
     help_menu.COMMAND : help_menu.command_help_menu,
     roles.REMOVE_COMMAND : roles.command_removeroles,
     user_count.COMMAND : user_count.command_user_count,
     garage_status.COMMAND : garage_status.command_garage_status,
-    weather.COMMAND : weather.command_weather,
 }
 
 INLINES = {

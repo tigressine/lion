@@ -7,12 +7,11 @@ Written by Tiger Sachse.
 """
 import re
 import sys
-import json
 import signal
 import discord
 from plugins import COMMANDS, INLINES, FILTERED_CHANNELS
 
-TOKEN_FILE = "data/token.json"
+TOKEN_FILE = "data/discord_token.txt"
 COMMAND_PATTERN = r"^!(?P<command>[a-zA-Z]+)"
 
 # Create a Discord client to interface with Discord servers.
@@ -53,11 +52,9 @@ async def on_message(message):
 
 
 def load_token():
-    """Load Lion's token from a json file."""
+    """Load the Discord API authentication token."""
     with open(TOKEN_FILE, "r") as token_file:
-        token = json.load(token_file)
-
-    return token
+        return token_file.read()[:-1]
 
 
 def handle_signals(signal_number, stack_frame):
