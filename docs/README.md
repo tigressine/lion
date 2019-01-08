@@ -3,11 +3,12 @@ This simple and lightweight bot is meant to improve the functionality of the UCF
 
 Existing Functions:
 - Polls
-- User count
-- UCF parking status
-- Auto roles
 - Help menu
-- Spongebob meme generator
-- Text egging machine
+- User count
+- Auto roles
+- Post filters
+- weather checker
+- UCF parking status
 - Dog picture picker
-- Filter posts without links in certain channels
+- Text egging machine
+- Spongebob meme generator

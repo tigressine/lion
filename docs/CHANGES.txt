@@ -1,0 +1,23 @@
+CHANGE LOG
+
+v1.2.0
+    - Added weather plugin.
+    - Disabled aerospace inline.
+    - Improve users plugin response.
+    - Added dependency installation function to execution script.
+    - Removed JSON dependency.
+
+v1.1.2
+    - Hotfixed dog plugin to include corgi as an available dog breed.
+
+v1.1.1
+    - Updated info plugin contents.
+
+v1.1.0
+    - Replaced corgi plugin with dog plugin.
+    - Improved poll command syntax.
+    - Added egg plugin to garble text.
+
+v1.0.0
+    - Initial release.
+    - Included plugins: sponge, corgi, poll, users, help, info, aerospace, garage.
