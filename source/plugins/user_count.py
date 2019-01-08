@@ -13,7 +13,7 @@ async def command_user_count(client, message):
     active_members = 0
     for member in server.members:
         status = str(member.status)
-        if status == "online" or status == "idle":
+        if status != "offline":
             active_members += 1
 
     response = RESPONSE_FORMAT.format(server.member_count, active_members)
