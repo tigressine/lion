@@ -1,5 +1,8 @@
 CHANGE LOG
 
+v1.2.1
+    - Removed requirement that links be valid in require_links.
+
 v1.2.0
     - Added weather plugin.
     - Disabled aerospace inline.
