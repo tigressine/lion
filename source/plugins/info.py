@@ -32,7 +32,7 @@ async def command_info(client, message):
     
     embedded_message.add_field(
         name="Version",
-        value="1.2.0",
+        value="1.2.1",
         inline=False
     )
 
