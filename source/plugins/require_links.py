@@ -22,8 +22,7 @@ async def filter_require_links(client, message):
 
     # If no link was found, delete the new message and DM the author.
     if search is None:
-        await client.delete_message(message) 
-        await client.send_message(
-            message.author,
+        await message.delete() 
+        await message.author.send(
             WARNING_FORMAT.format(message.channel, message.content)
         )
