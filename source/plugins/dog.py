@@ -21,7 +21,7 @@ async def command_dog(client, message):
     # If the given command doesn't match the necessary pattern, we've got a problem.
     if command_match is None:
         response = "You've got the dog syntax wrong. Try `!help`."
-        await client.send_message(message.channel, response)
+        await message.channel.send(response)
 
         return
     
@@ -31,7 +31,7 @@ async def command_dog(client, message):
   
     # If no breed was requested, return a list of breeds.
     if requested_breed is None:
-        await client.send_message(message.channel, make_breeds_list(breeds)) 
+        await message.channel.send(make_breeds_list(breeds)) 
 
         return
     
@@ -42,7 +42,7 @@ async def command_dog(client, message):
             break
     else:
         response = "That breed isn't currently available!\n" + make_breeds_list(breeds)
-        await client.send_message(message.channel, response)
+        await message.channel.send(response)
 
         return
 
@@ -56,11 +56,11 @@ async def command_dog(client, message):
             with open(IMAGE_FILE, "wb") as writable_file:
                 writable_file.write(image)
             
-            await client.send_file(message.channel, IMAGE_FILE)
+            await message.channel.send(file=discord.File(IMAGE_FILE))
         else:
-            await client.send_message(message.channel, "Could not download image!")
+            await message.channel.send("Could not download image!")
     else:
-        await client.send_message(message.channel, "Could not reach Woofbot API.")
+        await message.channel.send("Could not reach Woofbot API.")
 
 
 async def fetch_image(url):

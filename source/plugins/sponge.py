@@ -5,6 +5,7 @@ Written by Tiger Sachse.
 import re
 import random
 import textwrap
+import discord
 from PIL import Image, ImageDraw, ImageFont
 
 COMMAND = "sponge"
@@ -30,7 +31,7 @@ async def command_sponge(client, message):
     command_match = re.match(COMMAND_FORMAT, message.content, re.DOTALL)
     if command_match is None or not is_ascii(command_match.group("rest")):
         response = "You've got the syntax wrong. Try `!help`."
-        await client.send_message(message.channel, response)
+        await message.channel.send(response)
         return
 
     # Get the normal and SpOnGe text from the raw text of the message.
@@ -43,11 +44,11 @@ async def command_sponge(client, message):
     meme = generate_image(normal_text, sponge_text)
 
     # Send the meme to the client.
-    await client.send_file(message.channel, meme)
+    await message.channel.send(file=discord.File(meme))
     
     # Delete the original request if the user name was included in the meme.
     if is_ascii(message.author.display_name):
-        await client.delete_message(message)
+        await message.delete()
 
 
 def is_ascii(text):
