@@ -27,7 +27,7 @@ FORECAST_NUM = 3
 DEBUG = False       # prints api urls to console
 
 with open(API_KEY_FILE, "r") as f:
-    API_KEY = f.read()[:-1]
+    API_KEY = f.read().strip()
 API_OPTS = "&units=imperial&apikey={}".format(API_KEY)
 
 
