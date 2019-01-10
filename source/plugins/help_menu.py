@@ -60,6 +60,12 @@ async def command_help_menu(client, message):
     )
 
     embedded_message.add_field(
+        name="!magicball message",
+        value="Your questions will be answered by an object of irrelevance.",
+        inline=False
+    )
+
+    embedded_message.add_field(
         name="!sponge message",
         value="Create a spicy, sarcastic meme.",
         inline=False
