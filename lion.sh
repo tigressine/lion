@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # A small shell script that handles spinning up
 # and shutting down the bot.
 
@@ -25,7 +26,7 @@ start_lion() {
     cd source
 
     echo "Starting Lion..."
-    python3 lion.py &
+    python36 lion.py &
     echo $! > ../$LION_PID
 
     cd ..
@@ -39,7 +40,7 @@ install_dependencies() {
     fi
 
     apt install python3-pip
-    pip3 install discord BeautifulSoup4 httplib2 pillow
+    pip install discord BeautifulSoup4 httplib2 pillow
 
     printf "\n\n========================================================================\n"
     echo "You need the Discord and weather API tokens before the bot will work."
