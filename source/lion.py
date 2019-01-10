@@ -54,7 +54,7 @@ async def on_message(message):
 def load_token():
     """Load the Discord API authentication token."""
     with open(TOKEN_FILE, "r") as token_file:
-        return token_file.read()[:-1]
+        return token_file.read().strip()
 
 
 def handle_signals(signal_number, stack_frame):

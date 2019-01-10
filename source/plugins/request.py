@@ -25,7 +25,7 @@ async def command_request(client, message):
     try:
         await handle_request_command(client, message)
     except Exception as error:
-        await client.send_message(message.channel, str(error))
+        await message.channel.send(str(error))
         raise error
 
 
@@ -34,7 +34,7 @@ async def command_requests_management(client, message):
         await check_user_has_elevated_permissions(client, message,
                                                   lambda: handle_requests_management_command(client, message))
     except Exception as error:
-        await client.send_message(message.channel, str(error))
+        await message.channel.send(str(error))
         raise error
 
 
@@ -43,7 +43,7 @@ async def command_respond(client, message):
         await check_user_has_elevated_permissions(client, message,
                                                   lambda: handle_respond_command(client, message))
     except Exception as error:
-        await client.send_message(message.channel, str(error))
+        await message.channel.send(str(error))
         raise error
 
 
@@ -51,38 +51,38 @@ async def check_user_has_elevated_permissions(client, message, action):
     if user_has_elevated_permissions(message.author):
         await action()
     else:
-        await client.send_message(message.channel, NO_PERMISSIONS_RESPONSE)
+        await message.channel.send(NO_PERMISSIONS_RESPONSE)
 
 
 async def handle_request_command(client, message):
     request = create_request_item(message)
     add_request(request)
     await alert_admins(client, message, request)
-    await client.send_message(message.channel, DEFAULT_RESPONSE)
+    await message.channel.send(DEFAULT_RESPONSE)
 
 
 async def handle_requests_management_command(client, message):
     command = parse_sub_command(message.content)
 
     if command['subcommand'] == 'show':
-        await client.send_message(message.channel, get_requests_list_message())
+        await message.channel.send(get_requests_list_message())
     elif command['subcommand'] == 'clear':
         clear_requests()
-        await client.send_message(message.channel, 'The requests queue has been cleared')
+        await message.channel.send('The requests queue has been cleared')
 
 
 async def handle_respond_command(client, message):
     cmd = parse_respond_command(message.content)
     remove_request(cmd['request_index'])
     await send_respond_response(client, cmd)
-    await client.send_message(message.channel, 'The response has been sent')
+    await message.channel.send('The response has been sent')
 
 
 async def alert_admins(client, message, request):
     admin_channel = get(message.server.channels, name=ADMIN_CHANNEL_NAME)
     resp = 'New request "{}" by **{}**'.format(
         request['message'], request['author_name'])
-    await client.send_message(admin_channel, resp)
+    await admin_channel.send(resp)
 
 
 async def send_respond_response(client, cmd):
@@ -91,7 +91,7 @@ async def send_respond_response(client, cmd):
         request['author_id'], request['message'], cmd['message'])
 
     channel = client.get_channel(request['channel_id'])
-    await client.send_message(channel, resp)
+    await channel.send(resp)
 
 
 def parse_respond_command(content):

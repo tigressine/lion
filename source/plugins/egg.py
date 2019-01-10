@@ -31,7 +31,7 @@ async def command_egg(client, message):
     command_match = re.match(COMMAND_FORMAT, message.content, re.DOTALL)
     if command_match is None or not is_ascii(command_match.group("rest")):
         syntax_error_response = "Incorrect egg syntax. Try `!help`."
-        await client.send_message(message.channel, syntax_error_response)
+        await message.channel.send(syntax_error_response)
 
         return
 
@@ -54,13 +54,13 @@ async def command_egg(client, message):
 
     # Send the mention and response to the client.
     if len(response) < CHARACTER_LIMIT:
-        await client.send_message(message.channel, response)
+        await message.channel.send(response)
 
         # Delete the original request.
-        await client.delete_message(message)
+        await message.delete()
     else:
         sassy_response = "I can't handle that many characters. You gotta chill fam."
-        await client.send_message(message.channel, sassy_response)
+        await message.channel.send(sassy_response)
 
 
 def is_ascii(text):
