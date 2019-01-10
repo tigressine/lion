@@ -64,7 +64,6 @@ def handle_signals(signal_number, stack_frame):
 
 
 # Fire up the bot.
-print(load_token())
 signal.signal(signal.SIGINT, handle_signals)
 signal.signal(signal.SIGTERM, handle_signals)
 client.run(load_token())
