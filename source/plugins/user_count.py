@@ -8,7 +8,7 @@ RESPONSE_FORMAT = "**This server has {0} members ({1} currently online).**"
 
 async def command_user_count(client, message):
     """Display the server's user count."""
-    server = next(iter(client.servers))
+    server = next(iter(client.guilds))
 
     active_members = 0
     for member in server.members:
@@ -17,4 +17,4 @@ async def command_user_count(client, message):
             active_members += 1
 
     response = RESPONSE_FORMAT.format(server.member_count, active_members)
-    await client.send_message(message.channel, response)
+    await message.channel.send(response)
