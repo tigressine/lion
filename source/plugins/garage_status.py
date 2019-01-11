@@ -79,12 +79,12 @@ async def command_garage_status(client, message):
                 response = respond_with_single_garage(garage)
                 break
 
-    await message.channel.send(response)
+    garage_message = await message.channel.send(response)
 
     # A little Easter egg. ;)
     if random.random() < ODDS:
         for emoji in VEHICLE_EMOJIS:
-            await message.add_reaction(emoji)
+            await garage_message.add_reaction(emoji)
 
 
 def respond_with_all_garages(garages):
