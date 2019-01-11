@@ -2,21 +2,22 @@ import json
 import random
 import discord
 import re
-COMMAND = "magicball"
+COMMAND = "8ball"
 
 COMMAND_PATTERN = r"^\!{0}( (?P<question>[a-zA-Z ]([^\"]+)+))?$".format(COMMAND)
 """This prints out the messages to see if the json is loaded"""
 debug = False
+
+
 async def command_magicball(client,message):
     """See if !magic (message) matches the regex pattern above.
     This also allows for easy string extraction from message"""
     command_match = re.match(COMMAND_PATTERN, message.content)
 
-
     response = command_match.group("question")
 
     if response is None:
-        response = "Hmmmmm"
+        response = "Magic 8 ball says:"
     """JSON to a 2d array"""
     with open("data/8ball_responses.json") as f:
         data = json.load(f)
