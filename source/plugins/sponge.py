@@ -4,8 +4,8 @@ Written by Tiger Sachse.
 """
 import re
 import random
-import textwrap
 import discord
+import textwrap
 from PIL import Image, ImageDraw, ImageFont
 
 COMMAND = "sponge"
