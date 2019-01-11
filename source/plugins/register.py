@@ -1,3 +1,8 @@
+"""Register and unregister from classes to show/hide
+them in the sidebar
+
+Written by Sam Shannon
+"""
 
 import re
 import discord
@@ -32,10 +37,12 @@ class Class:
 async def command_list(client, message):
     """List the available classes"""
 
+    # header for "table"
     response = "**All classes:**\n```\n"
     response += "{:5}{:16} {:16}{}\n".format("", "Class name", "Professor", "Channel name")
     response += ("="*64) + "\n"
 
+    # show class details
     classes = await get_classes(message.guild)
     for class_ in classes:
         arrow = "-->" if class_.contains_member(message.author) else ""
@@ -97,12 +104,15 @@ async def command_unregister(client, message):
 
 
 async def get_classes_from_message(message):
+    """Get classes user referenced in their message"""
     possible_classes = await get_classes(message.guild)
     req_class_names = message.content.split()[1:]
 
+    # if only "all", return all classes
     if len(req_class_names) == 1 and req_class_names[0].lower() == "all":
         return possible_classes
 
+    # find the requested classes
     req_class_names = set(req_class_names)
     classes = []
     for req_class_name in req_class_names:
