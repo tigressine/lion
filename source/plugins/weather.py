@@ -27,7 +27,7 @@ FORECAST_NUM = 3
 DEBUG = False       # prints api urls to console
 
 with open(API_KEY_FILE, "r") as f:
-    API_KEY = f.read()[:-1]
+    API_KEY = f.read().strip()
 API_OPTS = "&units=imperial&apikey={}".format(API_KEY)
 
 
@@ -38,7 +38,7 @@ async def command_weather(client, message):
     # check syntax
     if command_match is None:
         response = "Incorrect command syntax. Try `!help`."
-        await client.send_message(message.channel, response)
+        await message.channel.send(response)
         return
     
     # get location from command
@@ -52,13 +52,13 @@ async def command_weather(client, message):
     if weather_data['cod'] != 200:
         err_message = weather_data['message'] if 'message' in weather_data else "unknown"
         response = "**API Error: {}**".format(err_message)
-        await client.send_message(message.channel, response)
+        await message.channel.send(response)
         return
     
     forecast_data = await fetch_weather("forecast", location)
     embed = generate_embed(weather_data, forecast_data)
 
-    await client.send_message(message.channel, "", embed=embed)
+    await message.channel.send("", embed=embed)
     
 
 async def fetch_weather(type, location):
@@ -154,7 +154,7 @@ def generate_embed(wdata, fdata):
     wind_dir = wdata['wind']['deg'] if 'deg' in wdata['wind'] else -1
     embed.add_field(
         name="Wind",
-        value="💨 {}mph {}".format(roundtoint(wind_speed), get_wind_arrow(wind_dir), wind_dir),
+        value="💨 {}mph {}".format(roundtoint(wind_speed), get_wind_arrow(wind_dir)),
         inline=True
     )
     

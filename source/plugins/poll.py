@@ -34,7 +34,7 @@ async def command_poll(client, message):
     # Throw an error message if the command syntax is wrong.
     if command_match is None:
         response = "You've got the poll syntax wrong. Try `!help`."
-        await client.send_message(message.channel, response)
+        await message.channel.send(response)
 
         return
 
@@ -44,7 +44,7 @@ async def command_poll(client, message):
             "You are asking for too much time. "
             + "I can't remember things for that long!"
         )
-        await client.send_message(message.channel, response)
+        await message.channel.send(response)
 
         return
 
@@ -53,29 +53,29 @@ async def command_poll(client, message):
     choices = command_match.group("choices").split(DELIMITER)
     if len(choices) > 9:
         response = "You've got too many choices. Keep it below 10."
-        await client.send_message(message.channel, response)
+        await message.channel.send(response)
 
         return
 
     prompt = command_match.group("prompt")
     response = get_response(prompt, choices)
-    poll_message = await client.send_message(message.channel, response)
+    poll_message = await message.channel.send(response)
 
     # Add reaction integers so members can vote in the poll.
     for integer in range(1, len(choices) + 1):
-        await client.add_reaction(poll_message, INTEGER_EMOJIS[integer])
+        await poll_message.add_reaction(INTEGER_EMOJIS[integer])
 
     # Wait for the poll to complete.
     await asyncio.sleep(int(command_match.group("amount")) * 60)
 
     # Attempt to find the poll. If it has been popped from the message deque
     # then just return. This is not ideal... see the find_poll_message docstring.
-    poll_message = find_poll_message(client, response)
+    poll_message = await find_poll_message(message.channel, poll_message)
     if poll_message == None:
         return
 
     results = get_results(poll_message, prompt, choices)
-    await client.send_message(message.channel, results)
+    await message.channel.send(results)
 
 
 def get_response(prompt, choices, winners=[]):
@@ -113,14 +113,6 @@ def get_results(message, prompt, choices):
     return RESULTS_HEADER + "\n" + get_response(prompt, choices, winners)
 
 
-def find_poll_message(client, text):
-    """Search from the back of the deque forward for the poll.
-    
-    This is not an ideal solution, but message objects do not appear
-    to update with new reactions and waiting for reactions causes problems,
-    so it is necessary to hunt down the message again in the deque. Reversing
-    the deque returns a reversed iterator which is quite time and memory
-    efficient. This could fail if more than MAX_MESSAGES are produced in the
-    poll's time frame.
-    """
-    return discord.utils.get(reversed(client.messages), content=text)
+async def find_poll_message(channel, poll_message):
+    """Find the poll message again."""
+    return await channel.history(around=poll_message).get(id=poll_message.id)
