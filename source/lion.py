@@ -12,7 +12,7 @@ import discord
 from plugins import COMMANDS, INLINES, FILTERED_CHANNELS
 
 TOKEN_FILE = "data/discord_token.txt"
-COMMAND_PATTERN = r"^!(?P<command>[a-zA-Z]+)"
+COMMAND_PATTERN = r"^!(?P<command>[a-zA-Z0-9]+)"
 
 # Create a Discord client to interface with Discord servers.
 client = discord.Client()
@@ -49,6 +49,13 @@ async def on_message(message):
             await COMMANDS[command](client, message)
         else:
             await COMMANDS["help"](client, message)
+
+
+@client.event
+async def on_member_join(member):
+    # change this to a more detailed message
+    # with instructions on how to register for classes
+    await member.send("Welcome to the CS discord!")
 
 
 def load_token():
