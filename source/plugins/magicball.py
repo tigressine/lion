@@ -2,6 +2,8 @@ import json
 import random
 import discord
 import re
+import os
+from plugins import egg
 COMMAND = "8ball"
 
 COMMAND_PATTERN = r"^\!{0}( (?P<question>[a-zA-Z ]([^\"]+)+))?$".format(COMMAND)
@@ -14,8 +16,14 @@ async def command_magicball(client,message):
     This also allows for easy string extraction from message"""
     command_match = re.match(COMMAND_PATTERN, message.content)
 
-    response = command_match.group("question")
+    if len(message.content) > (1+len(COMMAND)):
+        if command_match is None or not egg.is_ascii(command_match.group("question")):
+            syntax_error_response = "Incorrect 8 ball syntax. Try `!help`."
+            await message.channel.send(syntax_error_response)
 
+            return
+
+    response = command_match.group("question")
     if response is None:
         response = "Magic 8 ball says:"
     """JSON to a 2d array"""
