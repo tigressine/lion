@@ -37,12 +37,8 @@ async def command_list(client, message):
     response += ("="*64) + "\n"
 
     classes = await get_classes(message.guild)
-    prev_short = classes[0].short
     for class_ in classes:
         arrow = "-->" if class_.contains_member(message.author) else ""
-        if class_.short != prev_short:
-            response += "\n"
-        prev_short = class_.short
         response += "{:5}{:16} {:16}{}\n".format(arrow, class_.short, class_.prof, class_.name)
 
     response += "```\nYour classes are highlighted with an arrow.\n" \
