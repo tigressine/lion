@@ -55,7 +55,10 @@ async def on_message(message):
 async def on_member_join(member):
     # change this to a more detailed message
     # with instructions on how to register for classes
-    await member.send("Welcome to the CS discord!")
+
+    # uncomment line to enable
+    #await member.send("Welcome to the CS discord!")
+    pass
 
 
 def load_token():
