@@ -12,7 +12,7 @@ import discord
 from plugins import COMMANDS, INLINES, FILTERED_CHANNELS
 
 TOKEN_FILE = "data/discord_token.txt"
-COMMAND_PATTERN = r"^!(?P<command>[a-zA-Z]+)"
+COMMAND_PATTERN = r"^!(?P<command>[a-zA-Z0-9]+)"
 
 # Create a Discord client to interface with Discord servers.
 client = discord.Client()
