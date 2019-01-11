@@ -62,7 +62,7 @@ async def command_garage_status(client, message):
     # If the given command doesn't match the necessary pattern, we've got a problem.
     if command_match is None:
         response = "You've got the garage syntax wrong. Try `!help`."
-        await client.send_message(message.channel, response)
+        await message.channel.send(response)
 
         return
 
@@ -79,12 +79,12 @@ async def command_garage_status(client, message):
                 response = respond_with_single_garage(garage)
                 break
 
-    garage_message = await client.send_message(message.channel, response)
+    garage_message = await message.channel.send(response)
 
     # A little Easter egg. ;)
     if random.random() < ODDS:
         for emoji in VEHICLE_EMOJIS:
-            await client.add_reaction(garage_message, emoji)
+            await garage_message.add_reaction(emoji)
 
 
 def respond_with_all_garages(garages):

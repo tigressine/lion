@@ -52,4 +52,4 @@ async def command_info(client, message):
         inline=False
     )
     
-    await client.send_message(message.channel, response, embed=embedded_message)
+    await message.channel.send(response, embed=embedded_message)

@@ -23,11 +23,11 @@ async def command_addroles(client, message):
         return
 
     try:
-        await client.add_roles(message.author, *roles)
+        await message.author.add_roles(*roles)
         response = "Added roles! Check them out with `!{0}`".format(LIST_COMMAND)
-        await client.send_message(message.channel, response)
+        await message.channel.send(response)
     except discord.errors.Forbidden:
-        await client.send_message(message.channel, PERMISSIONS_ERROR)
+        await message.channel.send(PERMISSIONS_ERROR)
 
 
 async def command_removeroles(client, message):
@@ -37,18 +37,18 @@ async def command_removeroles(client, message):
         return
 
     try:
-        await client.remove_roles(message.author, *roles)
+        await message.author.remove_roles(*roles)
         response = "Removed roles. Confirm with `!{0}`".format(LIST_COMMAND)
-        await client.send_message(message.channel, response)
+        await message.channel.send(response)
     except discord.errors.Forbidden:
-        await client.send_message(message.channel, PERMISSIONS_ERROR)
+        await message.channel.send(PERMISSIONS_ERROR)
 
 
 async def command_listroles(client, message):
     """List all roles available on the server."""
     response = get_response(get_server(client), message.author)
 
-    await client.send_message(message.channel, response)
+    await message.channel.send(response)
 
 
 async def get_roles(client, message, command, command_pattern):
@@ -58,7 +58,7 @@ async def get_roles(client, message, command, command_pattern):
     command_match = re.match(command_pattern, message.content)
     if command_match is None:
         response = "You've got the {0} syntax wrong. Try `!help`.".format(command)
-        await client.send_message(message.channel, response)
+        await message.channel.send(response)
 
         return None
 
@@ -76,7 +76,7 @@ async def get_roles(client, message, command, command_pattern):
                 break
         else:
             response = "`{0}` is not a role. Try `!{1}`.".format(name, LIST_COMMAND)
-            await client.send_message(message.channel, response)
+            await message.channel.send(response)
 
             return None
 
@@ -85,7 +85,7 @@ async def get_roles(client, message, command, command_pattern):
 
 def get_server(client):
     """Get the next (and only) server for the client."""
-    return next(iter(client.servers))
+    return next(iter(client.guilds))
 
 
 def get_response(server, author):
