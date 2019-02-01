@@ -18,7 +18,8 @@ from plugins import (
     user_count,
     garage_status,
     require_links,
-    magicball
+    register,
+    magicball,
 )
 
 FILTERED_CHANNELS = {
@@ -38,7 +39,10 @@ COMMANDS = {
     roles.REMOVE_COMMAND : roles.command_removeroles,
     user_count.COMMAND : user_count.command_user_count,
     garage_status.COMMAND : garage_status.command_garage_status,
-    magicball.COMMAND : magicball.command_magicball
+    register.LIST_COMMAND : register.command_list,
+    register.REGISTER_COMMAND : register.command_register,
+    register.UNREGISTER_COMMAND : register.command_unregister,
+    magicball.COMMAND : magicball.command_magicball,
 }
 
 INLINES = {
