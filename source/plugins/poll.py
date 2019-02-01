@@ -10,7 +10,7 @@ import asyncio
 import discord
 
 COMMAND = "poll"
-DELIMITER = ", "
+DELIMITER = ","
 MAX_MINUTES = 60
 CHOICE_FORMAT = "{0}) {1}"
 POLL_HEADER = "**New poll:**"
@@ -50,7 +50,7 @@ async def command_poll(client, message):
 
     # Split choices by the delimiter and show the help message if
     # too many choices are provided.
-    choices = command_match.group("choices").split(DELIMITER)
+    choices = [x.strip() for x in command_match.group("choices").split(DELIMITER)]
     if len(choices) > 9:
         response = "You've got too many choices. Keep it below 10."
         await message.channel.send(response)
