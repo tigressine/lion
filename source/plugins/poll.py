@@ -114,13 +114,5 @@ def get_results(message, prompt, choices):
 
 
 async def find_poll_message(channel, poll_message):
-    """Search from the back of the deque forward for the poll.
-    
-    This is not an ideal solution, but message objects do not appear
-    to update with new reactions and waiting for reactions causes problems,
-    so it is necessary to hunt down the message again in the deque. Reversing
-    the deque returns a reversed iterator which is quite time and memory
-    efficient. This could fail if more than MAX_MESSAGES are produced in the
-    poll's time frame.
-    """
+    """Find the poll message again."""
     return await channel.history(around=poll_message).get(id=poll_message.id)
