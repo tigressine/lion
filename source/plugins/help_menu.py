@@ -83,4 +83,22 @@ async def command_help_menu(client, message):
         inline=False
     )
 
+    embedded_message.add_field(
+        name="!listclasses",
+        value="List all class channels",
+        inline=False
+    )
+
+    embedded_message.add_field(
+        name="!register [class_names...]",
+        value="Register for classes, allowing access their channels",
+        inline=False
+    )
+
+    embedded_message.add_field(
+        name="!unregister [class_names...]",
+        value="Unregister from classes, hiding their channels",
+        inline=False
+    )
+
     await message.channel.send(response, embed=embedded_message)
