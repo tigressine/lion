@@ -12,3 +12,5 @@ Existing Functions:
 - Dog picture picker
 - Text egging machine
 - Spongebob meme generator
+- Magic 8-ball fortune teller
+- Class channel registraion
