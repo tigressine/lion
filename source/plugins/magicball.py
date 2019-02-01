@@ -4,11 +4,16 @@ import discord
 import re
 import os
 from plugins import egg
-COMMAND = "8ball"
 
+COMMAND = "8ball"
 COMMAND_PATTERN = r"^\!{0}( (?P<question>[a-zA-Z ]([^\"]+)+))?$".format(COMMAND)
 """This prints out the messages to see if the json is loaded"""
-debug = False
+
+COLORS = {
+    "positive": 0x008000,
+    "neutral": 0xffee05,
+    "negative": 0xff0000
+}
 
 
 async def command_magicball(client,message):
@@ -26,20 +31,18 @@ async def command_magicball(client,message):
     response = command_match.group("question")
     if response is None:
         response = "Magic 8 ball says:"
+    
     """JSON to a 2d array"""
     with open("data/8ball_responses.json") as f:
         data = json.load(f)
-
-    if debug:
-        print(data["magicball"][random.randint(0, len(data["magicball"]))])
+    fortune = data[random.randrange(len(data))]
 
     """Embedded Discord message creation"""
-    embed = discord.Embed(color=0x6105ff)
+    embed = discord.Embed(color=COLORS[fortune[1].lower()])
 
-    embed.set_author(
-        name="Magic Ball of Fortune", icon_url = "https://cdn.discordapp.com/attachments/353269187633741824/532808475781234688/61F8HIGkUiL.png")
+    embed.set_thumbnail(url = "https://cdn.discordapp.com/attachments/532378760893169664/540981908218183701/magicball48.png")
 
-    embed.add_field(name=response, value=data["magicball"][random.randint(0, len(data["magicball"]))], inline=False)
+    embed.add_field(name=response, value=fortune[0], inline=False)
 
     await message.channel.send(embed=embed)
 
