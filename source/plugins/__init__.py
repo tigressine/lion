@@ -19,6 +19,7 @@ from plugins import (
     garage_status,
     require_links,
     register,
+    magicball,
 )
 
 FILTERED_CHANNELS = {
@@ -41,6 +42,7 @@ COMMANDS = {
     register.LIST_COMMAND : register.command_list,
     register.REGISTER_COMMAND : register.command_register,
     register.UNREGISTER_COMMAND : register.command_unregister,
+    magicball.COMMAND : magicball.command_magicball,
 }
 
 INLINES = {
