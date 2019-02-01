@@ -1,5 +1,10 @@
 CHANGE LOG
 
+v1.3.0
+    - Added register plugin.
+    - Added magic 8-ball plugin.
+    - Updated discord.py dependency to 1.0 rewrite version.
+
 v1.2.2
     - Fixed issue with forecast times being wrong in weather plugin.
 
