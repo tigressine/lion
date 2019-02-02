@@ -2,6 +2,8 @@
 
 Follow these steps to get started developing for lion after cloning the repo
 
+*Do `!addroles LionCollab` in the discord server for access to the lion development channel*
+
 ### 1. Installing dependencies
 Note: lion requires Python 3.5.3+
 
