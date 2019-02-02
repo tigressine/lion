@@ -39,7 +39,7 @@ async def on_message(message):
 
             return
 
-    command_match = re.match(COMMAND_PATTERN, message.content)
+    command_match = re.match(COMMAND_PATTERN, message.content, re.IGNORECASE)
     if command_match is not None:
         command = command_match.group("command")
 
