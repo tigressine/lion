@@ -42,6 +42,8 @@ async def on_message(message):
     command_match = re.match(COMMAND_PATTERN, message.content, re.IGNORECASE)
     if command_match is not None:
         command = command_match.group("command")
+        message.content = message.content.replace(command, command.lower(), 1)
+        command = command.lower()
 
         # If the command is supported, execute its function. Else call
         # the "help" function.
