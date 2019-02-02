@@ -25,7 +25,7 @@ async def command_info(client, message):
             "Evan Rupert",
             "Hayden Inghem",
             "Caleb Shepard",
-            "Joey the Corgi",
+            "Joey",
             "Matthew Bautista",
         )),
         inline=False
