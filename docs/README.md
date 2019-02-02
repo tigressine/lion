@@ -14,3 +14,9 @@ Existing Functions:
 - Spongebob meme generator
 - Magic 8-ball fortune teller
 - Class channel registraion
+
+
+&nbsp;
+
+
+[Getting started guide](https://github.com/tgsachse/lion/blob/master/docs/gettingstarted.md)
