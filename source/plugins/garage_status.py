@@ -41,7 +41,7 @@ class Garage:
 
     def set_saturated_space(self, available_space):
         """Set the saturated space."""
-        self.saturated_space = self.capacity - int(available_space)
+        self.saturated_space = max(self.capacity - int(available_space), 0)
         self.percent_full = self.__get_percent_full()
 
 
