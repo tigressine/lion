@@ -17,7 +17,7 @@ COLORS = {
 
 
 async def command_magicball(client,message):
-    """See if !magic (message) matches the regex pattern above.
+    """See if !8ball (message) matches the regex pattern above.
     This also allows for easy string extraction from message"""
     command_match = re.match(COMMAND_PATTERN, message.content)
 
@@ -45,4 +45,3 @@ async def command_magicball(client,message):
     embed.add_field(name=response, value=fortune[0], inline=False)
 
     await message.channel.send(embed=embed)
-
