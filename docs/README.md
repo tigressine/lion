@@ -15,4 +15,4 @@ Existing Functions:
 - Spongebob meme generator
 - Magic 8-ball fortune teller
 
-[Getting started guide](https://github.com/tgsachse/lion/blob/master/docs/GETTING_STARTED.md)
+[Development Guide](https://github.com/tgsachse/lion/blob/master/docs/GETTING_STARTED.md)
