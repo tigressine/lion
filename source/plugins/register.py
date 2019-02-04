@@ -120,7 +120,6 @@ async def get_classes_from_message(message):
         if "_" not in req_class_name:
             for possible_class in possible_classes:
                 if possible_class.name.split('_')[0].strip() == req_class_name.strip():
-                    print(possible_class.name)
                     classes.append(possible_class)
             if len(classes) == 0:
                 response = "`{}` is not an available class group. Try `!{}`." \
