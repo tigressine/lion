@@ -90,13 +90,13 @@ async def command_help_menu(client, message):
     )
 
     embedded_message.add_field(
-        name="!register [classes...]",
+        name="!register [all|classes...]",
         value="Gain access to class channels.",
         inline=False
     )
 
     embedded_message.add_field(
-        name="!unregister [classes...]",
+        name="!unregister [all|classes...]",
         value="Remove access to class channels.",
         inline=False
     )
