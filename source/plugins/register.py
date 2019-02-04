@@ -15,7 +15,7 @@ LIST_COMMAND_FORMAT = r"^!{0}$".format(LIST_COMMAND)
 REGISTER_COMMAND_FORMAT = r"^!{0}( [a-zA-Z0-9_ ]+)$".format(REGISTER_COMMAND)
 UNREGISTER_COMMAND_FORMAT = r"^!{0}( [a-zA-Z0-9_ ]+)$".format(UNREGISTER_COMMAND)
 
-CLASS_PATTERN = re.compile(r"(?P<short>[a-z0-9]+)_(?P<prof>[a-z]+)$")
+CLASS_PATTERN = re.compile(r"(?P<short>[a-z0-9_]+)_(?P<prof>[a-z]+)$")
 
 ALLOWED_CATEGORIES = ["CLASSES"]
 
@@ -24,6 +24,11 @@ class Class:
     def __init__(self, name, channel):
         self.name = name
         self.channel = channel
+
+        match = CLASS_PATTERN.match(self.name)
+        if match:
+            self.short = match.group("short")
+            self.prof = match.group("prof")
 
     def contains_member(self, member):
         return self.channel.permissions_for(member).read_messages
@@ -120,7 +125,7 @@ async def get_classes_from_message(message):
         # class group
         if "_" not in req_class_name:
             for possible_class in possible_classes:
-                if possible_class.name.split('_')[0].strip() == req_class_name.strip():
+                if possible_class.short == req_class_name.strip():
                     classes.append(possible_class)
             if len(classes) == 0:
                 response = "`{}` is not an available class group. Try `!{}`." \
