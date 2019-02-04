@@ -3,6 +3,7 @@ CHANGE LOG
 v1.3.0
     - Added register plugin.
     - Added magic 8-ball plugin.
+    - Commands are now case-insensitive.
     - Polls choices no longer require spaces after commas.
     - Updated discord.py dependency to 1.0 rewrite version.
 
