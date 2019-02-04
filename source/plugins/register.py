@@ -25,11 +25,6 @@ class Class:
         self.name = name
         self.channel = channel
 
-        match = CLASS_PATTERN.match(self.name)
-        if match:
-            self.short = match.group("short")
-            self.prof = match.group("prof")
-
     def contains_member(self, member):
         return self.channel.permissions_for(member).read_messages
 
@@ -62,10 +57,10 @@ async def command_register(client, message):
 
     # get the requested classes
     cfm = await get_classes_from_message(message)
+    if cfm is None:
+        return
     classes = cfm[0]
     isAll = cfm[1]
-    if classes is None:
-        return
 
     # give permissions
     for class_ in classes:
@@ -92,9 +87,10 @@ async def command_unregister(client, message):
         return
 
     # get the requested classes
-    classes = (await get_classes_from_message(message))[0]
-    if classes is None:
+    cfm = await get_classes_from_message(message)
+    if cfm is None:
         return
+    classes = cfm[0]
 
     # remove permissions
     for class_ in classes:
@@ -119,15 +115,30 @@ async def get_classes_from_message(message):
     classes = []
     for req_class_name in req_class_names:
         req_class_name = req_class_name.lower()
-        for possible_class in possible_classes:
-            if req_class_name == possible_class.name:
-                classes.append(possible_class)
-                break
+
+        # class group
+        if "_" not in req_class_name:
+            for possible_class in possible_classes:
+                if possible_class.name.split('_')[0].strip() == req_class_name.strip():
+                    print(possible_class.name)
+                    classes.append(possible_class)
+            if len(classes) == 0:
+                response = "`{}` is not an available class group. Try `!{}`." \
+                    .format(req_class_name, LIST_COMMAND)
+                await message.channel.send(response)
+                return
+
+        # individual class
         else:
-            response = "`{}` is not an available class. Try `!{}`." \
-                .format(req_class_name, LIST_COMMAND)
-            await message.channel.send(response)
-            return
+            for possible_class in possible_classes:
+                if req_class_name == possible_class.name:
+                    classes.append(possible_class)
+                    break
+            else:
+                response = "`{}` is not an available class. Try `!{}`." \
+                    .format(req_class_name, LIST_COMMAND)
+                await message.channel.send(response)
+                return
     
     return (classes, False)
 
