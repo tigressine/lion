@@ -39,7 +39,8 @@ install_dependencies() {
     fi
 
     apt install python3-pip
-    pip3 install discord-rewrite BeautifulSoup4 httplib2 pillow yarl==0.13.0
+    pip3 install BeautifulSoup4 httplib2 pillow yarl==0.13.0
+    pip3 install -U git+https://github.com/Rapptz/discord.py@rewrite#egg-discord.py
 
     printf "\n\n========================================================================\n"
     echo "You need the Discord and weather API tokens before the bot will work."
