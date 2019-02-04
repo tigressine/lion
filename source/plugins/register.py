@@ -61,7 +61,9 @@ async def command_register(client, message):
         return
 
     # get the requested classes
-    classes = await get_classes_from_message(message)
+    cfm = await get_classes_from_message(message)
+    classes = cfm[0]
+    isAll = cfm[1]
     if classes is None:
         return
 
@@ -70,9 +72,12 @@ async def command_register(client, message):
         await class_.channel.set_permissions(message.author, read_messages=True)
 
     # output the registered classes
-    response = "Registered classes:"
-    for class_ in classes:
-        response += "\n<#{}>".format(class_.channel.id)
+    if not isAll:
+        response = "Registered classes:"
+        for class_ in classes:
+            response += "\n<#{}>".format(class_.channel.id)
+    else:
+        response = "Registered all classes."
     await message.channel.send(response)
 
 
@@ -87,7 +92,7 @@ async def command_unregister(client, message):
         return
 
     # get the requested classes
-    classes = await get_classes_from_message(message)
+    classes = (await get_classes_from_message(message))[0]
     if classes is None:
         return
 
@@ -107,7 +112,7 @@ async def get_classes_from_message(message):
 
     # if only "all", return all classes
     if len(req_class_names) == 1 and req_class_names[0].lower() == "all":
-        return possible_classes
+        return (possible_classes, True)
 
     # find the requested classes
     req_class_names = set(req_class_names)
@@ -124,7 +129,7 @@ async def get_classes_from_message(message):
             await message.channel.send(response)
             return
     
-    return classes
+    return (classes, False)
 
 
 async def get_classes(guild):
