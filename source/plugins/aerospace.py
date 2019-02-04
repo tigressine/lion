@@ -2,10 +2,13 @@
 
 Written by Tiger Sachse.
 """
+import random
 
 INLINE = r"(a|A)(e|E)(r|R)(o|O)(s|S)(p|P)(a|A)(c|C)(e|E)"
-RESPONSE = "✈ **Resetting aerospace clock...** ✈"
+RESPONSE = "✈ **Did I hear aerospace?** ✈"
+ODDS = .1
 
 async def inline_aerospace(client, message):
     """Reset the aerospace clock."""
-    await message.channel.send(RESPONSE)
+    if random.random() < ODDS:
+        await message.channel.send(RESPONSE)

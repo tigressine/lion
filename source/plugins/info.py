@@ -20,12 +20,12 @@ async def command_info(client, message):
     embedded_message.add_field(
         name="Contributors",        
         value="\n".join((
+            "Joey",
             "Charles",
             "Sam Shannon",
             "Evan Rupert",
             "Hayden Inghem",
             "Caleb Shepard",
-            "Joey",
             "Matthew Bautista",
         )),
         inline=False

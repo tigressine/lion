@@ -14,12 +14,13 @@ from plugins import (
     roles,
     sponge,
     weather,
+    register,
+    magicball,
+    aerospace,
     help_menu,
     user_count,
     garage_status,
     require_links,
-    register,
-    magicball,
 )
 
 FILTERED_CHANNELS = {
@@ -46,4 +47,5 @@ COMMANDS = {
 }
 
 INLINES = {
+    aerospace.INLINE : aerospace.inline_aerospace
 }
