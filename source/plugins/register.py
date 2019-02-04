@@ -17,7 +17,7 @@ UNREGISTER_COMMAND_FORMAT = r"^!{0}( [a-zA-Z0-9_ ]+)$".format(UNREGISTER_COMMAND
 
 CLASS_PATTERN = re.compile(r"(?P<short>[a-z0-9]+)_(?P<prof>[a-z]+)$")
 
-ALLOWED_CATEGORIES = ["CORE CLASSES", "ELECTIVE CLASSES"]
+ALLOWED_CATEGORIES = ["CLASSES"]
 
 
 class Class:
@@ -37,16 +37,13 @@ class Class:
 async def command_list(client, message):
     """List the available classes"""
 
-    # header for "table"
     response = "**All classes:**\n```\n"
-    response += "{:5}{:16} {:16}{}\n".format("", "Class name", "Professor", "Channel name")
-    response += ("="*64) + "\n"
 
     # show class details
     classes = await get_classes(message.guild)
     for class_ in classes:
         arrow = "-->" if class_.contains_member(message.author) else ""
-        response += "{:5}{:16} {:16}{}\n".format(arrow, class_.short, class_.prof, class_.name)
+        response += "{:4}{}\n".format(arrow, class_.name)
 
     response += "```\nYour classes are highlighted with an arrow.\n" \
         "You can manage your classes with `!{}` and `!{}`".format(REGISTER_COMMAND, UNREGISTER_COMMAND)
@@ -99,7 +96,7 @@ async def command_unregister(client, message):
         await class_.channel.set_permissions(message.author, read_messages=False)
 
     # reply
-    response = "Unregistered classes."
+    response = "Unregistered from classes."
     await message.channel.send(response)
 
 
