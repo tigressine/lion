@@ -39,7 +39,7 @@ install_dependencies() {
     fi
 
     apt install python3-pip
-    pip3 install discord BeautifulSoup4 httplib2 pillow
+    pip3 install discord-rewrite BeautifulSoup4 httplib2 pillow yarl==0.13.0
 
     printf "\n\n========================================================================\n"
     echo "You need the Discord and weather API tokens before the bot will work."

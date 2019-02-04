@@ -61,7 +61,7 @@ async def command_help_menu(client, message):
 
     embedded_message.add_field(
         name="!8ball message",
-        value="Your questions will be answered by an object of irrelevance.",
+        value="Get your questions answered by an object of irrelevance.",
         inline=False
     )
 
@@ -85,19 +85,19 @@ async def command_help_menu(client, message):
 
     embedded_message.add_field(
         name="!listclasses",
-        value="List all class channels",
+        value="List all class channels.",
         inline=False
     )
 
     embedded_message.add_field(
-        name="!register [class_names...]",
-        value="Register for classes, allowing access their channels",
+        name="!register [classes...]",
+        value="Gain access to class channels.",
         inline=False
     )
 
     embedded_message.add_field(
-        name="!unregister [class_names...]",
-        value="Unregister from classes, hiding their channels",
+        name="!unregister [classes...]",
+        value="Remove access to class channels.",
         inline=False
     )
 
