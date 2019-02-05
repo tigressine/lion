@@ -1,5 +1,10 @@
 CHANGE LOG
 
+v1.3.1
+    - Added ability to register for all professors of a class
+    - Greatly improved speed of !register all
+    - Condensed response for !register all
+
 v1.3.0
     - Added register plugin.
     - Added magic 8-ball plugin.
