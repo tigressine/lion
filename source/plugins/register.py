@@ -41,7 +41,6 @@ async def command_list(client, message):
 
     # show class details
     classes = await get_classes(message.guild)
-    classes.sort(key=lambda x: x.name)
     for class_ in classes:
         arrow = "-->" if class_.contains_member(message.author) else ""
         response += "{:4}{}\n".format(arrow, class_.name)
