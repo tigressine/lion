@@ -7,6 +7,7 @@ Written by Tiger Sachse.
 """
 
 from plugins import (
+    calendar,
     egg,
     dog,
     info,
@@ -28,6 +29,7 @@ FILTERED_CHANNELS = {
 }
 
 COMMANDS = {
+    calendar.COMMAND : calendar.command_calendar,
     egg.COMMAND : egg.command_egg,
     dog.COMMAND : dog.command_dog,
     info.COMMAND : info.command_info,
