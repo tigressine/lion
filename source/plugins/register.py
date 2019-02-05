@@ -68,12 +68,16 @@ async def command_register(client, message):
     isAll = cfm[1]
 
     # give permissions
-    for class_ in classes:
-        await class_.channel.set_permissions(message.author, read_messages=True)
+    if isAll:
+        for category in get_categories(message.guild):
+            await category.set_permissions(message.author, read_messages=True)
+    else:
+        for class_ in classes:
+            await class_.channel.set_permissions(message.author, read_messages=True)
 
     # output the registered classes
     if not isAll:
-        response = "Registered classes:"
+        response = "**Registered classes:**"
         for class_ in classes:
             response += "\n<#{}>".format(class_.channel.id)
     else:
@@ -96,8 +100,12 @@ async def command_unregister(client, message):
     if cfm is None:
         return
     classes = cfm[0]
+    isAll = cfm[1]
 
     # remove permissions
+    if isAll:
+        for category in get_categories(message.guild):
+            await category.set_permissions(message.author, read_messages=False)
     for class_ in classes:
         await class_.channel.set_permissions(message.author, read_messages=False)
 
@@ -150,10 +158,17 @@ async def get_classes_from_message(message):
 async def get_classes(guild):
     # get all classes in the ALLOWED_CATEGORIES
     classes = []
-    for category in guild.categories:
-        if category.name.upper() in ALLOWED_CATEGORIES:
+    for category in get_categories(guild):
             for channel in category.channels:
                 class_ = Class(channel.name, channel)
                 classes.append(class_)
 
     return classes
+
+
+def get_categories(guild):
+    categories = []
+    for category in guild.categories:
+        if category.name.upper() in ALLOWED_CATEGORIES:
+            categories.append(category)
+    return categories
