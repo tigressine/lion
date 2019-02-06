@@ -76,6 +76,12 @@ async def command_help_menu(client, message):
         value="Send your text through the egg machine.",
         inline=False
     )
+
+    embedded_message.add_field(
+        name="!calendar <spring/summer/fall> <year> [tag filter]",
+        value="View the academic calendar. Common tags include no-classes, registration, housing, undergraduate, graduate, and faculty.",
+        inline=False
+    )
     
     embedded_message.add_field(
         name="!weather [city|zip]",
