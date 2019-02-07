@@ -1,3 +1,3 @@
-TOKEN_NAME = "discord.token"
-COGS_DIRECTORY = "cogs"
 PREFIX = "!"
+COGS_DIRECTORY = "cogs"
+TOKEN_NAME = "discord.token"

@@ -14,11 +14,17 @@ def load_token(token_name):
 def load_cogs(bot, cogs_directory):
     """"""
     cogs_path = Path(cogs_directory)
+    cogs_loaded = 0
     for cog in (path.stem for path in cogs_path.iterdir()):
+        print("Attempting to load '{0}' cog:".format(cog), end="")
         try:
             bot.load_extension(".".join((cogs_directory, str(cog), str(cog))))
-        except Exception as e:
-            print(e)
+            cogs_loaded += 1
+            print(" Success!")
+        except ModuleNotFoundError:
+            print(" Failure!")
+    print("Loaded {0} cog{1}.".format(cogs_loaded,
+                                      "s" if cogs_loaded != 1 else ""))
 
 
 load_cogs(bot, settings.COGS_DIRECTORY)
