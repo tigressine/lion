@@ -3,6 +3,12 @@
 
 # Written by Tiger Sachse.
 
+
+# dont need kill or start
+# change install dependencies to full install of system
+# remove dependencies for plugins
+# create a shell script in /usr/local/bin to call the lioncli.py script
+
 LION_PID="lion_pid_temp.txt"
 
 # Kill the bot.
