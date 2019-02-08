@@ -1,3 +1,5 @@
+import logging
+
 async def throw_error(context, error, message=None):
     """"""
     ERROR_FORMAT = ("Something went wrong!\n```\n"
@@ -35,7 +37,3 @@ def load_token(token_name):
     """Load the Discord API authentication token."""
     with open(token_name, "r") as token_file:
         return token_file.read().strip()
-
-
-def debugging_logging():
-    pass
