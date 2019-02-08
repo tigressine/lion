@@ -1,4 +1,7 @@
-"""Load all cogs into the main bot and run the bot.
+"""Create and run a Discord bot.
+
+This bot will load every cog (plugin) in the cogs directory, and then will
+run continously until interrupted. This script should be run as a daemon.
 
 Written by Tiger Sachse.
 """
@@ -9,7 +12,7 @@ from discord.ext import commands
 
 
 def load_cogs(bot, cogs_directory):
-    """Load all cogs into a bot within a cogs directory."""
+    """Load all cogs within a cogs directory into a bot."""
     cogs_loaded = 0
     cogs_path = Path(cogs_directory)
 
