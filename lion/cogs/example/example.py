@@ -13,7 +13,7 @@ class ExampleCog:
         """"""
         if number < 1 or number > 3:
             raise commands.errors.BadArgument("Number out of range.")
-        await context.send(self.get_example_text(number))
+        await utilities.respond(context, self.get_example_text(number))
 
     @example_command.error
     async def on_example_error(self, context, error):
