@@ -2,6 +2,8 @@
 
 Written by Tiger Sachse.
 """
+import time
+
 async def throw_error(context, error, message=None):
     """Send an error to the context's server.
     
@@ -42,6 +44,7 @@ async def respond(
 
     # Delete the original message by default.
     if delete_original:
+        time.sleep(1)
         await context.message.delete()
 
 
