@@ -19,11 +19,12 @@ async def throw_error(context, error, message=None):
     await respond(context, response)
 
 
-async def respond(context,
-                  message,
-                  ignore_formatting=False,
-                  delete_original=True,
-                  **keyword_arguments):
+async def respond(
+    context,
+    message,
+    ignore_formatting=False,
+    delete_original=True,
+    **keyword_arguments):
     """Respond to a message in context.
     
     The response is automatically formatted with the original message's author's
