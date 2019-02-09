@@ -1,69 +1,21 @@
-# A small shell script that handles spinning up
-# and shutting down the bot.
+DOCS_DIR="docs"
+TARGET_DIR="/opt"
+PACKAGE_DIR="lion"
 
-# Written by Tiger Sachse.
+if [[ $EUID -ne 0 ]]; then
+    echo "You must run this script as a root user (or with sudo)."
+    exit 1
+fi
 
-
-# dont need kill or start
-# change install dependencies to full install of system
-# remove dependencies for plugins
-# create a shell script in /usr/local/bin to call the lioncli.py script
-
-LION_PID="lion_pid_temp.txt"
-
-# Kill the bot.
-kill_lion() {
-    if [ ! -f $LION_PID ]; then
-        echo "Lion is not running."
-    else
-        printf "Killing Lion (%d)...\n" $(cat $LION_PID)
-        kill $(cat $LION_PID)
-
-        rm -rf source/plugins/__pycache__
-        rm -f $LION_PID
-    fi
-}
-
-# Start the bot.
-start_lion() {
-    kill_lion
-
-    cd source
-
-    echo "Starting Lion..."
-    python3 lion.py &
-    echo $! > ../$LION_PID
-
-    cd ..
-}
-
-# Install dependencies.
-install_dependencies() {
-    if [[ $EUID -ne 0 ]]; then
-        echo "This operation must be run as root." 
-        exit 1
-    fi
-
+if [ "$1" != "--ignore-dependencies" ]; then
     apt install python3-pip
-    pip3 install BeautifulSoup4 httplib2 pillow yarl==0.13.0
+    #pip3 install yarl==0.13.0
     pip3 install -U git+https://github.com/Rapptz/discord.py@rewrite#egg-discord.py
+fi
 
-    printf "\n\n========================================================================\n"
-    echo "You need the Discord and weather API tokens before the bot will work."
-    echo "These are pinned in the #lion_development channel of the UCF CS Discord."
-    echo "Ask a moderator for access to this channel."
-    printf "========================================================================\n"
-}
+mkdir -p "$TARGET_DIR/$PACKAGE_DIR"
 
-# Main entry point of the script.
-case $1 in
-    "--start")
-        start_lion
-        ;;
-    "--kill")
-        kill_lion
-        ;;
-    "--install-dependencies")
-        install_dependencies
-        ;;
-esac
+find $PACKAGE_DIR/* -type d | xargs --replace="%" mkdir -p "$TARGET_DIR/%"
+find $PACKAGE_DIR/* -type f ! -path "*.token" | xargs --replace="%" cp "%" "$TARGET_DIR/%"
+
+cp -r $DOCS_DIR $TARGET_DIR/$PACKAGE_DIR
