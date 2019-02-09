@@ -33,4 +33,4 @@ def load_cogs(bot, cogs_directory):
 # Main entry point to the daemon.
 bot = commands.Bot(command_prefix=settings.PREFIX)
 load_cogs(bot, settings.COGS_DIRECTORY)
-bot.run(utilities.load_token(settings.TOKEN_NAME))
+bot.run(utilities.load_token(settings.TOKEN_FILE))

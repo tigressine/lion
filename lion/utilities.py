@@ -48,7 +48,7 @@ async def respond(
         await context.message.delete()
 
 
-def load_token(token_name):
+def load_token(token_file):
     """Load an API token from file."""
-    with open(token_name, "r") as token_file:
-        return token_file.read().strip()
+    with open(token_file, "r") as open_token_file:
+        return open_token_file.read().strip()
