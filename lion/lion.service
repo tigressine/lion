@@ -1,5 +1,5 @@
 [Unit]
-Description=Lion, a simple, modular Discord bot.
+Description=Lion, a simple, modular Discord bot from scratch
 
 [Service]
 Type=simple
