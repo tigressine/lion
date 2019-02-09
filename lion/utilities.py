@@ -3,10 +3,13 @@
 Written by Tiger Sachse.
 """
 import time
+import logging
+from systemd.journal import JournalHandler
+
 
 async def throw_error(context, error, message=None):
     """Send an error to the context's server.
-    
+
     If a message is provided, that message is included in the post, otherwise
     the error's default message is included.
     """
@@ -18,15 +21,16 @@ async def throw_error(context, error, message=None):
     response = ERROR_FORMAT.format(context.command,
                                    type(error).__name__,
                                    message if message is not None else error)
+
+    log(response, level=logging.ERROR)
     await respond(context, response)
 
 
-async def respond(
-    context,
-    message,
-    ignore_formatting=False,
-    delete_original=True,
-    **keyword_arguments):
+async def respond(context,
+                  message,
+                  delete_original=True,
+                  ignore_formatting=False,
+                  **keyword_arguments):
     """Respond to a message in context.
     
     The response is automatically formatted with the original message's author's
@@ -52,3 +56,18 @@ def load_token(token_file):
     """Load an API token from file."""
     with open(token_file, "r") as open_token_file:
         return open_token_file.read().strip()
+
+
+def log(message, level=logging.INFO):
+    """Log a message to the journal.
+    
+    This is pretty hacky, to say the least. I don't want to pass around a
+    logger or make other developers worry about that sort of stuff, so this is
+    my solution.
+    """
+    logger = logging.getLogger(__name__)
+    logger.handlers.clear()
+    logger.addHandler(JournalHandler())
+    logger.setLevel(logging.INFO)
+
+    logger.log(level, message)

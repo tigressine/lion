@@ -1,6 +1,3 @@
 PREFIX = "!"
 COGS_DIRECTORY = "cogs"
-DOCS_DIRECTORY = "../docs"
 TOKEN_FILE = "discord.token"
-SERVICE_FILE = "lion.service"
-VERSION_FILE = DOCS_DIRECTORY + "/VERSION.txt"
