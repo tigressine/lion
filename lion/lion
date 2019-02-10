@@ -1,0 +1,118 @@
+#!/usr/bin/env bash
+# Control the Lion service.
+# Written by Tiger Sachse.
+
+DOCS_DIR="docs"
+INSTALL_DIR="/opt"
+PACKAGE_NAME="lion"
+TOKEN_FILE="discord.token"
+VERSION_FILE="VERSION.txt"
+SERVICE_FILE="lion.service"
+
+# Add a token for the service.
+add_token() {
+    if [[ $EUID -ne 0 ]]; then
+        echo "[LION] You must run this function as a root user (or with sudo)."
+        exit 1
+    fi
+    echo "[LION] Adding token..."
+    echo $1 > "$INSTALL_DIR/$PACKAGE_NAME/$TOKEN_FILE"
+}
+
+# Start the service.
+start_service() {
+    if [[ $EUID -ne 0 ]]; then
+        echo "[LION] You must run this function as a root user (or with sudo)."
+        exit 1
+    fi
+    echo "[LION] Starting Lion..."
+    systemctl start $SERVICE_FILE
+}
+
+# Kill the service.
+kill_service() {
+    if [[ $EUID -ne 0 ]]; then
+        echo "[LION] You must run this function as a root user (or with sudo)."
+        exit 1
+    fi
+    echo "[LION] Killing Lion..."
+    systemctl stop $SERVICE_FILE
+}
+
+# Restart the service.
+restart_service() {
+    if [[ $EUID -ne 0 ]]; then
+        echo "[LION] You must run this function as a root user (or with sudo)."
+        exit 1
+    fi
+    echo "[LION] Restarting Lion..."
+    systemctl restart $SERVICE_FILE
+}
+
+# Enable the service.
+enable_service() {
+    if [[ $EUID -ne 0 ]]; then
+        echo "[LION] You must run this function as a root user (or with sudo)."
+        exit 1
+    fi
+    echo "[LION] Enabling Lion..."
+    systemctl enable $SERVICE_FILE
+}
+
+# Disable the service.
+disable_service() {
+    if [[ $EUID -ne 0 ]]; then
+        echo "[LION] You must run this function as a root user (or with sudo)."
+        exit 1
+    fi
+    echo "[LION] Disabling Lion..."
+    systemctl disable $SERVICE_FILE
+}
+
+# Get the status of the service.
+get_service_status() {
+    echo "[LION] Getting Lion's status..."
+    systemctl status $SERVICE_FILE
+}
+
+# Show this service's version and related information.
+show_version() {
+    cat "$INSTALL_DIR/$PACKAGE_NAME/$DOCS_DIR/$VERSION_FILE"
+}
+
+# Show a simple help message.
+show_help() {
+    printf "Command syntax:\n    $ lion [--flag] <parameter>\n\n"
+    echo "Check out https://github.com/tgsachse/lion for all available flags."
+}
+
+# Main entry point to the script.
+case $1 in
+    --token)
+        add_token $2
+        ;;
+    -s|--start)
+        start_service
+        ;;
+    -k|--kill|--stop)
+        kill_service
+        ;;
+    -r|--restart)
+        restart_service
+        ;;
+    -e|--enable)
+        enable_service
+        ;;
+    -d|--disable)
+        disable_service
+        ;;
+    --status)
+        get_service_status
+        ;;
+    --version)
+        show_version
+        ;;
+    -h|--help)
+        show_help
+        ;;
+esac
