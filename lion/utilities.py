@@ -2,6 +2,7 @@
 
 Written by Tiger Sachse.
 """
+import json
 import time
 import logging
 from systemd.journal import JournalHandler
@@ -30,6 +31,7 @@ async def respond(context,
                   message,
                   delete_original=True,
                   ignore_formatting=False,
+                  in_default_channel=True,
                   **keyword_arguments):
     """Respond to a message in context.
     
@@ -38,22 +40,25 @@ async def respond(context,
     """
     RESPONSE_FORMAT = "{0}:\n{1}"
 
-    print(type(context))
-    print(vars(context))
-    print(vars(context.bot))
-    print("hey")
-    print(context.guild.id)
-    print(context.message.channel.id)
-    await context.message.channel.send("BITCH")
     # Avoid additionally formatting, if requested.
     if ignore_formatting:
         response = message
     else:
         response = RESPONSE_FORMAT.format(context.author.mention, message)
 
-    await context.send(response, **keyword_arguments)
+    # If requested, attempt to send the response on the default channel for the
+    # user's guild.
+    if in_default_channel:
+        try:
+            guild_settings = context.bot.get_guild_settings(context.guild.id)
+            default_channel = context.bot.get_channel(guild_settings["default_channel"])
+            await default_channel.send(response, **keyword_arguments)
+        except KeyError:
+            await context.send(response, **keyword_arguments)
+    else:
+        await context.send(response, **keyword_arguments)
 
-    # Delete the original message by default.
+    # Delete the original message, if requested.
     if delete_original:
         time.sleep(1)
         await context.message.delete()
