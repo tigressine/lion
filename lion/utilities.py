@@ -38,6 +38,13 @@ async def respond(context,
     """
     RESPONSE_FORMAT = "{0}:\n{1}"
 
+    print(type(context))
+    print(vars(context))
+    print(vars(context.bot))
+    print("hey")
+    print(context.guild.id)
+    print(context.message.channel.id)
+    await context.message.channel.send("BITCH")
     # Avoid additionally formatting, if requested.
     if ignore_formatting:
         response = message

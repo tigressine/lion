@@ -1,3 +1,3 @@
 PREFIX = "!"
 COGS_DIRECTORY = "cogs"
-TOKEN_FILE = "discord.token"
+TOKEN_PATH = "data/discord.token"
