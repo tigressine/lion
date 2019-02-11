@@ -1,7 +1,7 @@
 """An example cog for educational purposes.
 
 This cog creates a new command called 'example' which takes 1 argument: a
-number. This cog loads a text file from 'assets/' based on the given number and
+number. This cog loads a text file from 'data/' based on the given number and
 then posts the contents of that file to the user's server.
 
 Written by Tiger Sachse.
@@ -25,10 +25,10 @@ def setup(bot):
 class ExampleCog:
     """This class contains all the logic for the 'example' command."""
 
-    # Notice that paths for assets must be relative and must start at the
-    # 'cogs' directory. If you try to access 'assets/example{0}.txt' the program
+    # Notice that paths for data must be relative and must start at the
+    # 'cogs' directory. If you try to access 'data/example{0}.txt' the program
     # will not understand because of how Python keeps track of relative paths.
-    EXAMPLE_PATH_FORMAT = "cogs/example/assets/example{0}.txt"
+    EXAMPLE_PATH_FORMAT = "cogs/example/data/example{0}.txt"
     
     @commands.command(name="example")
     async def example_command(self, context, number: int):

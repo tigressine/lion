@@ -4,7 +4,8 @@
 DOCS_DIR="docs"
 INSTALL_DIR="/opt"
 PACKAGE_NAME="lion"
-DISABLED_DIR="disabled"
+SCRIPTS_DIR="scripts"
+#DISABLED_DIR="disabled"
 BIN_DIR="/usr/local/bin"
 SERVICE_FILE="lion.service"
 SYSTEMD_DIR="/etc/systemd/system"
@@ -29,19 +30,18 @@ rm -f "$SYSTEMD_DIR/$SERVICE_FILE"
 rm -f "$BIN_DIR/$PACKAGE_NAME"
 
 # Create the installation directory target, then copy all documentation and source
-# files to this target, excluding any tokens and/or service files within the package
-# file tree.
+# files to this target, excluding any tokens within the package file tree.
 echo "Copying files..."
 mkdir -p "$INSTALL_DIR/$PACKAGE_NAME"
-mkdir -p "$INSTALL_DIR/$PACKAGE_NAME/$DISABLED_DIR"
-cp -r $DOCS_DIR $INSTALL_DIR/$PACKAGE_NAME
+#mkdir -p "$INSTALL_DIR/$PACKAGE_NAME/$DISABLED_DIR"
+cp -r $DOCS_DIR "$INSTALL_DIR/$PACKAGE_NAME"
 find $PACKAGE_NAME/* -type d | \
     xargs --replace="%" mkdir -p "$INSTALL_DIR/%"
-find $PACKAGE_NAME/* -type f ! -path "*.token" ! -path "*.service" -path "*.*" | \
+find $PACKAGE_NAME/* -type f ! -path "*.token" | \
     xargs --replace="%" cp "%" "$INSTALL_DIR/%"
-cp "$PACKAGE_NAME/$PACKAGE_NAME" $BIN_DIR
+cp "$SCRIPTS_DIR/$PACKAGE_NAME" $BIN_DIR
 
 # Copy the Systemd unit file to the correct location, and reload Systemd.
 echo "Configuring Systemd..."
-cp "$PACKAGE_NAME/$SERVICE_FILE" "$SYSTEMD_DIR"
+cp "$SCRIPTS_DIR/$SERVICE_FILE" $SYSTEMD_DIR
 systemctl daemon-reload
