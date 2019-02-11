@@ -2,10 +2,8 @@
 
 Written by Tiger Sachse.
 """
-import json
 import time
 import logging
-from systemd.journal import JournalHandler
 
 
 async def throw_error(context, error, message=None):
@@ -23,7 +21,7 @@ async def throw_error(context, error, message=None):
                                    type(error).__name__,
                                    message if message is not None else error)
 
-    log(response, level=logging.ERROR)
+    context.bot.log(response, level=logging.ERROR)
     await respond(context, response)
 
 
@@ -49,11 +47,11 @@ async def respond(context,
     # If requested, attempt to send the response on the default channel for the
     # user's guild.
     if in_default_channel:
-        try:
-            guild_settings = context.bot.get_guild_settings(context.guild.id)
+        guild_settings = context.bot.get_guild_settings(context.guild.id)
+        if guild_settings is not None:
             default_channel = context.bot.get_channel(guild_settings["default_channel"])
             await default_channel.send(response, **keyword_arguments)
-        except KeyError:
+        else:
             await context.send(response, **keyword_arguments)
     else:
         await context.send(response, **keyword_arguments)
@@ -68,18 +66,3 @@ def load_token(token_file):
     """Load an API token from file."""
     with open(token_file, "r") as open_token_file:
         return open_token_file.read().strip()
-
-
-def log(message, level=logging.INFO):
-    """Log a message to the journal.
-    
-    This is pretty hacky, to say the least. I don't want to pass around a
-    logger or make other developers worry about that sort of stuff, so this is
-    my solution.
-    """
-    logger = logging.getLogger(__name__)
-    logger.handlers.clear()
-    logger.addHandler(JournalHandler())
-    logger.setLevel(logging.INFO)
-
-    logger.log(level, message)
