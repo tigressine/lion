@@ -6,6 +6,7 @@ will run continously until interrupted. This script should be run as a daemon.
 Written by Tiger Sachse.
 """
 import json
+import shutil
 import logging
 import settings
 import utilities
@@ -67,7 +68,10 @@ class LionBot(commands.Bot):
         self.log(log_message, level=logging.INFO)
 
     def write_guild_settings(self):
-        """Write the current guild settings to disk."""
+        """Backup any old guild settings and write the current ones to disk."""
+        shutil.copy2(self._guild_settings_file,
+                     self._guild_settings_file + ".backup")
+
         with open(self._guild_settings_file, "w") as open_guild_settings_file:
             json.dump(self._guild_settings, open_guild_settings_file)
 

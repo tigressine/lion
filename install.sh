@@ -39,7 +39,7 @@ mkdir -p "$INSTALL_DIR/$PACKAGE_NAME/$DISABLED_DIR"
 cp -r $DOCS_DIR "$INSTALL_DIR/$PACKAGE_NAME"
 find $PACKAGE_NAME/* -type d | \
     xargs --replace="%" mkdir -p "$INSTALL_DIR/%"
-find $PACKAGE_NAME/* -type f ! -path "*.token" | \
+find $PACKAGE_NAME/* -type f ! -path "*.token" ! -path "*guild_settings.*" | \
     xargs --replace="%" cp "%" "$INSTALL_DIR/%"
 cp "$SCRIPTS_DIR/$PACKAGE_NAME" $BIN_DIR
 

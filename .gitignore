@@ -1,2 +1,4 @@
 *.pyc
 *.token
+*guild_settings.*
+enabled/
