@@ -4,6 +4,7 @@ Written by Tiger Sachse.
 """
 import time
 import logging
+from discord.ext import commands
 
 
 async def throw_error(context, error, message=None):
@@ -48,7 +49,7 @@ async def respond(context,
     # user's guild.
     if in_default_channel:
         guild_settings = context.bot.get_guild_settings(context.guild.id)
-        if guild_settings is not None:
+        if guild_settings is not None and "default_channel" in guild_settings:
             default_channel = context.bot.get_channel(guild_settings["default_channel"])
             await default_channel.send(response, **keyword_arguments)
         else:
@@ -66,3 +67,8 @@ def load_token(token_file):
     """Load an API token from file."""
     with open(token_file, "r") as open_token_file:
         return open_token_file.read().strip()
+
+
+async def is_administrator(context):
+    """"""
+    return context.author.guild_permissions.administrator

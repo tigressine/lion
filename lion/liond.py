@@ -69,7 +69,7 @@ class LionBot(commands.Bot):
     def write_guild_settings(self):
         """Write the current guild settings to disk."""
         with open(self._guild_settings_file, "w") as open_guild_settings_file:
-            json.dump(open_guild_settings_file, self._guild_settings)
+            json.dump(self._guild_settings, open_guild_settings_file)
 
     def get_guild_settings(self, guild_id):
         """Get a particular guild's settings, based on the guild id."""
@@ -78,6 +78,14 @@ class LionBot(commands.Bot):
             return self._guild_settings[guild_id]
         else:
             return None
+
+    def set_guild_setting(self, guild_id, setting, value):
+        """"""
+        guild_id = str(guild_id)
+        if guild_id not in self._guild_settings:
+            self._guild_settings[guild_id] = {}
+        self._guild_settings[guild_id][setting] = value
+        self.write_guild_settings()
     
     def log(self, message, level=logging.INFO):
         """Log a message using the bot's logger."""
