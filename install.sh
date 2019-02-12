@@ -1,4 +1,4 @@
-# Install Lion on your system!
+# Install Lion on your system!!
 # Written by Tiger Sachse.
 
 DOCS_DIR="docs"
