@@ -2,7 +2,7 @@
 # Control the Lion service.
 # Written by Tiger Sachse.
 
-COG_DIR="cogs"
+COGS_DIR="cogs"
 DOCS_DIR="docs"
 DATA_DIR="data"
 INSTALL_DIR="/opt"
@@ -10,8 +10,8 @@ PACKAGE_NAME="lion"
 ENABLED_DIR="enabled"
 DISABLED_DIR="disabled"
 VERSION_FILE="VERSION.txt"
+TOKEN_FILE="discord.token"
 SERVICE_FILE="lion.service"
-TOKEN_PATH="$INSTALL_DIR/$PACKAGE_NAME/$DATA_DIR/discord.token"
 
 # Add a token for the service.
 add_token() {
@@ -20,7 +20,7 @@ add_token() {
         exit 1
     fi
     echo "Adding token..."
-    echo $1 > $TOKEN_PATH
+    echo $1 > "$INSTALL_DIR/$PACKAGE_NAME/$DATA_DIR/$TOKEN_FILE"
 }
 
 # Start the service.
@@ -104,7 +104,7 @@ enable_cogs() {
 
     ENABLED_COG=false
     for COG in "$@"; do
-        COG_PATH="$INSTALL_DIR/$PACKAGE_NAME/$COG_DIR/$COG"
+        COG_PATH="$INSTALL_DIR/$PACKAGE_NAME/$COGS_DIR/$COG"
         if [ -d $COG_PATH ]; then
             if [ ! -L "$INSTALL_DIR/$PACKAGE_NAME/$ENABLED_DIR/$COG" ]; then
                 ln -s $COG_PATH "$INSTALL_DIR/$PACKAGE_NAME/$ENABLED_DIR"
@@ -133,7 +133,7 @@ disable_cogs() {
 
     DISABLED_COG=false
     for COG in "$@"; do
-        COG_PATH="$INSTALL_DIR/$PACKAGE_NAME/$COG_DIR/$COG"
+        COG_PATH="$INSTALL_DIR/$PACKAGE_NAME/$COGS_DIR/$COG"
         if [ -d $COG_PATH ]; then
             if [ ! -L "$INSTALL_DIR/$PACKAGE_NAME/$DISABLED_DIR/$COG" ]; then
                 ln -s $COG_PATH "$INSTALL_DIR/$PACKAGE_NAME/$DISABLED_DIR"
@@ -155,15 +155,8 @@ disable_cogs() {
 
 # List installed cogs.
 list_cogs() {
-    HEADER="Available cogs:"
-    TARGET_DIR="$INSTALL_DIR/$PACKAGE_NAME/$COG_DIR"
-    if [ "$1" == "--enabled" ]; then
-        HEADER="Enabled cogs:"
-        TARGET_DIR="$INSTALL_DIR/$PACKAGE_NAME/$ENABLED_DIR"
-    elif [ "$1" == "--disabled" ]; then
-        HEADER="Disabled cogs:"
-        TARGET_DIR="$INSTALL_DIR/$PACKAGE_NAME/$DISABLED_DIR"
-    fi
+    HEADER=$1
+    TARGET_DIR="$INSTALL_DIR/$PACKAGE_NAME/$2"
 
     if [ "$(ls -A $TARGET_DIR)" ]; then
         echo $HEADER
@@ -207,14 +200,42 @@ case $1 in
         ;;
     --cogs)
         case $2 in
-            --enable)
-                enable_cogs "${@:3}"
+            enable)
+                case $3 in
+                    all)
+                        ALL_COGS=$(find "$INSTALL_DIR/$PACKAGE_NAME/$COGS_DIR"/* \
+                            -maxdepth 0 -type d -exec basename {} \;)
+                        enable_cogs $ALL_COGS
+                        ;;
+                    *)
+                        enable_cogs "${@:3}"
+                        ;;
+                esac
                 ;;
-            --disable)
-                disable_cogs "${@:3}"
+            disable)
+                case $3 in
+                    all)
+                        ALL_COGS=$(find "$INSTALL_DIR/$PACKAGE_NAME/$COGS_DIR"/* \
+                            -maxdepth 0 -type d -exec basename {} \;)
+                        disable_cogs $ALL_COGS
+                        ;;
+                    *)
+                        disable_cogs "${@:3}"
+                        ;;
+                esac
                 ;;
-            --list)
-                list_cogs $3
+            list)
+                case $3 in
+                    enabled)
+                        list_cogs "Enabled cogs:" $ENABLED_DIR
+                        ;;
+                    disabled)
+                        list_cogs "Disabled cogs:" $DISABLED_DIR
+                        ;;
+                    *)
+                        list_cogs "Available cogs:" $COGS_DIR
+                        ;;
+                esac
                 ;;
             *)
                 show_help
