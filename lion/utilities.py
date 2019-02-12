@@ -7,7 +7,13 @@ import logging
 from discord.ext import commands
 
 
-async def throw_error(context, error, message=None):
+async def throw_error(context,
+                      error,
+                      message=None,
+                      delete_original=True,
+                      ignore_formatting=False,
+                      in_default_channel=True,
+                      **keyword_arguments):
     """Send an error to the context's server.
 
     If a message is provided, that message is included in the post, otherwise
@@ -23,7 +29,12 @@ async def throw_error(context, error, message=None):
                                    message if message is not None else error)
 
     context.bot.log(response, level=logging.ERROR)
-    await respond(context, response)
+    await respond(context,
+                  response,
+                  delete_original,
+                  ignore_formatting,
+                  in_default_channel,
+                  **keyword_arguments)
 
 
 async def respond(context,
