@@ -1,7 +1,8 @@
-# Install Lion on your system!!
+# Install Lion on your system!
 # Written by Tiger Sachse.
 
 DOCS_DIR="docs"
+DATA_DIR="data"
 INSTALL_DIR="/opt"
 PACKAGE_NAME="lion"
 SCRIPTS_DIR="scripts"
@@ -34,6 +35,7 @@ rm -f "$BIN_DIR/$PACKAGE_NAME"
 # files to this target, excluding any tokens within the package file tree.
 echo "Copying files..."
 mkdir -p "$INSTALL_DIR/$PACKAGE_NAME"
+mkdir -p "$INSTALL_DIR/$PACKAGE_NAME/$DATA_DIR"
 mkdir -p "$INSTALL_DIR/$PACKAGE_NAME/$ENABLED_DIR"
 mkdir -p "$INSTALL_DIR/$PACKAGE_NAME/$DISABLED_DIR"
 cp -r $DOCS_DIR "$INSTALL_DIR/$PACKAGE_NAME"
