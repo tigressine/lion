@@ -30,9 +30,14 @@ class ExampleCog:
     # will not understand because of how Python keeps track of relative paths.
     EXAMPLE_PATH_FORMAT = "cogs/example/data/example{0}.txt"
     
-    @commands.command(name="example")
+    @commands.command(name="example", usage="!example <number>")
     async def example_command(self, context, number: int):
-        """Main entry point for the example command."""
+        """Display some example text.
+        
+        The first line of this docstring is displayed in the !help command's
+        menu. The 'usage' parameter passed to this function's decorator is also
+        used.
+        """
 
         # Do not handle errors directly in your cog_command() function. Raise
         # the appropriate exception and let the cog_error() function handle it.
