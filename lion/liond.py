@@ -8,6 +8,7 @@ Written by Tiger Sachse.
 import json
 import shutil
 import logging
+import discord
 import settings
 import utilities
 from pathlib import Path
@@ -59,7 +60,7 @@ class LionBot(commands.Bot):
                 self.log(LOG_MESSAGE_FORMAT.format(cog, " Success!"),
                          level=logging.INFO)
                 cogs_loaded += 1
-            except ModuleNotFoundError:
+            except (ModuleNotFoundError, discord.errors.ClientException):
                 self.log(LOG_MESSAGE_FORMAT.format(cog, " Failure!"),
                          level=logging.WARNING)
 
