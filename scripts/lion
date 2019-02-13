@@ -153,6 +153,53 @@ disable_cogs() {
     fi
 }
 
+# Install a list of tarred cogs onto the system.
+install_cogs() {
+    if [[ $EUID -ne 0 ]]; then
+        echo "You must run this function as a root user (or with sudo)."
+        exit 1
+    fi
+
+    for GIVEN_PATH in "$@"; do
+
+        # Adjust relative paths, if necessary.
+        case $GIVEN_PATH in
+            /*)
+                COG_PATH=$GIVEN_PATH
+                ;;
+            *)
+                COG_PATH="$(pwd)/$GIVEN_PATH"
+                ;;
+        esac
+
+        # Get the stem and the name of the cog from its path.
+        COG_STEM="$(basename $COG_PATH)"
+        COG_NAME="${COG_STEM%%.*}"
+
+        if [ -f $COG_PATH ]; then
+            if [ -d "$INSTALL_DIR/$PACKAGE_NAME/$COGS_DIR/$COG_NAME" ]; then
+                ALREADY_INSTALLED=true
+            else
+                ALREADY_INSTALLED=false
+            fi
+
+            # Attempt to untar the given cog path into place.
+            tar xzf $COG_PATH -C "$INSTALL_DIR/$PACKAGE_NAME/$COGS_DIR" &> /dev/null
+            if [ $? -eq 0 ]; then
+                if [ "$ALREADY_INSTALLED" = true ]; then
+                    echo "Reinstalled cog: $COG_NAME"
+                else
+                    echo "Installed cog: $COG_NAME"
+                fi
+            else
+                echo "File could not be untarred: $COG_PATH"
+            fi
+        else
+            echo "File not found: $COG_PATH"
+        fi
+    done
+}
+
 # List installed cogs.
 list_cogs() {
     HEADER=$1
@@ -223,6 +270,9 @@ case $1 in
                         disable_cogs "${@:3}"
                         ;;
                 esac
+                ;;
+            install)
+                install_cogs "${@:3}"
                 ;;
             list)
                 case $3 in
