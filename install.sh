@@ -13,7 +13,7 @@ SERVICE_FILE="lion.service"
 SYSTEMD_DIR="/etc/systemd/system"
 
 # You must run this script with root permissions.
-if [[ $EUID -ne 0 ]]; then
+if [ "$EUID" != 0 ]; then
     echo "You must run this script as a root user (or with sudo)."
     exit 1
 fi
@@ -38,14 +38,14 @@ mkdir -p "$INSTALL_DIR/$PACKAGE_NAME"
 mkdir -p "$INSTALL_DIR/$PACKAGE_NAME/$DATA_DIR"
 mkdir -p "$INSTALL_DIR/$PACKAGE_NAME/$ENABLED_DIR"
 mkdir -p "$INSTALL_DIR/$PACKAGE_NAME/$DISABLED_DIR"
-cp -r $DOCS_DIR "$INSTALL_DIR/$PACKAGE_NAME"
-find $PACKAGE_NAME/* -type d | \
+cp -r "$DOCS_DIR" "$INSTALL_DIR/$PACKAGE_NAME"
+find "$PACKAGE_NAME"/* -type d | \
     xargs --replace="%" mkdir -p "$INSTALL_DIR/%"
-find $PACKAGE_NAME/* -type f ! -path "*.token" ! -path "*guild_settings.*" | \
+find "$PACKAGE_NAME"/* -type f ! -path "*.token" ! -path "*guild_settings.*" | \
     xargs --replace="%" cp "%" "$INSTALL_DIR/%"
-cp "$SCRIPTS_DIR/$PACKAGE_NAME" $BIN_DIR
+cp "$SCRIPTS_DIR/$PACKAGE_NAME" "$BIN_DIR"
 
 # Copy the Systemd unit file to the correct location, and reload Systemd.
 echo "Configuring Systemd..."
-cp "$SCRIPTS_DIR/$SERVICE_FILE" $SYSTEMD_DIR
+cp "$SCRIPTS_DIR/$SERVICE_FILE" "$SYSTEMD_DIR"
 systemctl daemon-reload
