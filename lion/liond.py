@@ -34,6 +34,9 @@ class LionBot(commands.Bot):
         self._logger.addHandler(JournalHandler())
         self._logger.setLevel(logging.INFO)
 
+        # Remove the default help command.
+        self.remove_command("help")
+
         # Load all cogs in the enabled cogs directory.
         self.load_cogs(enabled_cogs_directory)
 
@@ -85,7 +88,7 @@ class LionBot(commands.Bot):
             return None
 
     def set_guild_setting(self, guild_id, setting, value):
-        """"""
+        """Set a guild setting for a particular guild id."""
         guild_id = str(guild_id)
         if guild_id not in self._guild_settings:
             self._guild_settings[guild_id] = {}
