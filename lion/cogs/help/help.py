@@ -1,16 +1,19 @@
-""""""
+"""Display a help menu.
+
+Written by Tiger Sachse.
+"""
 import discord
 import utilities
 from discord.ext import commands
 
 
 def setup(bot):
-    """"""
+    """Add this cog to a given bot."""
     bot.add_cog(HelpCog())
 
 
 class HelpCog:
-    """"""
+    """This class contains all the logic for the 'help' command."""
     EMBEDDED_COLOR = 0xFFEE05
 
     @commands.command(name="help", usage="!help")
@@ -28,5 +31,5 @@ class HelpCog:
 
     @help_command.error
     async def help_error(self, context, error):
-        """"""
+        """Handle any errors that occurred during the 'help' command."""
         await utilities.throw_error(context, error)
