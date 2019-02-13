@@ -13,13 +13,13 @@ SERVICE_FILE="lion.service"
 SYSTEMD_DIR="/etc/systemd/system"
 
 # You must run this script with root permissions.
-if [ "$EUID" != 0 ]; then
+if [ "$EUID" -ne 0 ]; then
     echo "You must run this script as a root user (or with sudo)."
     exit 1
 fi
 
 # Install dependencies, if requested. This only works on systems with "apt".
-if [ "$1" == "--handle-dependencies" ]; then
+if [ "$1" = "--handle-dependencies" ]; then
     echo "Installing dependencies..."
     apt install python3-pip
     pip3 install -U git+https://github.com/Rapptz/discord.py@rewrite#egg-discord.py
