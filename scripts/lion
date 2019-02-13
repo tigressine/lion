@@ -172,12 +172,13 @@ install_cogs() {
                 ;;
         esac
 
-        # Get the stem and the name of the cog from its path.
+        # Get the stem and the name of the cog from its path. This is a little
+        # too Bash-specific for my taste. Future me should revisit these lines.
         COG_STEM="$(basename "$COG_PATH")"
-        COG_NAME="${COG_STEM%%.*}"
+        COG="${COG_STEM%%.*}"
 
         if [ -f "$COG_PATH" ]; then
-            if [ -d "$INSTALL_DIR/$PACKAGE_NAME/$COGS_DIR/$COG_NAME" ]; then
+            if [ -d "$INSTALL_DIR/$PACKAGE_NAME/$COGS_DIR/$COG" ]; then
                 ALREADY_INSTALLED=true
             else
                 ALREADY_INSTALLED=false
@@ -187,15 +188,34 @@ install_cogs() {
             tar xzf "$COG_PATH" -C "$INSTALL_DIR/$PACKAGE_NAME/$COGS_DIR" &> /dev/null
             if [ "$?" -eq 0 ]; then
                 if [ "$ALREADY_INSTALLED" = true ]; then
-                    echo "Reinstalled cog: $COG_NAME"
+                    echo "Reinstalled cog: $COG"
                 else
-                    echo "Installed cog: $COG_NAME"
+                    echo "Installed cog: $COG"
                 fi
             else
                 echo "File could not be untarred: $COG_PATH"
             fi
         else
             echo "File not found: $COG_PATH"
+        fi
+    done
+}
+
+# Remove a list of cogs from the system.
+uninstall_cogs() {
+    if [ "$EUID" -ne 0 ]; then
+        echo "You must run this function as a root user (or with sudo)."
+        exit 1
+    fi
+
+    for COG in "$@"; do
+        if [ -d "$INSTALL_DIR/$PACKAGE_NAME/$COGS_DIR/$COG" ]; then
+            rm -r "$INSTALL_DIR/$PACKAGE_NAME/$COGS_DIR/$COG"
+            rm -r -f "$INSTALL_DIR/$PACKAGE_NAME/$ENABLED_DIR/$COG"
+            rm -r -f "$INSTALL_DIR/$PACKAGE_NAME/$DISABLED_DIR/$COG"
+            echo "Uninstalled cog: $COG"
+        else
+            echo "Cog not found: $COG"
         fi
     done
 }
@@ -273,6 +293,9 @@ case "$1" in
                 ;;
             install)
                 install_cogs "${@:3}"
+                ;;
+            uninstall)
+                uninstall_cogs "${@:3}"
                 ;;
             list)
                 case "$3" in
