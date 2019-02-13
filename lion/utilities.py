@@ -81,5 +81,5 @@ def load_token(token_file):
 
 
 async def is_administrator(context):
-    """"""
+    """Check if the message author is an administrator."""
     return context.author.guild_permissions.administrator
