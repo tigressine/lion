@@ -13,7 +13,7 @@ Here are some of Lion's cool features:
 - hide class-related channels on a per-user basis
 - automatically assign permission roles
 
-Take a look at the installation procedure to get started, or learn how to contribute by following the links at the bottom of this page.
+Take a look at the installation procedure to get started, or learn how to contribute by following the link at the bottom of this page.
 
 installation
 ====
@@ -99,7 +99,7 @@ Here are some examples of Lion's control script in action:
 
 contributing
 ====
-We welcome new contributors who want to help make this project better! Take a look at the development guidelines_ and `API reference`_ before you get started.
+We welcome new contributors who want to help make this project better! Take a look at the `API reference`_ before you get started.
 
 information
 ====
@@ -114,7 +114,6 @@ Authors
 .. _`Create an application and obtain a bot token`: https://discordapp.com/developers/applications
 .. _`invite Lion to your server`: https://www.techjunkie.com/add-bots-discord-server/
 
-.. _guidelines: GUIDELINES.rst
 .. _`API reference`: REFERENCE.rst
 
 .. _MIT: LICENSE.txt
