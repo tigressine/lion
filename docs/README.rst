@@ -1,5 +1,6 @@
+====
 lion
-----
+====
 This simple and lightweight Discord bot is built by and for UCF CS students. Its heavily modular architecture is highly extensible and is meant to scale to large audiences. Writing cogs (plugins) for Lion is easy, too!
 
 Here are some of Lion's cool features:
@@ -15,7 +16,7 @@ Here are some of Lion's cool features:
 Take a look at the installation procedure to get started, or learn how to contribute by following the documentation links at the bottom of this page.
 
 installation
-------------
+====
 This software is only supported on Linux systems that use ``systemd`` and have ``python3`` installed, (like Ubuntu/Debian/Fedora/Arch/etc). To download and install Lion on your Linux server run these commands:
 ::
   cd /tmp && wget https://github.com/tgsachse/lion/archive/v2.0.0.tar.gz
@@ -38,16 +39,39 @@ Finally, start the service with this command:
 
 All that's left to do is `invite Lion to your server`_!
 
+
 usage
-----
+====
 Lion runs as a ``systemd`` service (daemon) and can be controlled with an included script. Once you've properly installed the software, the script can be run on the command line with the command:
 ::
   lion [--flag [parameters...]]
 
 All of the script's available flags are listed and described below:
 
+``--service <directive>``
+  Send a directive to the service. Directives include ``start``, ``stop``, ``restart``, ``status``, ``enable``, and ``disable``. ``enable`` and ``disable`` are used to force the service to start or stop at system startup. The rest of the directives do what you'd think they do.
+``--token <token>``
+  Add a Discord API token to the bot.
+``--version``
+  Display version information.
+``--log``
+  Display the most recent logs from the service.
+``--help``
+  Show a small help menu.
+``--cogs <directive> [parameters...]``
+  Manage Lion's cogs. Potential directives include ``enable``, ``disable``, ``install``, ``uninstall``, and ``list``.
+  
+  ``enable <cogs...> | disable <cogs...> | uninstall <cogs...>``
+    Enable, disable, or uninstall a list of cogs from the system. Enter the names of the cogs you wish to manipulate after this directive, with spaces to separate the names.
+    
+  ``install <tarballs...>``
+    Install new cogs from tarballs onto your system. Enter the paths to the tarballs of the cogs you wish to install after this directive, separated by spaces.
+   
+  ``list [enabled | disabled]``
+    List cogs on the system. Takes an optional parameter that specifies only enabled or disabled cogs.
+
 contribute
-----------
+====
 Guidelines_
 
 API Reference:
