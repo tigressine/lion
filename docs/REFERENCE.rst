@@ -16,7 +16,7 @@ Note that you'll need to `invite your version of Lion`_ to your own development 
 
 functions
 ====
-This software has 2 major utility functions that you need to communicate with Discord. **DO NOT** use the ``send()`` function that is provided by ``discord.py``. You **MUST** use these 2 functions to interact with Discord or your pull requrests will be rejected.
+This software provides 2 major utility functions that will be of use to you. **DO NOT** use the ``context.send()`` function that is provided by ``discord.py``. You **MUST** use these 2 functions to interact with Discord or your pull requrests will be rejected.
 ::
   async def respond(context,
                     message,
@@ -25,7 +25,7 @@ This software has 2 major utility functions that you need to communicate with Di
                     in_default_channel=True,                  
                     **keyword_arguments)
                     
-This function is how Lion responds to commands in Discord. Your 1st argument must be ``context``, and your 2nd argument is your response string (``message``). By default, this function will delete the original user's request, format your message with a ping to the user, and send your message on the user's server's default bot channel. This function also accepts all of the arguments that ``discord.py``'s ``send()`` function accepts (like ``embed`` and ``tts``). All responses must use this function.
+The 1st function allows Lion to respond to commands in Discord. Your 1st argument must be ``context``, and your 2nd argument is your response string (``message``). By default, this function deletes the original user's request, formats your response with a ping to the user, and sends your message to the user's server's default bot channel. This function also accepts all of the keyword arguments that ``discord.py``'s ``context.send()`` function accepts (like ``embed`` and ``tts``). All responses must use this function. It is a full replacement for ``context.send()``.
 ::
   async def throw_error(context,
                         error,
@@ -35,7 +35,9 @@ This function is how Lion responds to commands in Discord. Your 1st argument mus
                         in_default_channel=True,
                         **keyword_arguments)
 
-The second function is an error function that sends an error to the user. Your 1st argument must be ``context`` and your 2nd argument must be ``error``. By default, ``error`` has a message that will be displayed to the user, but if you would like to override that message you can pass a new message as the 3rd argument. This function also takes all of the keyword arguments that ``respond()`` takes, and all of the keyword arguments that ``send()`` takes.
+The 2nd function sends an error to the user. Your 1st argument must be ``context`` and your 2nd argument must be ``error``. By default, the ``error``'s message is displayed to the user, but this can be overridden by passing a new message as the 3rd argument. This function also takes all of the keyword arguments that ``respond()`` takes, and all of the keyword arguments that ``context.send()`` takes.
+
+To use these functions, your cog must ``import utilities``. Please refer to the `example cog`_ for examples.
 
 .. _`discord.py (rewrite)`: https://discordpy.readthedocs.io/en/rewrite/api.html
 .. _`commands extension`: https://discordpy.readthedocs.io/en/rewrite/ext/commands/api.html
