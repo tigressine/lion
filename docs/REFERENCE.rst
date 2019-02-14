@@ -4,7 +4,7 @@ To work on Lion, you'll need to clone this repository using ``git``. Execute the
 ::
   git clone https://github.com/tgsachse/lion.git
   
-Afterwards, familiarize yourself with the documentation for `discord.py (rewrite)`_, the `commands extension`_, and the `example cog`_ before you start working.
+Afterwards, familiarize yourself with the documentation for `discord.py (rewrite)`_, the `commands extension`_, and the `example cog`_ before you start working. If you do not follow the guidelines set out within the example cog, your pull requests will be rejected.
 
 To run your changes, install and configure Lion as described in the README_:
 ::
@@ -16,7 +16,7 @@ Note that you'll need to `invite your version of Lion`_ to your own development 
 
 functions
 ====
-This software provides 2 major utility functions that will be of use to you. **DO NOT** use the ``context.send()`` function that is provided by ``discord.py``. You **MUST** use these 2 functions to interact with Discord or your pull requrests will be rejected.
+This software provides 2 major utility functions that you will need. **DO NOT** use the ``context.send()`` function that is provided by ``discord.py``. You **MUST** use these 2 functions to interact with Discord or your pull requests will be rejected.
 ::
   async def respond(context,
                     message,
@@ -25,7 +25,7 @@ This software provides 2 major utility functions that will be of use to you. **D
                     in_default_channel=True,                  
                     **keyword_arguments)
                     
-The 1st function allows Lion to respond to commands in Discord. Your 1st argument must be ``context``, and your 2nd argument is your response string (``message``). By default, this function deletes the original user's request, formats your response with a ping to the user, and sends your message to the user's server's default bot channel. This function also accepts all of the keyword arguments that ``discord.py``'s ``context.send()`` function accepts (like ``embed`` and ``tts``). All responses must use this function. It is a full replacement for ``context.send()``.
+The 1st function allows Lion to respond to commands in Discord. Your 1st argument must be ``context``, and your 2nd argument is your response string (``message``). By default, this function deletes the user's original request, formats your response with a ping to the user, and sends your response to the user's server's default communication channel. This function also accepts all of the keyword arguments that ``discord.py``'s ``context.send()`` function accepts (like ``embed`` and ``tts``). All responses must use this function. It is a full replacement for ``context.send()``.
 ::
   async def throw_error(context,
                         error,
