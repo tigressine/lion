@@ -52,23 +52,24 @@ All of the script's available flags are listed and described below:
   Send a directive to the service. Directives include ``start``, ``stop``, ``restart``, ``status``, ``enable``, and ``disable``. ``enable`` and ``disable`` are used to force the service to start or stop at system startup. The rest of the directives do what you'd think they do.
 ``--token <token>``
   Add a Discord API token to the bot.
+``--cogs <directive> [parameters...]``
+  Manage Lion's cogs. Potential directives include ``enable``, ``disable``, ``install``, ``uninstall``, and ``list``.
+  
+    ``enable <cogs...> | disable <cogs...> | uninstall <cogs...>``
+      Enable, disable, or uninstall a list of cogs from the system. Enter the names of the cogs you wish to manipulate after this directive, with spaces to separate the names.
+    
+    ``install <tarballs...>``
+      Install new cogs from tarballs onto your system. Enter the paths to the tarballs of the cogs you wish to install after this directive, separated by spaces.
+   
+    ``list [enabled | disabled]``
+      List cogs on the system. Takes an optional parameter that specifies only enabled or disabled cogs.
+      
 ``--version``
   Display version information.
 ``--log``
   Display the most recent logs from the service.
 ``--help``
   Show a small help menu.
-``--cogs <directive> [parameters...]``
-  Manage Lion's cogs. Potential directives include ``enable``, ``disable``, ``install``, ``uninstall``, and ``list``.
-  
-  ``enable <cogs...> | disable <cogs...> | uninstall <cogs...>``
-    Enable, disable, or uninstall a list of cogs from the system. Enter the names of the cogs you wish to manipulate after this directive, with spaces to separate the names.
-    
-  ``install <tarballs...>``
-    Install new cogs from tarballs onto your system. Enter the paths to the tarballs of the cogs you wish to install after this directive, separated by spaces.
-   
-  ``list [enabled | disabled]``
-    List cogs on the system. Takes an optional parameter that specifies only enabled or disabled cogs.
 
 contribute
 ====
