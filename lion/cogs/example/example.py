@@ -2,7 +2,10 @@
 
 This cog creates a new command called 'example' which takes 1 argument: a
 number. This cog loads a text file from 'data/' based on the given number and
-then posts the contents of that file to the user's server.
+then posts the contents of that file to the user's server. Since this cog is
+named 'example.py' it must be located inside of a directory named 'example'
+within the 'cogs' directory. The directory name and Python source file name
+must match.
 
 Written by Tiger Sachse.
 """
