@@ -241,23 +241,30 @@ case "$1" in
     --token)
         add_token "$2"
         ;;
-    --start)
-        start_service
-        ;;
-    --stop)
-        stop_service
-        ;;
-    --restart)
-        restart_service
-        ;;
-    --enable)
-        enable_service
-        ;;
-    --disable)
-        disable_service
-        ;;
-    --status)
-        get_service_status
+    --service)
+        case "$2" in
+            start)
+                start_service
+                ;;
+            stop)
+                stop_service
+                ;;
+            restart)
+                restart_service
+                ;;
+            enable)
+                enable_service
+                ;;
+            disable)
+                disable_service
+                ;;
+            status)
+                get_service_status
+                ;;
+            *)
+                show_help
+                ;;
+        esac
         ;;
     --version)
         show_version
