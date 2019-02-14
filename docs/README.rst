@@ -42,27 +42,27 @@ All that's left to do is `invite Lion to your server`_!
 
 usage
 ====
-Lion runs as a ``systemd`` service (daemon) and can be controlled with an included script. Once you've properly installed the software, the script can be run on the command line with the command:
+Lion runs as a ``systemd`` service/daemon. Once you've properly installed the software, the service can be controlled from the command line with the ``lion`` command like this:
 ::
   lion [--flag [parameters...]]
 
 All of the script's available flags are listed and described below:
 
 ``--service <directive>``
-  Send a directive to the service. Directives include ``start``, ``stop``, ``restart``, ``status``, ``enable``, and ``disable``. ``enable`` and ``disable`` are used to force the service to start or stop at system startup. The rest of the directives do what you'd think they do.
+  Send a directive to the service. Directives include ``start``, ``stop``, ``restart``, ``status``, ``enable``, and ``disable``. ``enable`` and ``disable`` force the service to start or stop at system startup. The rest of the directives do what you think they do.
 ``--token <token>``
-  Add a Discord API token to the bot.
-``--cogs <directive> [parameters...]``
+  Add a Discord API token to Lion. If you never add a token, Lion cannot communicate with Discord.
+``--cogs <directive [parameters...]>``
   Manage Lion's cogs. Potential directives include ``enable``, ``disable``, ``install``, ``uninstall``, and ``list``.
   
-    ``enable <cogs...> | disable <cogs...> | uninstall <cogs...>``
-      Enable, disable, or uninstall a list of cogs from the system. Enter the names of the cogs you wish to manipulate after this directive, with spaces to separate the names.
+  ``enable <cogs...> | disable <cogs...> | uninstall <cogs...>``
+    Enable, disable, or uninstall a list of cogs from the system. Enter the space-separated names of the cogs you wish to manipulate after this directive.
     
-    ``install <tarballs...>``
-      Install new cogs from tarballs onto your system. Enter the paths to the tarballs of the cogs you wish to install after this directive, separated by spaces.
+  ``install <tarballs...>``
+    Install new cogs from tarballs onto your system. Enter the space-separated paths to the tarballs of the cogs you wish to install after this directive.
    
-    ``list [enabled | disabled]``
-      List cogs on the system. Takes an optional parameter that specifies only enabled or disabled cogs.
+  ``list [enabled | disabled]``
+    List cogs on the system. An optional parameter may be used to specify only enabled or disabled cogs.
       
 ``--version``
   Display version information.
