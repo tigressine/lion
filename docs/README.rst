@@ -13,7 +13,7 @@ Here are some of Lion's cool features:
 - hide class-related channels on a per-user basis
 - automatically assign permission roles
 
-Take a look at the installation procedure to get started, or learn how to contribute by following the documentation links at the bottom of this page.
+Take a look at the installation procedure to get started, or learn how to contribute by following the links at the bottom of this page.
 
 installation
 ====
@@ -29,7 +29,7 @@ Before you can start the Lion service you must add your Discord API token. `Crea
 ::
   sudo lion --token "your token"
  
-Next, you'll probably want to enable some (or all) of the cogs that Lion ships with by default, otherwise Lion won't have any skills! Enable all the cogs like this:
+Next, you'll probably want to enable some (or all) of the cogs that Lion ships with by default, otherwise Lion won't have any skills! Enable all of the cogs like this:
 ::
   sudo lion --cogs enable all
 
@@ -49,20 +49,20 @@ Lion runs as a ``systemd`` service/daemon. Once you've properly installed the so
 All of the script's available flags are listed and described below:
 
 ``--service <directive>``
-  Send a directive to the service. Directives include ``start``, ``stop``, ``restart``, ``status``, ``enable``, and ``disable``. ``enable`` and ``disable`` force the service to start or stop at system startup. The rest of the directives do what you think they do. All these directives except for ``status`` must be run as root or with ``sudo``.
+  Send a directive to the service. Directives include ``start``, ``stop``, ``restart``, ``status``, ``enable``, and ``disable``. ``enable`` and ``disable`` force the service to start or stop at system startup. The rest of the directives do what you'd think they do. All of these directives except for ``status`` must be run as root or with ``sudo``.
 ``--token <token>``
-  Add a Discord API token to Lion. If you never add a token, Lion cannot communicate with Discord. This flag must be run as root or with ``sudo``.
+  Add a Discord API token to Lion. If you never add a token, Lion cannot communicate with Discord! This flag must be run as root or with ``sudo``.
 ``--cogs <directive [parameters...]>``
   Manage Lion's cogs. Potential directives include ``enable``, ``disable``, ``install``, ``uninstall``, and ``list``.
   
   ``enable <cogs...> | disable <cogs...> | uninstall <cogs...>``
-    Enable, disable, or uninstall a list of cogs from the system. Enter the space-separated names of the cogs you wish to manipulate after this directive. These directives must all be run as root or with ``sudo``.
+    Enable, disable, or uninstall a list of cogs from the system. Your list of cog names should be space-separated. These directives must all be run as root or with ``sudo``.
     
   ``install <tarballs...>``
-    Install new cogs from tarballs onto your system. Enter the space-separated paths to the tarballs of the cogs you wish to install after this directive. This directive must be run as root or with ``sudo``.
+    Install new cogs from a list of tarballs onto your system. Your list of tarballs should be space-separated. This directive must be run as root or with ``sudo``.
    
   ``list [enabled | disabled]``
-    List cogs on the system. An optional parameter may be used to specify only enabled or disabled cogs.
+    List cogs on the system. An optional parameter allows you to only list enabled or disabled cogs.
       
 ``--version``
   Display version information.
@@ -99,11 +99,7 @@ Here are some examples of Lion's control script in action:
 
 contributing
 ====
-We welcome new contributors who want to help make this project better! Take a look at the guidelines and API reference before you get started.
-
-Guidelines_
-
-`API Reference`_
+We welcome new contributors who want to help make this project better! Take a look at the development guidelines_ and `API reference`_ before you get started.
 
 information
 ====
@@ -118,8 +114,8 @@ Authors
 .. _`Create an application and obtain a bot token`: https://discordapp.com/developers/applications
 .. _`invite Lion to your server`: https://www.techjunkie.com/add-bots-discord-server/
 
-.. _Guidelines: DEVELOPER_GUIDELINES.rst
-.. _`API Reference`: DEVELOPER_DOCUMENTATION.rst
+.. _guidelines: GUIDELINES.rst
+.. _`API reference`: DOCUMENTATION.rst
 
 .. _MIT: LICENSE.txt
 .. _`2.0.0`: https://github.com/tgsachse/lion/releases/tag/v2.0.0
