@@ -84,29 +84,44 @@ Here are some examples of Lion's control script in action:
   # Enable the 'example' and 'administration' cogs.
   sudo lion --cogs enable example administration
   
-  # Install new cogs 'weather' and 'poll' from tarballs.
+  # Install and enable new cogs 'weather' and 'poll' from tarballs.
   sudo lion --cogs install weather.tar.gz poll.tar.gz
+  sudo lion --cogs enable weather poll
   
   # View all enabled cogs.
   lion --list enabled
   
   # Disable all cogs.
   sudo lion --cogs disable all
+  
+  # Restart the service.
+  sudo lion --service restart
 
-contribute
+contributing
 ====
+We welcome new contributors who want to help make this project better! Take a look at the guidelines and API reference before you get started.
+
 Guidelines_
 
-API Reference:
+`API Reference`_
 
-- Lion_
-- `discord.py`_
-- `discord.py rewrite`_
+information
+====
+License
+  MIT_
+Version
+  `2.0.0`_
+Authors
+  `Tiger Sachse`_ and several contributors_
 
 .. _`dependencies portion`: ../install.sh#L21
 .. _`Create an application and obtain a bot token`: https://discordapp.com/developers/applications
 .. _`invite Lion to your server`: https://www.techjunkie.com/add-bots-discord-server/
+
 .. _Guidelines: DEVELOPER_GUIDELINES.rst
-.. _Lion: DEVELOPER_DOCUMENTATION.rst
-.. _`discord.py`: https://discordpy.readthedocs.io/en/latest/api.html
-.. _`discord.py rewrite`: https://discordpy.readthedocs.io/en/rewrite/api.html
+.. _`API Reference`: DEVELOPER_DOCUMENTATION.rst
+
+.. _MIT: LICENSE.txt
+.. _`2.0.0`: https://github.com/tgsachse/lion/releases/tag/v2.0.0
+.. _`Tiger Sachse`: https://github.com/tgsachse
+.. _contributors: https://github.com/tgsachse/lion/graphs/contributors
