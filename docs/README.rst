@@ -49,17 +49,17 @@ Lion runs as a ``systemd`` service/daemon. Once you've properly installed the so
 All of the script's available flags are listed and described below:
 
 ``--service <directive>``
-  Send a directive to the service. Directives include ``start``, ``stop``, ``restart``, ``status``, ``enable``, and ``disable``. ``enable`` and ``disable`` force the service to start or stop at system startup. The rest of the directives do what you think they do.
+  Send a directive to the service. Directives include ``start``, ``stop``, ``restart``, ``status``, ``enable``, and ``disable``. ``enable`` and ``disable`` force the service to start or stop at system startup. The rest of the directives do what you think they do. All these directives except for ``status`` must be run as root or with ``sudo``.
 ``--token <token>``
-  Add a Discord API token to Lion. If you never add a token, Lion cannot communicate with Discord.
+  Add a Discord API token to Lion. If you never add a token, Lion cannot communicate with Discord. This flag must be run as root or with ``sudo``.
 ``--cogs <directive [parameters...]>``
   Manage Lion's cogs. Potential directives include ``enable``, ``disable``, ``install``, ``uninstall``, and ``list``.
   
   ``enable <cogs...> | disable <cogs...> | uninstall <cogs...>``
-    Enable, disable, or uninstall a list of cogs from the system. Enter the space-separated names of the cogs you wish to manipulate after this directive.
+    Enable, disable, or uninstall a list of cogs from the system. Enter the space-separated names of the cogs you wish to manipulate after this directive. These directives must all be run as root or with ``sudo``.
     
   ``install <tarballs...>``
-    Install new cogs from tarballs onto your system. Enter the space-separated paths to the tarballs of the cogs you wish to install after this directive.
+    Install new cogs from tarballs onto your system. Enter the space-separated paths to the tarballs of the cogs you wish to install after this directive. This directive must be run as root or with ``sudo``.
    
   ``list [enabled | disabled]``
     List cogs on the system. An optional parameter may be used to specify only enabled or disabled cogs.
@@ -71,15 +71,37 @@ All of the script's available flags are listed and described below:
 ``--help``
   Show a small help menu.
 
+examples
+====
+Here are some examples of Lion's control script in action:
+::
+  # Start the service.
+  sudo lion --service start
+  
+  # Check the service's status.
+  lion --service status
+  
+  # Enable the 'example' and 'administration' cogs.
+  sudo lion --cogs enable example administration
+  
+  # Install new cogs 'weather' and 'poll' from tarballs.
+  sudo lion --cogs install weather.tar.gz poll.tar.gz
+  
+  # View all enabled cogs.
+  lion --list enabled
+  
+  # Disable all cogs.
+  sudo lion --cogs disable all
+
 contribute
 ====
 Guidelines_
 
 API Reference:
 
-  - Lion_
-  - `discord.py`_
-  - `discord.py rewrite`_
+- Lion_
+- `discord.py`_
+- `discord.py rewrite`_
 
 .. _`dependencies portion`: ../install.sh#L21
 .. _`Create an application and obtain a bot token`: https://discordapp.com/developers/applications
