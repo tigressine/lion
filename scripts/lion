@@ -1,0 +1,328 @@
+#!/usr/bin/env bash
+# Control the Lion service.
+# Written by Tiger Sachse.
+
+COGS_DIR="cogs"
+DOCS_DIR="docs"
+DATA_DIR="data"
+INSTALL_DIR="/opt"
+PACKAGE_NAME="lion"
+ENABLED_DIR="enabled"
+DISABLED_DIR="disabled"
+VERSION_FILE="VERSION.txt"
+TOKEN_FILE="discord.token"
+SERVICE_FILE="lion.service"
+
+# Add a token for the service.
+add_token() {
+    if [ "$EUID" -ne 0 ]; then
+        echo "You must run this function as a root user (or with sudo)."
+        exit 1
+    fi
+    echo "Adding token..."
+    echo "$1" > "$INSTALL_DIR/$PACKAGE_NAME/$DATA_DIR/$TOKEN_FILE"
+}
+
+# Start the service.
+start_service() {
+    if [ "$EUID" -ne 0 ]; then
+        echo "You must run this function as a root user (or with sudo)."
+        exit 1
+    fi
+    echo "Starting Lion..."
+    systemctl start "$SERVICE_FILE"
+}
+
+# Stop the service.
+stop_service() {
+    if [ "$EUID" -ne 0 ]; then
+        echo "You must run this function as a root user (or with sudo)."
+        exit 1
+    fi
+    echo "Stopping Lion..."
+    systemctl stop "$SERVICE_FILE"
+}
+
+# Restart the service.
+restart_service() {
+    if [ "$EUID" -ne 0 ]; then
+        echo "You must run this function as a root user (or with sudo)."
+        exit 1
+    fi
+    echo "Restarting Lion..."
+    systemctl restart "$SERVICE_FILE"
+}
+
+# Enable the service.
+enable_service() {
+    if [ "$EUID" -ne 0 ]; then
+        echo "You must run this function as a root user (or with sudo)."
+        exit 1
+    fi
+    echo "Enabling Lion..."
+    systemctl enable "$SERVICE_FILE"
+}
+
+# Disable the service.
+disable_service() {
+    if [ "$EUID" -ne 0 ]; then
+        echo "You must run this function as a root user (or with sudo)."
+        exit 1
+    fi
+    echo "Disabling Lion..."
+    systemctl disable "$SERVICE_FILE"
+}
+
+# Get the status of the service.
+get_service_status() {
+    echo "Getting Lion's status..."
+    systemctl status "$SERVICE_FILE"
+}
+
+# Show this service's version and related information.
+show_version() {
+    cat "$INSTALL_DIR/$PACKAGE_NAME/$DOCS_DIR/$VERSION_FILE"
+}
+
+# Show the most recent log entries by this service.
+show_log() {
+    journalctl -b -u "$SERVICE_FILE"
+}
+
+# Show a simple help message.
+show_help() {
+    printf "Command syntax:\n    $ lion [--flag] <parameters>\n\n"
+    echo "Check out https://github.com/tgsachse/lion for all available flags."
+}
+
+# Enable installed cogs.
+enable_cogs() {
+    if [ "$EUID" -ne 0 ]; then
+        echo "You must run this function as a root user (or with sudo)."
+        exit 1
+    fi
+
+    ENABLED_COG=false
+    for COG in "$@"; do
+        COG_PATH="$INSTALL_DIR/$PACKAGE_NAME/$COGS_DIR/$COG"
+        if [ -d "$COG_PATH" ]; then
+            if [ ! -L "$INSTALL_DIR/$PACKAGE_NAME/$ENABLED_DIR/$COG" ]; then
+                ln -s "$COG_PATH" "$INSTALL_DIR/$PACKAGE_NAME/$ENABLED_DIR"
+                rm -f "$INSTALL_DIR/$PACKAGE_NAME/$DISABLED_DIR/$COG"
+                echo "Enabled cog: $COG"
+                ENABLED_COG=true
+            else
+                echo "Cog already enabled: $COG"
+            fi
+        else
+            echo "Cog not found: $COG"
+        fi
+    done
+
+    if [ "$ENABLED_COG" = true ]; then
+        printf "\nYou should restart the bot for changes to take effect.\n"
+    fi
+}
+
+# Disable unwanted cogs.
+disable_cogs() {
+    if [ "$EUID" -ne 0 ]; then
+        echo "You must run this function as a root user (or with sudo)."
+        exit 1
+    fi
+
+    DISABLED_COG=false
+    for COG in "$@"; do
+        COG_PATH="$INSTALL_DIR/$PACKAGE_NAME/$COGS_DIR/$COG"
+        if [ -d "$COG_PATH" ]; then
+            if [ ! -L "$INSTALL_DIR/$PACKAGE_NAME/$DISABLED_DIR/$COG" ]; then
+                ln -s "$COG_PATH" "$INSTALL_DIR/$PACKAGE_NAME/$DISABLED_DIR"
+                rm -f "$INSTALL_DIR/$PACKAGE_NAME/$ENABLED_DIR/$COG"
+                echo "Disabled cog: $COG"
+                DISABLED_COG=true
+            else
+                echo "Cog already disabled: $COG"
+            fi
+        else
+            echo "Cog not found: $COG"
+        fi
+    done
+
+    if [ "$DISABLED_COG" = true ]; then
+        printf "\nYou should restart the bot for changes to take effect.\n"
+    fi
+}
+
+# Install a list of tarred cogs onto the system.
+install_cogs() {
+    if [ "$EUID" -ne 0 ]; then
+        echo "You must run this function as a root user (or with sudo)."
+        exit 1
+    fi
+
+    for GIVEN_PATH in "$@"; do
+
+        # Adjust relative paths, if necessary.
+        case $GIVEN_PATH in
+            /*)
+                COG_PATH="$GIVEN_PATH"
+                ;;
+            *)
+                COG_PATH="$(pwd)/$GIVEN_PATH"
+                ;;
+        esac
+
+        # Get the stem and the name of the cog from its path. This is a little
+        # too Bash-specific for my taste. Future me should revisit these lines.
+        COG_STEM="$(basename "$COG_PATH")"
+        COG="${COG_STEM%%.*}"
+
+        if [ -f "$COG_PATH" ]; then
+            if [ -d "$INSTALL_DIR/$PACKAGE_NAME/$COGS_DIR/$COG" ]; then
+                ALREADY_INSTALLED=true
+            else
+                ALREADY_INSTALLED=false
+            fi
+
+            # Attempt to untar the given cog path into place.
+            tar xzf "$COG_PATH" -C "$INSTALL_DIR/$PACKAGE_NAME/$COGS_DIR" &> /dev/null
+            if [ "$?" -eq 0 ]; then
+                if [ "$ALREADY_INSTALLED" = true ]; then
+                    echo "Reinstalled cog: $COG"
+                else
+                    echo "Installed cog: $COG"
+                fi
+            else
+                echo "File could not be untarred: $COG_PATH"
+            fi
+        else
+            echo "File not found: $COG_PATH"
+        fi
+    done
+}
+
+# Remove a list of cogs from the system.
+uninstall_cogs() {
+    if [ "$EUID" -ne 0 ]; then
+        echo "You must run this function as a root user (or with sudo)."
+        exit 1
+    fi
+
+    for COG in "$@"; do
+        if [ -d "$INSTALL_DIR/$PACKAGE_NAME/$COGS_DIR/$COG" ]; then
+            rm -r "$INSTALL_DIR/$PACKAGE_NAME/$COGS_DIR/$COG"
+            rm -r -f "$INSTALL_DIR/$PACKAGE_NAME/$ENABLED_DIR/$COG"
+            rm -r -f "$INSTALL_DIR/$PACKAGE_NAME/$DISABLED_DIR/$COG"
+            echo "Uninstalled cog: $COG"
+        else
+            echo "Cog not found: $COG"
+        fi
+    done
+}
+
+# List installed cogs.
+list_cogs() {
+    HEADER=$1
+    TARGET_DIR="$INSTALL_DIR/$PACKAGE_NAME/$2"
+
+    if [ "$(ls -A "$TARGET_DIR")" ]; then
+        echo $HEADER
+        for COG_PATH in "$TARGET_DIR"/*; do
+            COG="$(basename "$COG_PATH")"
+            echo "  $COG"
+        done
+    else
+        echo "No cogs found!"
+    fi
+}
+
+# Main entry point to the script.
+case "$1" in
+    --token)
+        add_token "$2"
+        ;;
+    --service)
+        case "$2" in
+            start)
+                start_service
+                ;;
+            stop)
+                stop_service
+                ;;
+            restart)
+                restart_service
+                ;;
+            enable)
+                enable_service
+                ;;
+            disable)
+                disable_service
+                ;;
+            status)
+                get_service_status
+                ;;
+            *)
+                show_help
+                ;;
+        esac
+        ;;
+    --version)
+        show_version
+        ;;
+    --log)
+        show_log
+        ;;
+    --cogs)
+        case "$2" in
+            enable)
+                case "$3" in
+                    all)
+                        ALL_COGS="$(find "$INSTALL_DIR/$PACKAGE_NAME/$COGS_DIR"/* \
+                            -maxdepth 0 -type d -exec basename {} \;)"
+                        enable_cogs $ALL_COGS
+                        ;;
+                    *)
+                        enable_cogs "${@:3}"
+                        ;;
+                esac
+                ;;
+            disable)
+                case "$3" in
+                    all)
+                        ALL_COGS="$(find "$INSTALL_DIR/$PACKAGE_NAME/$COGS_DIR"/* \
+                            -maxdepth 0 -type d -exec basename {} \;)"
+                        disable_cogs $ALL_COGS
+                        ;;
+                    *)
+                        disable_cogs "${@:3}"
+                        ;;
+                esac
+                ;;
+            install)
+                install_cogs "${@:3}"
+                ;;
+            uninstall)
+                uninstall_cogs "${@:3}"
+                ;;
+            list)
+                case "$3" in
+                    enabled)
+                        list_cogs "Enabled cogs:" "$ENABLED_DIR"
+                        ;;
+                    disabled)
+                        list_cogs "Disabled cogs:" "$DISABLED_DIR"
+                        ;;
+                    *)
+                        list_cogs "Available cogs:" "$COGS_DIR"
+                        ;;
+                esac
+                ;;
+            *)
+                show_help
+                ;;
+        esac
+        ;;
+    --help|*)
+        show_help
+        ;;
+esac
