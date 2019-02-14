@@ -115,7 +115,7 @@ Authors
 .. _`invite Lion to your server`: https://www.techjunkie.com/add-bots-discord-server/
 
 .. _guidelines: GUIDELINES.rst
-.. _`API reference`: DOCUMENTATION.rst
+.. _`API reference`: REFERENCE.rst
 
 .. _MIT: LICENSE.txt
 .. _`2.0.0`: https://github.com/tgsachse/lion/releases/tag/v2.0.0
