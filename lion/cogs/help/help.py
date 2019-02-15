@@ -27,7 +27,7 @@ class HelpCog:
                                        value=command.help.split("\n")[0],
                                        inline=False)
 
-        await utilities.respond(response, embed=embedded_message)
+        await utilities.respond(context, response, embed=embedded_message)
 
     @help_command.error
     async def help_error(self, context, error):
