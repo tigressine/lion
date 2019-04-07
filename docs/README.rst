@@ -35,7 +35,7 @@ Next, you'll probably want to enable some (or all) of the cogs that Lion ships w
 
 Finally, start the service with this command:
 ::
-  sudo lion --start
+  sudo lion --service start
 
 All that's left to do is `invite Lion to your server`_!
 
