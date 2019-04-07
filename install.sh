@@ -22,6 +22,7 @@ fi
 if [ "$1" = "--handle-dependencies" ]; then
     echo "Installing dependencies..."
     apt install python3-pip
+    apt install python3-systemd
     pip3 install -U git+https://github.com/Rapptz/discord.py@rewrite#egg-discord.py
 fi
 
