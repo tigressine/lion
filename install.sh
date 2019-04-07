@@ -12,6 +12,22 @@ BIN_DIR="/usr/local/bin"
 SERVICE_FILE="lion.service"
 SYSTEMD_DIR="/etc/systemd/system"
 
+# Assert user is running `install.sh` correctly.
+if [ "$BASH" != "/bin/bash" ]; then
+    echo "You must run this script using the following syntax: bash install.sh"
+    exit
+fi
+
+if [ -z "$BASH_VERSION" ]; then
+   echo "You must run this script using the following syntax: bash install.sh"
+   exit
+fi
+
+if [ $0 == "./install.sh" ]; then
+   echo "You must run this script using the following syntax: bash install.sh"
+   exit
+fi
+
 # You must run this script with root permissions.
 if [ "$EUID" -ne 0 ]; then
     echo "You must run this script as a root user (or with sudo)."
