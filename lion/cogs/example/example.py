@@ -22,10 +22,10 @@ def setup(bot):
 
     Every cog must include this function.
     """
-    bot.add_cog(ExampleCog())
+    bot.add_cog(ExampleCog(bot))
 
 
-class ExampleCog:
+class ExampleCog(commands.Cog):
     """This class contains all the logic for the 'example' command."""
 
     # Notice that paths for data must be relative and must start at the
