@@ -8,10 +8,10 @@ from discord.ext import commands
 
 def setup(bot):
     """Add this cog to a given bot."""
-    bot.add_cog(AdministrationCog())
+    bot.add_cog(AdministrationCog(bot))
 
 
-class AdministrationCog:
+class AdministrationCog(commands.Cog):
     """This class contains several delicate commands."""
     @commands.command(name="reroute", usage="!reroute")
     @commands.check(utilities.is_administrator)

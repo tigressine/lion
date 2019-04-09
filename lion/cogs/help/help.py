@@ -9,10 +9,10 @@ from discord.ext import commands
 
 def setup(bot):
     """Add this cog to a given bot."""
-    bot.add_cog(HelpCog())
+    bot.add_cog(HelpCog(bot))
 
 
-class HelpCog:
+class HelpCog(commands.Cog):
     """This class contains all the logic for the 'help' command."""
     EMBEDDED_COLOR = 0xFFEE05
 

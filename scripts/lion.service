@@ -4,7 +4,7 @@ Description=Lion, a simple, modular Discord bot from scratch
 [Service]
 Type=simple
 WorkingDirectory=/opt/lion
-ExecStart=python3 /opt/lion/liond.py
+ExecStart=/usr/bin/python3 /opt/lion/liond.py
 
 [Install]
 WantedBy=multi-user.target
